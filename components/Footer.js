@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import ContactLines from './ContactLines';
 
 export default function Footer({ site }) {
@@ -7,6 +8,9 @@ export default function Footer({ site }) {
         <div>
           <h3>{site.name}</h3>
           <p>{site.tagline}</p>
+          <p className="footlinks">
+            <Link href="/">Home</Link> · <Link href="/products">Products</Link> · <Link href="/about">About</Link> · <Link href="/faq">FAQ</Link> · <Link href="/contact">Contact Us</Link>
+          </p>
         </div>
         <address><ContactLines site={site} /></address>
       </div>

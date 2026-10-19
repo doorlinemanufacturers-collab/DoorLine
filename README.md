@@ -1,18 +1,20 @@
 # DoorLine Manufacturers - Next.js 14 SEO Website
 
-## Local run
+Pages: Home, Products (with categories), Product detail, About, FAQ, Contact Us, /admin.
+
+## Run locally
 npm install && npm run dev
 
 ## Deploy (GitHub -> Vercel)
-1. GitHub par naya repo banayein aur ye folder push karein.
-2. Vercel > Add New Project > repo import > Deploy.
-3. Vercel Project > Settings > Environment Variables: NEXT_PUBLIC_SITE_URL = https://aapka-domain.com
-4. **Admin edits save hone ke liye (zaroori):** Vercel Project > Storage > "Upstash Redis" (KV) create/connect karein (KV_REST_API_URL / KV_REST_API_TOKEN khud add ho jate hain).
-5. **Admin se image upload ke liye:** Storage > Blob create karein (BLOB_READ_WRITE_TOKEN auto). Redeploy karein.
-6. /admin par login: username `waheed999`.
+1. Push this folder to your GitHub repository.
+2. In Vercel: Add New Project, import the repository, Deploy.
+3. Project Settings > Environment Variables: NEXT_PUBLIC_SITE_URL = https://your-domain.com
+4. Admin saving (required): Project > Storage > create an Upstash Redis (KV) database and connect it to the project. KV_REST_API_URL and KV_REST_API_TOKEN are added automatically. Redeploy.
+5. Admin image upload: Storage > create a Blob store and connect it (BLOB_READ_WRITE_TOKEN is added automatically). Redeploy.
+6. Open /admin and log in.
 
 ## Images
-Apni images /public/images me rakhein aur admin me path likhein: /images/file-name.jpg
+Put images in /public/images and enter the path in the admin, for example /images/file-name.jpg
 
 ## Security
-Admin password code me default hai. Apne Vercel env me ADMIN_USER, ADMIN_PASS, AUTH_SECRET set kar ke isay override karein.
+Set ADMIN_USER, ADMIN_PASS and AUTH_SECRET in Vercel environment variables to override the defaults in the code.

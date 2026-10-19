@@ -50,7 +50,7 @@ export default function Admin() {
     setBusy(true); setMsg(''); setErr('');
     const r = await fetch('/api/admin/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: c }) });
     const j = await r.json(); setBusy(false);
-    if (!r.ok) setErr(j.error || 'Save fail'); else setMsg('Saved! Website update ho gayi.');
+    if (!r.ok) setErr(j.error || 'Save fail'); else setMsg('Saved. Your website is updated.');
   };
 
   const up = (path, v) => setC((o) => { const n = structuredClone(o); let t = n; for (let i = 0; i < path.length - 1; i++) t = t[path[i]]; t[path[path.length - 1]] = v; return n; });
@@ -60,7 +60,7 @@ export default function Admin() {
     setC({ ...c, products: [{ id: `new-${Date.now()}`, slug: '', model: `DL-${500 + n}`, name: 'New Aluminium Handle', category: 'Door Handles', image: '', alt: '', desc: '', size: '', finish: '', colors: '' }, ...c.products] });
     setOpen(0);
   };
-  const delProd = (i) => { if (confirm('Is product ko delete karein?')) setC({ ...c, products: c.products.filter((_, x) => x !== i) }); };
+  const delProd = (i) => { if (confirm('Delete this product?')) setC({ ...c, products: c.products.filter((_, x) => x !== i) }); };
   const finalize = (p) => {
     const slug = p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`;
     return { ...p, slug, alt: p.alt || `${p.name} ${p.model} ${p.size} Lahore Pakistan`.replace(/\s+/g, ' ').trim() };
@@ -73,7 +73,7 @@ export default function Admin() {
     const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
     const j = await r.json();
     if (!r.ok) { setMsg(''); return setErr(j.error); }
-    upProd(i, 'image', j.url); setMsg('Image upload ho gayi - ab Save dabayein.');
+    upProd(i, 'image', j.url); setMsg('Image uploaded. Now click Save Changes.');
   };
 
   if (auth === null) return <div className="login">Loading...</div>;
@@ -94,19 +94,19 @@ export default function Admin() {
     );
   }
 
-  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
+  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
   return (
     <div className="adm">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>DoorLine Admin Dashboard</h1>
         <div><a href="/" target="_blank" style={{ marginRight: 12 }}>View site</a><button className="tab" onClick={logout}>Logout</button></div>
       </div>
-      {!storage && <p className="err">⚠️ Storage connect nahi hai - changes save nahi honge. Vercel me Upstash Redis (KV) connect karein (README dekhein).</p>}
+      {!storage && <p className="err">⚠️ Storage is not connected, so changes cannot be saved yet. In Vercel open your project > Storage, create an Upstash Redis (KV) database, connect it to this project and redeploy. See the README for details.</p>}
       <div className="tabs">{tabs.map(([k, l]) => <button key={k} className={`tab ${tab === k ? 'on' : ''}`} onClick={() => setTab(k)}>{l}</button>)}</div>
 
       {tab === 'general' && (
         <div className="panel">
-          {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address ya place name)']].map(([k, l]) => (
+          {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address or place name)']].map(([k, l]) => (
             <Field key={k} label={l} value={c.site[k]} onChange={(v) => up(['site', k], v)} />
           ))}
         </div>
@@ -121,6 +121,20 @@ export default function Admin() {
           <Field label="About title" value={c.about.title} onChange={(v) => up(['about', 'title'], v)} />
           <Field label="About text" area rows={7} value={c.about.text} onChange={(v) => up(['about', 'text'], v)} />
         </div>
+      )}
+
+      {tab === 'seo' && (
+        <>
+          <p className="muted" style={{ marginBottom: 10 }}>These text blocks appear on the home page and help your Google ranking. Keep them natural and useful.</p>
+          {c.seo.map((b, i) => (
+            <div className="panel" key={i}>
+              <Field label="Heading" value={b.title} onChange={(v) => up(['seo', i, 'title'], v)} />
+              <Field label="Text" area rows={5} value={b.text} onChange={(v) => up(['seo', i, 'text'], v)} />
+              <p style={{ marginTop: 10 }}><button className="btn btn-sm danger" onClick={() => setC({ ...c, seo: c.seo.filter((_, x) => x !== i) })}>Delete</button></p>
+            </div>
+          ))}
+          <button className="btn btn-sm" onClick={() => setC({ ...c, seo: [...c.seo, { title: '', text: '' }] })}>+ Add text block</button>
+        </>
       )}
 
       {tab === 'why' && (
@@ -151,18 +165,18 @@ export default function Admin() {
                     <div><Field label="Category" value={p.category} onChange={(v) => upProd(i, 'category', v)} /></div>
                   </div>
                   <Field label="Product Name" value={p.name} onChange={(v) => upProd(i, 'name', v)} />
-                  <Field label="URL slug (khali chhorein to auto banega)" value={p.slug} onChange={(v) => upProd(i, 'slug', v)} />
+                  <Field label="URL slug (leave empty to generate automatically)" value={p.slug} onChange={(v) => upProd(i, 'slug', v)} />
                   <Field label="Description" area value={p.desc} onChange={(v) => upProd(i, 'desc', v)} />
                   <div className="two">
                     <div><Field label="Size" value={p.size} onChange={(v) => upProd(i, 'size', v)} /></div>
                     <div><Field label="Finish" value={p.finish} onChange={(v) => upProd(i, 'finish', v)} /></div>
                   </div>
                   <Field label="Colours" value={p.colors} onChange={(v) => upProd(i, 'colors', v)} />
-                  <Field label="Image path/URL" value={p.image} onChange={(v) => upProd(i, 'image', v)} />
-                  <label>Ya nayi image upload karein (max 4MB)</label>
+                  <Field label="Image path or URL" value={p.image} onChange={(v) => upProd(i, 'image', v)} />
+                  <label>Or upload a new image (max 4MB)</label>
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
-                  <Field label="Image Alt text (SEO) - khali chhorein to auto" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
+                  <Field label="Image alt text (SEO) - leave empty to generate automatically" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p style={{ marginTop: 12 }}><button className="btn btn-sm danger" onClick={() => delProd(i)}>Delete Product</button></p>
                 </>
               )}

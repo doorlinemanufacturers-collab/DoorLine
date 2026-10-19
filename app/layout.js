@@ -8,7 +8,7 @@ const font = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'],
 export const metadata = {
   metadataBase: new URL(siteUrl()),
   title: { default: 'DoorLine Manufacturers - Aluminium Handles Manufacturer Lahore', template: '%s | DoorLine Manufacturers Lahore' },
-  description: 'Aluminium door handles, cabinet handles, window locks aur hinges ki direct factory Lahore me. Wholesale rates, bulk delivery all over Pakistan.',
+  description: 'Direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore. Wholesale rates and bulk delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore'],
   openGraph: { type: 'website', siteName: 'DoorLine Manufacturers', locale: 'en_PK', images: ['/images/fluted-bar-handle-white-gold.jpg'] },
   robots: { index: true, follow: true },

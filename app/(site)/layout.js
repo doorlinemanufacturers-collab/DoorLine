@@ -4,6 +4,7 @@ import WhatsAppFloat from '@/components/WhatsAppFloat';
 import { getContent } from '@/lib/store';
 
 export default async function SiteLayout({ children }) {
-  const { site } = await getContent();
-  return (<><Header site={site} /><main>{children}</main><Footer site={site} /><WhatsAppFloat site={site} /></>);
+  const { site, products } = await getContent();
+  const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
+  return (<><Header site={site} categories={categories} /><main>{children}</main><Footer site={site} /><WhatsAppFloat site={site} /></>);
 }

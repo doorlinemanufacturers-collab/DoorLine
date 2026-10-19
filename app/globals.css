@@ -15,7 +15,7 @@ h3{font-size:1rem}
 .pre{white-space:pre-line;margin-bottom:16px}
 .header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:20}
 .nav{display:flex;align-items:center;gap:20px;height:64px}
-.nav nav{display:flex;gap:18px;margin-left:auto;font-size:.9rem}
+.nav nav{display:flex;gap:20px;margin-left:auto;font-size:.9rem}
 .nav nav a{text-decoration:none}.nav nav a:hover{color:var(--brand)}
 .logo{font-weight:700;font-size:1.15rem;text-decoration:none}.logo span{color:var(--brand)}
 .btn{display:inline-block;background:var(--brand);color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;border:2px solid var(--brand);cursor:pointer;font-size:.95rem;font-family:inherit}
@@ -51,7 +51,7 @@ address{font-style:normal;margin-bottom:16px}
 .crumb{font-size:.85rem;color:var(--muted);margin-bottom:18px}
 .spec{border-collapse:collapse;margin:16px 0 20px;width:100%}
 .spec th,.spec td{padding:8px 10px;border-bottom:1px solid #eee;text-align:left;font-size:.9rem}.spec th{width:35%;color:var(--muted)}
-@media(max-width:800px){.herogrid,.contactgrid,.pgrid,.footgrid{grid-template-columns:1fr}.nav nav{display:none}.nav{justify-content:space-between}}
+@media(max-width:800px){.herogrid,.contactgrid,.pgrid,.footgrid{grid-template-columns:1fr}.desknav{display:none!important}.nav .btn-sm{margin-left:auto}}
 /* admin */
 .adm{max-width:1000px;margin:0 auto;padding:20px}
 .adm h1{font-size:1.5rem;margin-bottom:12px}
@@ -70,3 +70,19 @@ address{font-style:normal;margin-bottom:16px}
 .wafloat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:30}
 .logo{display:flex;align-items:center}
 .footer address{line-height:1.8}
+
+.burger{background:none;border:1px solid #ddd;border-radius:8px;width:42px;height:38px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 9px;cursor:pointer}
+.burger span{display:block;height:2px;background:var(--dark);border-radius:2px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
+.drawer{position:fixed;top:0;right:0;height:100%;width:290px;max-width:85%;background:#fff;z-index:50;transform:translateX(100%);transition:transform .25s;padding:16px 20px;display:flex;flex-direction:column;overflow-y:auto}
+.drawer.open{transform:none}
+.drawerhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.x{background:none;border:0;font-size:2rem;cursor:pointer;line-height:1}
+.drawer a,.dlink{padding:13px 4px;border-bottom:1px solid #eee;text-decoration:none;font-size:1rem;text-align:left;background:none;border-left:0;border-right:0;border-top:0;font-family:inherit;color:inherit;cursor:pointer;display:flex;justify-content:space-between}
+.subs{background:var(--alt);padding-left:12px}.subs a{font-size:.92rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{padding:7px 16px;border:1px solid #ccc;border-radius:999px;text-decoration:none;font-size:.88rem}.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.catbox{text-decoration:none;display:block}.catbox:hover{border-color:var(--brand)}
+.seoblock{margin-bottom:32px}.seoblock h2{font-size:1.4rem}
+.cta{background:linear-gradient(135deg,#faf7f0,#efe8d8)}
+.footlinks{margin-top:10px;font-size:.88rem}.footlinks a{text-decoration:none}

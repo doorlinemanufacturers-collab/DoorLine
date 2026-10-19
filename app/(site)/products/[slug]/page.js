@@ -37,7 +37,7 @@ export default async function ProductPage({ params }) {
   return (
     <section className="section">
       <div className="container">
-        <p className="crumb"><Link href="/">Home</Link> / <Link href="/#products">Products</Link> / {p.model}</p>
+        <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / {p.model}</p>
         <div className="pgrid">
           <ProductImage src={p.image} alt={p.alt} priority sizes="(max-width: 900px) 100vw, 50vw" />
           <div>
@@ -51,7 +51,7 @@ export default async function ProductPage({ params }) {
               <tr><th>Colours</th><td>{p.colors}</td></tr>
               <tr><th>Price</th><td>Wholesale rate - call / WhatsApp</td></tr>
             </tbody></table>
-            <a className="btn" href={waLink(c.site.whatsapp, `I need wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>
+            <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need the wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>
           </div>
         </div>
         {related.length > 0 && (<><h2 style={{ marginTop: 48 }}>Related Products</h2><div className="grid">{related.map((r) => <ProductCard key={r.slug} p={r} />)}</div></>)}
