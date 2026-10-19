@@ -66,6 +66,8 @@ export default function Admin() {
     return { ...p, slug, alt: p.alt || `${p.name} ${p.model} ${p.size} Lahore Pakistan`.replace(/\s+/g, ' ').trim() };
   };
   const doSaveProducts = () => { setC((o) => ({ ...o, products: o.products.map(finalize) })); setTimeout(save, 50); };
+  const doSaveServices = () => { setC((o) => ({ ...o, services: o.services.map(finSvc) })); setTimeout(save, 50); };
+  const finSvc = (x) => ({ ...x, slug: slugify(x.slug || x.title) });
 
   const upload = async (i, file) => {
     if (!file) return; setMsg('Uploading...'); setErr('');
@@ -94,7 +96,7 @@ export default function Admin() {
     );
   }
 
-  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
+  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['services', `Services (${c.services.length})`], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
   return (
     <div className="adm">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -134,6 +136,40 @@ export default function Admin() {
             </div>
           ))}
           <button className="btn btn-sm" onClick={() => setC({ ...c, seo: [...c.seo, { title: '', text: '' }] })}>+ Add text block</button>
+        </>
+      )}
+
+      {tab === 'services' && (
+        <>
+          <p className="muted" style={{ marginBottom: 10 }}>Service pages (anodizing, electroplating and more). Each service gets its own page, Google schema and FAQ.</p>
+          <p><button className="btn btn-sm" onClick={() => { setC({ ...c, services: [{ slug: '', title: 'New Service in Lahore', short: '', image: '', keywords: '', intro: '', points: '', body: '', faqs: [] }, ...c.services] }); setOpen(0); }}>+ Add Service</button></p>
+          {c.services.map((x, i) => (
+            <div className="panel" key={i}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }} onClick={() => setOpen(open === i ? null : i)}><strong>{x.title}</strong><span>{open === i ? '▲' : '▼'}</span></div>
+              {open === i && (
+                <>
+                  <Field label="Title (include the keyword, e.g. Aluminium Anodizing Service in Lahore)" value={x.title} onChange={(v) => up(['services', i, 'title'], v)} />
+                  <Field label="URL slug (leave empty to generate automatically)" value={x.slug} onChange={(v) => up(['services', i, 'slug'], v)} />
+                  <Field label="Short description" area value={x.short} onChange={(v) => up(['services', i, 'short'], v)} />
+                  <Field label="Image path or URL" value={x.image} onChange={(v) => up(['services', i, 'image'], v)} />
+                  <Thumb src={x.image} />
+                  <Field label="SEO keywords (comma separated)" area value={x.keywords} onChange={(v) => up(['services', i, 'keywords'], v)} />
+                  <Field label="Introduction" area rows={4} value={x.intro} onChange={(v) => up(['services', i, 'intro'], v)} />
+                  <Field label="Key points (one per line)" area rows={5} value={x.points} onChange={(v) => up(['services', i, 'points'], v)} />
+                  <Field label="Details text" area rows={7} value={x.body} onChange={(v) => up(['services', i, 'body'], v)} />
+                  <label>FAQs</label>
+                  {(x.faqs || []).map((f, k) => (
+                    <div key={k} style={{ borderTop: '1px solid #eee', paddingTop: 8 }}>
+                      <Field label="Question" value={f.q} onChange={(v) => up(['services', i, 'faqs', k, 'q'], v)} />
+                      <Field label="Answer" area value={f.a} onChange={(v) => up(['services', i, 'faqs', k, 'a'], v)} />
+                      <button className="btn btn-sm danger" style={{ marginTop: 6 }} onClick={() => up(['services', i, 'faqs'], x.faqs.filter((_, z) => z !== k))}>Delete FAQ</button>
+                    </div>
+                  ))}
+                  <p style={{ marginTop: 10 }}><button className="btn btn-sm" onClick={() => up(['services', i, 'faqs'], [...(x.faqs || []), { q: '', a: '' }])}>+ Add FAQ</button> <button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this service?')) setC({ ...c, services: c.services.filter((_, z) => z !== i) }); }}>Delete Service</button></p>
+                </>
+              )}
+            </div>
+          ))}
         </>
       )}
 
@@ -177,6 +213,10 @@ export default function Admin() {
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   <Field label="Image alt text (SEO) - leave empty to generate automatically" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
+                  <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
+                  <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />
+                  <Field label="Custom meta title (optional, max 70 characters)" value={p.metaTitle} onChange={(v) => upProd(i, 'metaTitle', v)} />
+                  <Field label="Custom meta description (optional, max 158 characters)" area value={p.metaDesc} onChange={(v) => upProd(i, 'metaDesc', v)} />
                   <p style={{ marginTop: 12 }}><button className="btn btn-sm danger" onClick={() => delProd(i)}>Delete Product</button></p>
                 </>
               )}
@@ -199,7 +239,7 @@ export default function Admin() {
       )}
 
       <div className="bar">
-        <button className="btn" disabled={busy} onClick={tab === 'products' ? doSaveProducts : save}>{busy ? 'Saving...' : 'Save Changes'}</button>
+        <button className="btn" disabled={busy} onClick={tab === 'products' ? doSaveProducts : tab === 'services' ? doSaveServices : save}>{busy ? 'Saving...' : 'Save Changes'}</button>
         {msg && <span className="ok">{msg}</span>}{err && <span className="err">{err}</span>}
       </div>
     </div>

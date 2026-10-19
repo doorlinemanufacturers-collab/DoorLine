@@ -4,10 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { waLink } from '@/lib/site';
 
-export default function Header({ site, categories }) {
+export default function Header({ site, categories, services = [] }) {
   const [open, setOpen] = useState(false);
   const [sub, setSub] = useState(false);
-  const close = () => { setOpen(false); setSub(false); };
+  const [sv, setSv] = useState(false);
+  const close = () => { setOpen(false); setSub(false); setSv(false); };
   return (
     <header className="header">
       <div className="container nav">
@@ -16,6 +17,7 @@ export default function Header({ site, categories }) {
         </Link>
         <nav className="desknav" aria-label="Main">
           <Link href="/">Home</Link>
+          <Link href="/services">Services</Link>
           <Link href="/about">About</Link>
           <Link href="/faq">FAQ</Link>
           <Link href="/contact">Contact Us</Link>
@@ -34,6 +36,13 @@ export default function Header({ site, categories }) {
           <div className="subs">
             <Link href="/products" onClick={close}>All Products</Link>
             {categories.map((c) => <Link key={c} href={`/products?category=${encodeURIComponent(c)}`} onClick={close}>{c}</Link>)}
+          </div>
+        )}
+        <button className="dlink" onClick={() => setSv(!sv)} aria-expanded={sv}>Services <span>{sv ? '▲' : '▼'}</span></button>
+        {sv && (
+          <div className="subs">
+            <Link href="/services" onClick={close}>All Services</Link>
+            {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(' Service', '')}</Link>)}
           </div>
         )}
         <Link href="/about" onClick={close}>About Us</Link>
