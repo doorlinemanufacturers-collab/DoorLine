@@ -101,7 +101,7 @@ export default function Admin() {
         <h1>DoorLine Admin Dashboard</h1>
         <div><a href="/" target="_blank" style={{ marginRight: 12 }}>View site</a><button className="tab" onClick={logout}>Logout</button></div>
       </div>
-      {!storage && <p className="err">⚠️ Storage is not connected, so changes cannot be saved yet. In Vercel open your project > Storage, create an Upstash Redis (KV) database, connect it to this project and redeploy. See the README for details.</p>}
+      {!storage && <p className="err">⚠️ Storage is not connected, so changes cannot be saved yet. In Vercel open your project, then the Storage tab, create an Upstash Redis (KV) database, connect it to this project and redeploy. See the README for details.</p>}
       <div className="tabs">{tabs.map(([k, l]) => <button key={k} className={`tab ${tab === k ? 'on' : ''}`} onClick={() => setTab(k)}>{l}</button>)}</div>
 
       {tab === 'general' && (
