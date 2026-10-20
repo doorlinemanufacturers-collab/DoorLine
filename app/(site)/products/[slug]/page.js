@@ -7,6 +7,7 @@ import ProductImage from '@/components/ProductImage';
 import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
+import Badges from '@/components/Badges';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,6 +50,7 @@ export default async function ProductPage({ params }) {
           <Reveal><ProductImage src={p.image} alt={p.alt} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
           <Reveal delay={120}>
             <h1 className="h1s">{p.name} {p.model}</h1>
+            <Badges items={c.badges} />
             <p className="pre">{seo.intro}</p>
             <table className="spec"><tbody>
               <tr><th>Model</th><td>{p.model}</td></tr>

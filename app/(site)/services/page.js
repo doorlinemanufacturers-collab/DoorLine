@@ -5,9 +5,9 @@ import Reveal from '@/components/Reveal';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Aluminium Anodizing & Electroplating Services in Lahore',
-  description: 'Professional aluminium anodizing and electroplating services in Lahore for handles, locks, hinges and aluminium parts. Bulk and job work orders across Pakistan.',
-  keywords: ['aluminium anodizing in Lahore', 'electroplating in Lahore', 'anodizing service Pakistan', 'aluminium electroplating service'],
+  title: 'Top Aluminium Anodizing & Electroplating in Lahore | Direct Rates',
+  description: 'Premium quality aluminium anodizing and electroplating in Lahore at cheap, direct factory rates with no middleman. Bulk and job work orders across Pakistan.',
+  keywords: ['aluminium anodizing in Lahore', 'electroplating in Lahore', 'anodizing service Pakistan', 'aluminium electroplating service', 'top anodizing service in Lahore', 'cheap anodizing price Lahore', 'premium quality electroplating Lahore'],
   alternates: { canonical: '/services' },
 };
 

@@ -117,6 +117,7 @@ export default function Admin() {
       {tab === 'hero' && (
         <div className="panel">
           <Field label="Hero H1 heading" area value={c.hero.h1} onChange={(v) => up(['hero', 'h1'], v)} />
+          <Field label="Trust badges under the hero text (one per line)" area rows={5} value={(c.badges || []).join('\n')} onChange={(v) => up(['badges'], v.split('\n'))} />
           <Field label="Hero sub text" area value={c.hero.sub} onChange={(v) => up(['hero', 'sub'], v)} />
           <Field label="Hero image path or URL (leave empty to show no image)" value={c.hero.image} onChange={(v) => up(['hero', 'image'], v)} />
           <Thumb src={c.hero.image} />

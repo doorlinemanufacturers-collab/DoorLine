@@ -12,7 +12,7 @@ export async function generateMetadata({ searchParams }) {
   const title = cat ? `${cat} Wholesale - Aluminium Handles Manufacturer Lahore` : 'Aluminium Door & Cabinet Handles Wholesale - Products';
   return {
     title,
-    description: `Browse ${cat || 'aluminium door handles, cabinet handles, window locks and hinges'} from DoorLine Manufacturers, Lahore. Factory price for bulk buyers across Pakistan. Anodizing and electroplating available.`,
+    description: `Browse ${cat || 'aluminium door handles, cabinet handles, window locks and hinges'} from DoorLine Manufacturers, Lahore. Factory price for bulk buyers across Pakistan. Cheap wholesale price, no middleman, premium quality. Anodizing and electroplating available.`,
     alternates: { canonical: cat ? `/products?category=${encodeURIComponent(cat)}` : '/products' },
     robots: q ? { index: false, follow: true } : undefined,
   };

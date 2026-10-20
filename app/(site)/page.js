@@ -7,19 +7,20 @@ import CatalogueForm from '@/components/CatalogueForm';
 import FAQ from '@/components/FAQ';
 import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
+import Badges from '@/components/Badges';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: { absolute: 'Aluminium Handles Manufacturer, Anodizing & Electroplating in Lahore - DoorLine' },
-  description: 'DoorLine Manufacturers: direct factory of aluminium door and cabinet handles, window locks and hinges in Lahore, with anodizing and electroplating services. Wholesale price, delivery all over Pakistan.',
-  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore'],
+  title: { absolute: 'Top Aluminium Handles Manufacturers in Lahore | Direct Factory Rates, No Middleman' },
+  description: 'Top aluminium handles manufacturer in Lahore: cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
+  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'DoorLine Manufacturers - Aluminium Handles Manufacturer Lahore', description: 'Factory price aluminium door and cabinet handles, plus anodizing and electroplating services. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
+  openGraph: { title: 'Top Aluminium Handles Manufacturers Lahore - Direct Factory Rates', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
 };
 
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services } = await getContent();
+  const { site, hero, why, products, faqs, seo, services, badges } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   return (
     <>
@@ -28,6 +29,7 @@ export default async function Home() {
           <div>
             <h1>{hero.h1}</h1>
             <p>{hero.sub}</p>
+            <Badges items={badges} center={!hero.image} />
             <div className="row">
               <Link className="btn" href="/products">View Products</Link>
               <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">WhatsApp Rates</a>

@@ -6,6 +6,7 @@ import ProductImage from '@/components/ProductImage';
 import FAQ from '@/components/FAQ';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
+import Badges from '@/components/Badges';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,9 +15,9 @@ async function find(slug) { const c = await getContent(); return { c, s: c.servi
 export async function generateMetadata({ params }) {
   const { s } = await find(params.slug);
   if (!s) return { title: 'Service not found' };
-  const description = `${s.short} DoorLine Manufacturers, aluminium handles manufacturer in Lahore. Bulk and job work orders across Pakistan.`.slice(0, 158);
+  const description = `${s.short} Premium quality, cheap price, direct factory rates and no middleman. DoorLine Manufacturers, Lahore. Bulk orders across Pakistan.`.slice(0, 158);
   return {
-    title: s.metaTitle || s.title, description,
+    title: s.metaTitle || `${s.title} | Premium Quality & Direct Rates`, description,
     keywords: String(s.keywords || '').split(',').map((k) => k.trim()).filter(Boolean),
     alternates: { canonical: `/services/${s.slug}` },
     openGraph: { title: s.title, description, url: `/services/${s.slug}`, images: [s.image] },
@@ -42,6 +43,7 @@ export default async function ServicePage({ params }) {
             <Reveal><ProductImage src={s.image} alt={`${s.title} - DoorLine Manufacturers Lahore`} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
             <Reveal delay={120}>
               <h1 className="h1s">{s.title}</h1>
+              <Badges items={c.badges} />
               <p className="pre">{s.intro}</p>
               <ul className="ticks">{points.map((p, i) => <li key={i}>{p}</li>)}</ul>
               <div className="row">
