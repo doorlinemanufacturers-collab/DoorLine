@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink } from '@/lib/site';
-import ProductImage from '@/components/ProductImage';
+import { ServiceVisual } from '@/components/ServiceCard';
 import FAQ from '@/components/FAQ';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
@@ -40,7 +40,7 @@ export default async function ServicePage({ params }) {
         <div className="container">
           <p className="crumb"><Link href="/">Home</Link> / <Link href="/services">Services</Link> / {s.title}</p>
           <div className="pgrid">
-            <Reveal><ProductImage src={s.image} alt={`${s.title} - DoorLine Manufacturers Lahore`} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
+            <Reveal><ServiceVisual s={s} big /></Reveal>
             <Reveal delay={120}>
               <h1 className="h1s">{s.title}</h1>
               <Badges items={c.badges} />

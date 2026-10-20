@@ -78,6 +78,15 @@ export default function Admin() {
     upProd(i, 'image', j.url); setMsg('Image uploaded. Now click Save Changes.');
   };
 
+  const uploadSvc = async (i, file) => {
+    if (!file) return; setMsg('Uploading...'); setErr('');
+    const fd = new FormData(); fd.append('file', file);
+    const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+    const j = await r.json();
+    if (!r.ok) { setMsg(''); return setErr(j.error); }
+    up(['services', i, 'image'], j.url); setMsg('Image uploaded. Now click Save Changes.');
+  };
+
   if (auth === null) return <div className="login">Loading...</div>;
   if (auth === false) {
     return (
@@ -155,6 +164,9 @@ export default function Admin() {
                   <Field label="Short description" area value={x.short} onChange={(v) => up(['services', i, 'short'], v)} />
                   <Field label="Image path or URL" value={x.image} onChange={(v) => up(['services', i, 'image'], v)} />
                   <Thumb src={x.image} />
+                  {x.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => up(['services', i, 'image'], '')}>Remove image</button></p>}
+                  <label>Or upload a new image (max 4MB)</label>
+                  <input type="file" accept="image/*" onChange={(e) => uploadSvc(i, e.target.files[0])} />
                   <Field label="SEO keywords (comma separated)" area value={x.keywords} onChange={(v) => up(['services', i, 'keywords'], v)} />
                   <Field label="Introduction" area rows={4} value={x.intro} onChange={(v) => up(['services', i, 'intro'], v)} />
                   <Field label="Key points (one per line)" area rows={5} value={x.points} onChange={(v) => up(['services', i, 'points'], v)} />
@@ -214,6 +226,7 @@ export default function Admin() {
                   <label>Or upload a new image (max 4MB)</label>
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
+                  {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
                   <Field label="Image alt text (SEO) - leave empty to generate automatically" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
                   <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />

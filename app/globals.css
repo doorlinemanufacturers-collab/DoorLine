@@ -115,3 +115,9 @@ address{font-style:normal;margin-bottom:16px}
 .badges li{background:#fff;border:1px solid #e4d5b0;color:#7a5a12;padding:7px 14px;border-radius:999px;font-size:.85rem;font-weight:600;animation:pop .6s ease both;box-shadow:0 2px 8px rgba(184,134,43,.15)}
 .badges li span{color:var(--brand)}
 @keyframes pop{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:none}}
+
+.svcvisual{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;background:linear-gradient(135deg,#1d1d1f,#3a2f17 60%,#b8862b);color:#fff;position:relative;overflow:hidden}
+.svcvisual.big{aspect-ratio:1/1;border-radius:12px}
+.svcvisual::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);animation:shine 4s infinite}
+.svcicon{font-size:2.6rem;animation:floaty 4s ease-in-out infinite}
+.svcvisual strong{font-size:1.05rem}
