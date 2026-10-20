@@ -118,8 +118,9 @@ export default function Admin() {
         <div className="panel">
           <Field label="Hero H1 heading" area value={c.hero.h1} onChange={(v) => up(['hero', 'h1'], v)} />
           <Field label="Hero sub text" area value={c.hero.sub} onChange={(v) => up(['hero', 'sub'], v)} />
-          <Field label="Hero image path/URL (e.g. /images/xyz.jpg)" value={c.hero.image} onChange={(v) => up(['hero', 'image'], v)} />
+          <Field label="Hero image path or URL (leave empty to show no image)" value={c.hero.image} onChange={(v) => up(['hero', 'image'], v)} />
           <Thumb src={c.hero.image} />
+          {c.hero.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => up(['hero', 'image'], '')}>Remove hero image</button></p>}
           <Field label="About title" value={c.about.title} onChange={(v) => up(['about', 'title'], v)} />
           <Field label="About text" area rows={7} value={c.about.text} onChange={(v) => up(['about', 'text'], v)} />
         </div>

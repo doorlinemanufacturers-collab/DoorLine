@@ -13,7 +13,7 @@ export default function Header({ site, categories, services = [] }) {
     <header className="header">
       <div className="container nav">
         <Link href="/" className="logo" aria-label={`${site.name} - ${site.tagline}`} onClick={close}>
-          <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer Lahore" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
+          <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer, anodizing and electroplating Lahore" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
         </Link>
         <nav className="desknav" aria-label="Main">
           <Link href="/">Home</Link>

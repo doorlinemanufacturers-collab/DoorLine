@@ -8,6 +8,7 @@ export default function Footer({ site }) {
         <div>
           <h3>{site.name}</h3>
           <p>{site.tagline}</p>
+          <p className="muted" style={{ color: '#aaa' }}>Aluminium handles manufacturer with anodizing and electroplating services in Lahore, Pakistan.</p>
           <p className="footlinks">
             <Link href="/">Home</Link> · <Link href="/products">Products</Link> · <Link href="/about">About</Link> · <Link href="/faq">FAQ</Link> · <Link href="/contact">Contact Us</Link>
           </p>

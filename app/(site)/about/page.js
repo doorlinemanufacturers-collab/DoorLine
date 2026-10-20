@@ -4,8 +4,8 @@ import { getContent } from '@/lib/store';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'About Us - Aluminium Handles Manufacturer in Lahore',
-  description: 'Learn about DoorLine Manufacturers, a direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan.',
+  title: 'About Us - Aluminium Handles Manufacturer, Anodizing & Electroplating Lahore',
+  description: 'Learn about DoorLine Manufacturers, a direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore, with anodizing and electroplating services.',
   alternates: { canonical: '/about' },
 };
 

@@ -11,11 +11,11 @@ import Reveal from '@/components/Reveal';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: { absolute: 'Aluminium Handles Manufacturer in Lahore | Door & Cabinet Handles Wholesale - DoorLine' },
-  description: 'DoorLine Manufacturers is a direct factory of aluminium door handles, kitchen cabinet handles, window locks and hinges in Lahore. Wholesale price, bulk delivery all over Pakistan.',
+  title: { absolute: 'Aluminium Handles Manufacturer, Anodizing & Electroplating in Lahore - DoorLine' },
+  description: 'DoorLine Manufacturers: direct factory of aluminium door and cabinet handles, window locks and hinges in Lahore, with anodizing and electroplating services. Wholesale price, delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'DoorLine Manufacturers - Aluminium Handles Manufacturer Lahore', description: 'Factory price aluminium door and cabinet handles for bulk buyers. Delivery all over Pakistan.', url: '/', images: ['/images/fluted-bar-handle-white-gold.jpg'] },
+  openGraph: { title: 'DoorLine Manufacturers - Aluminium Handles Manufacturer Lahore', description: 'Factory price aluminium door and cabinet handles, plus anodizing and electroplating services. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
 };
 
 export default async function Home() {
@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <>
       <section className="hero">
-        <div className="container herogrid">
+        <div className={`container herogrid ${hero.image ? '' : 'herosolo'}`}>
           <div>
             <h1>{hero.h1}</h1>
             <p>{hero.sub}</p>
@@ -33,9 +33,11 @@ export default async function Home() {
               <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">WhatsApp Rates</a>
             </div>
           </div>
-          <div className="heroimg">
-            <Image src={hero.image} alt="Aluminium door handle manufacturer Lahore Pakistan - fluted bar handles" fill priority sizes="(max-width: 900px) 100vw, 45vw" className="pimg" />
-          </div>
+          {hero.image ? (
+            <div className="heroimg">
+              <Image src={hero.image} alt="Aluminium door handle manufacturer, anodizing and electroplating Lahore Pakistan" fill priority sizes="(max-width: 900px) 100vw, 45vw" className="pimg" />
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -67,7 +69,7 @@ export default async function Home() {
       <section id="products" className="section alt">
         <div className="container">
           <h2>Featured Aluminium Handles</h2>
-          <p className="lead">Door handles, cabinet handles, window locks and hinges at wholesale factory prices.</p>
+          <p className="lead">Door handles, cabinet handles, window locks and hinges at wholesale factory prices. Anodizing and electroplating available.</p>
           <div className="grid">{products.slice(0, 8).map((p, i) => <Reveal key={p.slug} delay={(i % 4) * 80}><ProductCard p={p} /></Reveal>)}</div>
           <p style={{ marginTop: 28, textAlign: 'center' }}><Link className="btn" href="/products">View All Products</Link></p>
         </div>
@@ -96,7 +98,7 @@ export default async function Home() {
       <section id="catalogue" className="section">
         <div className="container narrow">
           <h2>Request Wholesale Catalogue</h2>
-          <p className="lead">Fill in the form and we will send the catalogue and latest rate list on WhatsApp.</p>
+          <p className="lead">Fill in the form and we will send the catalogue, latest rate list and anodizing and electroplating details on WhatsApp.</p>
           <CatalogueForm whatsapp={site.whatsapp} />
         </div>
       </section>

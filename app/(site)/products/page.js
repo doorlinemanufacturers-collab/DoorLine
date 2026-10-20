@@ -12,7 +12,7 @@ export async function generateMetadata({ searchParams }) {
   const title = cat ? `${cat} Wholesale - Aluminium Handles Manufacturer Lahore` : 'Aluminium Door & Cabinet Handles Wholesale - Products';
   return {
     title,
-    description: `Browse ${cat || 'aluminium door handles, cabinet handles, window locks and hinges'} from DoorLine Manufacturers, Lahore. Factory price for bulk buyers across Pakistan.`,
+    description: `Browse ${cat || 'aluminium door handles, cabinet handles, window locks and hinges'} from DoorLine Manufacturers, Lahore. Factory price for bulk buyers across Pakistan. Anodizing and electroplating available.`,
     alternates: { canonical: cat ? `/products?category=${encodeURIComponent(cat)}` : '/products' },
     robots: q ? { index: false, follow: true } : undefined,
   };
@@ -29,7 +29,7 @@ export default async function ProductsPage({ searchParams }) {
     <section className="section">
       <div className="container">
         <h1 className="h1s">{q ? `Search results for "${q}"` : cat ? `${cat} - Wholesale Aluminium Handles` : 'Aluminium Door & Cabinet Handles - All Products'}</h1>
-        <p className="lead">Direct from our factory in Lahore. Contact us for wholesale rates.</p>
+        <p className="lead">Direct from our factory in Lahore. Anodized and electroplated finishes available. Contact us for wholesale rates.</p>
         <form className="search" action="/products" method="get">
           <input name="q" defaultValue={q} placeholder="Search products, e.g. cabinet handle, window lock, hinge" aria-label="Search products" />
           <button className="btn" type="submit">Search</button>

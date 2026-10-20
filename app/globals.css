@@ -110,3 +110,4 @@ address{font-style:normal;margin-bottom:16px}
 .search{display:flex;gap:10px;margin-bottom:18px;max-width:560px}.search input{flex:1;padding:12px;border:1px solid #ccc;border-radius:8px;font:inherit}
 .chip{transition:background .2s,color .2s}.chip:hover{background:var(--brand);border-color:var(--brand);color:#fff}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+.herosolo{grid-template-columns:1fr!important;max-width:880px;text-align:center}.herosolo .row{justify-content:center}

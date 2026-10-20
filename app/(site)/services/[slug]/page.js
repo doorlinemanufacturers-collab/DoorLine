@@ -14,7 +14,7 @@ async function find(slug) { const c = await getContent(); return { c, s: c.servi
 export async function generateMetadata({ params }) {
   const { s } = await find(params.slug);
   if (!s) return { title: 'Service not found' };
-  const description = `${s.short} DoorLine Manufacturers, Lahore. Bulk and job work orders across Pakistan.`.slice(0, 158);
+  const description = `${s.short} DoorLine Manufacturers, aluminium handles manufacturer in Lahore. Bulk and job work orders across Pakistan.`.slice(0, 158);
   return {
     title: s.metaTitle || s.title, description,
     keywords: String(s.keywords || '').split(',').map((k) => k.trim()).filter(Boolean),

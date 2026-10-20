@@ -7,10 +7,10 @@ const font = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'],
 
 export const metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: 'DoorLine Manufacturers - Aluminium Handles Manufacturer Lahore', template: '%s | DoorLine Manufacturers Lahore' },
+  title: { default: 'DoorLine Manufacturers - Aluminium Handles Manufacturer, Anodizing & Electroplating Lahore', template: '%s | DoorLine Manufacturers Lahore' },
   description: 'Direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore, plus anodizing and electroplating services. Wholesale rates and bulk delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore'],
-  openGraph: { type: 'website', siteName: 'DoorLine Manufacturers', locale: 'en_PK', images: ['/images/fluted-bar-handle-white-gold.jpg'] },
+  openGraph: { type: 'website', siteName: 'DoorLine Manufacturers', locale: 'en_PK', images: ['/images/logo.png'] },
   robots: { index: true, follow: true },
 };
 
@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
     '@type': ['LocalBusiness', 'Organization'],
     '@id': `${siteUrl()}/#business`,
     name: site.name,
-    description: 'Manufacturer of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan. Wholesale supply.',
+    description: 'Manufacturer of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan, offering aluminium anodizing and electroplating services. Wholesale supply.',
     additionalType: 'https://schema.org/Manufacturer',
     url: siteUrl(),
     image: `${siteUrl()}${(products[0] && products[0].image) || '/images/fluted-bar-handle-white-gold.jpg'}`,

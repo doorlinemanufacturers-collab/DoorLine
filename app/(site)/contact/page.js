@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Contact Us - Aluminium Handles Factory Lahore',
-  description: 'Contact DoorLine Manufacturers in Lahore for wholesale aluminium door handles, cabinet handles, window locks and hinges. Call or WhatsApp for rates.',
+  description: 'Contact DoorLine Manufacturers in Lahore for wholesale aluminium handles, locks and hinges, and for anodizing and electroplating services. Call or WhatsApp for rates.',
   alternates: { canonical: '/contact' },
 };
 
@@ -17,7 +17,7 @@ export default async function Contact() {
     <section className="section">
       <div className="container">
         <h1 className="h1s">Contact Us</h1>
-        <p className="lead">Call, WhatsApp or send an inquiry. We reply with the latest wholesale rates.</p>
+        <p className="lead">Call, WhatsApp or send an inquiry about wholesale handles, anodizing or electroplating. We reply with the latest rates.</p>
         <div className="contactgrid">
           <div>
             <address><ContactLines site={site} /></address>
