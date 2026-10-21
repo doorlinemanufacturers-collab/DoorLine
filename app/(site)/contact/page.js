@@ -1,11 +1,10 @@
 import { getContent } from '@/lib/store';
-import ContactLines from '@/components/ContactLines';
 import CatalogueForm from '@/components/CatalogueForm';
-
+import ContactCards from '@/components/ContactCards';
 
 export const metadata = {
-  title: 'Contact Us - Aluminium Handles Factory Lahore',
-  description: 'Contact DoorLine Manufacturers in Lahore for wholesale aluminium handles, locks and hinges, and for anodizing and electroplating services. Call or WhatsApp for rates.',
+  title: 'Contact Us - Professional Aluminium Handles Manufacturer Lahore',
+  description: 'Contact DoorLine Manufacturers, a professional aluminium handles manufacturer in Lahore, for wholesale handles, locks, hinges, anodizing and electroplating. Call or WhatsApp for rates.',
   alternates: { canonical: '/contact' },
 };
 
@@ -15,13 +14,14 @@ export default async function Contact() {
   return (
     <section className="section">
       <div className="container">
-        <h1 className="h1s">Contact Us</h1>
-        <p className="lead">Call, WhatsApp or send an inquiry about wholesale handles, anodizing or electroplating. We reply with the latest rates.</p>
-        <div className="contactgrid">
+        <h1 className="h1s">Contact DoorLine Manufacturers</h1>
+        <p className="lead">Professional aluminium handles manufacturer in Lahore. Call, WhatsApp or send an inquiry about wholesale handles, anodizing or electroplating. We reply with the latest rates.</p>
+        <ContactCards site={site} />
+        <div className="contactgrid" style={{ marginTop: 36 }}>
           <div>
-            <address><ContactLines site={site} /></address>
-            <h2 style={{ marginTop: 24, fontSize: '1.2rem' }}>Send an Inquiry</h2>
-            <CatalogueForm whatsapp={site.whatsapp} button="Send Inquiry on WhatsApp" title="Wholesale Inquiry" />
+            <h2 style={{ fontSize: '1.3rem' }}>Send an Inquiry</h2>
+            <p className="muted" style={{ marginBottom: 12 }}>Your inquiry reaches us instantly and also opens on WhatsApp.</p>
+            <CatalogueForm whatsapp={site.whatsapp} button="Send Inquiry" title="Wholesale Inquiry" source="contact" />
           </div>
           <iframe title={`${site.name} factory location Lahore`} src={map} loading="lazy" className="map" referrerPolicy="no-referrer-when-downgrade" />
         </div>

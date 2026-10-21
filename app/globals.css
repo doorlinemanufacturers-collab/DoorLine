@@ -121,3 +121,11 @@ address{font-style:normal;margin-bottom:16px}
 .svcvisual::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);animation:shine 4s infinite}
 .svcicon{font-size:2.6rem;animation:floaty 4s ease-in-out infinite}
 .svcvisual strong{font-size:1.05rem}
+
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.ccards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.ccard{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #eee;border-top:4px solid var(--brand);border-radius:14px;padding:22px;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s;animation:fadeUp .7s ease both}
+.ccard:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(184,134,43,.22)}
+.cicon{font-size:2rem;width:56px;height:56px;border-radius:50%;background:var(--alt);display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.ctext{color:var(--muted);font-size:.92rem;word-break:break-word}
+.chours{margin-top:18px;text-align:center;background:var(--alt);border-radius:10px;padding:12px;font-size:.95rem}

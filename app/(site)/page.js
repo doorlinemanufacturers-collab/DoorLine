@@ -8,6 +8,7 @@ import FAQ from '@/components/FAQ';
 import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
+import { slugify } from '@/lib/site';
 
 
 export const metadata = {
@@ -19,7 +20,7 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services, badges, about } = await getContent();
+  const { site, hero, why, products, faqs, seo, services, badges, about, cities } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   return (
     <>
@@ -105,11 +106,28 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <h2>How It Works</h2>
+          <div className="grid4">
+            {[['1. Send Your Requirement', 'Share the models, colours and quantities you need on WhatsApp or through the form.'], ['2. Get Factory Rates', 'We reply with the latest wholesale rate list directly from the factory, no middleman.'], ['3. Confirm and Produce', 'Confirm the order. Ready stock ships fast and bulk orders are produced with your required finish.'], ['4. Delivery Across Pakistan', 'Your order is dispatched from Lahore by transport or cargo to your city.']].map(([t, x], i) => (<Reveal key={t} delay={i * 90} className="box"><h3>{t}</h3><p>{x}</p></Reveal>))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section alt">
+        <div className="container">
+          <h2>Delivery All Over Pakistan</h2>
+          <p className="lead">We supply aluminium handles, locks and hinges from Lahore to dealers and fabricators in every major city.</p>
+          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/delivery-across-pakistan#${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
+        </div>
+      </section>
+
       <section id="catalogue" className="section">
         <div className="container narrow">
           <h2>Request Wholesale Catalogue</h2>
           <p className="lead">Fill in the form and we will send the catalogue, latest rate list and anodizing and electroplating details on WhatsApp.</p>
-          <CatalogueForm whatsapp={site.whatsapp} />
+          <CatalogueForm whatsapp={site.whatsapp} source="home" />
         </div>
       </section>
 

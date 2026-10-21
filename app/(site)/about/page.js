@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function About() {
-  const { about, why } = await getContent();
+  const { about, why, site } = await getContent();
   return (
     <>
       <section className="section">
@@ -19,6 +19,21 @@ export default async function About() {
         </div>
       </section>
       <section className="section">
+        <div className="container narrow">
+          <h2>DoorLine Manufacturers at a Glance</h2>
+          <table className="spec"><tbody>
+            <tr><th>Business</th><td>{site.name} - professional aluminium handles manufacturer</td></tr>
+            <tr><th>Location</th><td>{site.address}</td></tr>
+            <tr><th>Products</th><td>Aluminium door handles, cabinet handles, window locks, hinges, fitting parts</td></tr>
+            <tr><th>Services</th><td>Aluminium anodizing and electroplating</td></tr>
+            <tr><th>Customers</th><td>Hardware shops, fabricators, dealers, furniture makers, contractors</td></tr>
+            <tr><th>Pricing</th><td>Direct factory rates, no middleman</td></tr>
+            <tr><th>Delivery</th><td>All over Pakistan</td></tr>
+            <tr><th>Contact person</th><td>{site.owner}</td></tr>
+          </tbody></table>
+        </div>
+      </section>
+      <section className="section alt">
         <div className="container">
           <h2>Our Vision, Mission & Promise</h2>
           <div className="grid4">

@@ -45,6 +45,7 @@ export default function Header({ site, categories, services = [] }) {
             {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(' Service', '')}</Link>)}
           </div>
         )}
+        <Link href="/delivery-across-pakistan" onClick={close}>Delivery Across Pakistan</Link>
         <Link href="/about" onClick={close}>About Us</Link>
         <Link href="/faq" onClick={close}>FAQ - Wholesale Buyers</Link>
         <Link href="/contact" onClick={close}>Contact Us</Link>

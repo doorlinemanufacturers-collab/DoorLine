@@ -71,21 +71,39 @@ export default function Admin() {
 
   const upload = async (i, file) => {
     if (!file) return; setMsg('Uploading...'); setErr('');
-    const fd = new FormData(); fd.append('file', file);
+    const fd = new FormData(); fd.append('file', await compress(file));
     const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
     const j = await r.json();
     if (!r.ok) { setMsg(''); return setErr(j.error); }
-    upProd(i, 'image', j.url); setMsg('Image uploaded. Now click Save Changes.');
+    upProd(i, 'image', j.url); setMsg((j.storage === 'blob' ? 'Image uploaded to Blob storage. Now click Save Changes.' : 'Blob is not connected, so the image was saved in backup storage. Now click Save Changes.'));
   };
 
   const uploadSvc = async (i, file) => {
     if (!file) return; setMsg('Uploading...'); setErr('');
-    const fd = new FormData(); fd.append('file', file);
+    const fd = new FormData(); fd.append('file', await compress(file));
     const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
     const j = await r.json();
     if (!r.ok) { setMsg(''); return setErr(j.error); }
-    up(['services', i, 'image'], j.url); setMsg('Image uploaded. Now click Save Changes.');
+    up(['services', i, 'image'], j.url); setMsg((j.storage === 'blob' ? 'Image uploaded to Blob storage. Now click Save Changes.' : 'Blob is not connected, so the image was saved in backup storage. Now click Save Changes.'));
   };
+
+  const compress = (file) => new Promise((resolve) => {
+    const img = new window.Image();
+    const u = URL.createObjectURL(file);
+    img.onload = () => {
+      const r = Math.min(1, 1100 / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * r); cv.height = Math.round(img.height * r);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      cv.toBlob((b) => { URL.revokeObjectURL(u); resolve(b ? new File([b], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' }) : file); }, 'image/jpeg', 0.82);
+    };
+    img.onerror = () => resolve(file);
+    img.src = u;
+  });
+
+  const [leads, setLeads] = useState(null);
+  const loadLeads = async () => { const r = await fetch('/api/admin/leads', { cache: 'no-store' }); const j = await r.json(); setLeads(j.leads || []); };
+  useEffect(() => { if (tab === 'leads' && auth) loadLeads(); }, [tab, auth]);
 
   if (auth === null) return <div className="login">Loading...</div>;
   if (auth === false) {
@@ -105,7 +123,7 @@ export default function Admin() {
     );
   }
 
-  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['services', `Services (${c.services.length})`], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
+  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['services', `Services (${c.services.length})`], ['leads', 'Inquiries'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
   return (
     <div className="adm">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -115,11 +133,29 @@ export default function Admin() {
       {!storage && <p className="err">⚠️ Storage is not connected, so changes cannot be saved yet. In Vercel open your project, then the Storage tab, create an Upstash Redis (KV) database, connect it to this project and redeploy. See the README for details.</p>}
       <div className="tabs">{tabs.map(([k, l]) => <button key={k} className={`tab ${tab === k ? 'on' : ''}`} onClick={() => setTab(k)}>{l}</button>)}</div>
 
+      {tab === 'leads' && (
+        <>
+          <p className="muted" style={{ marginBottom: 10 }}>Inquiries sent from the website forms appear here (latest first).</p>
+          {!leads && <p>Loading...</p>}
+          {leads && leads.length === 0 && <p className="muted">No inquiries yet.</p>}
+          {leads && leads.map((l, i) => (
+            <div className="panel" key={l.id || i}>
+              <strong>{l.name}</strong> <span className="muted">{l.date ? new Date(l.date).toLocaleString() : ''}</span>
+              <p>{l.shop ? `${l.shop} - ` : ''}{l.city}</p>
+              <p><a href={`tel:${l.phone}`}>{l.phone}</a> | <a href={`https://wa.me/${String(l.phone).replace(/\D/g, '').replace(/^0/, '92')}`} target="_blank" rel="noopener noreferrer">WhatsApp</a></p>
+              <p className="pre">{l.msg}</p>
+              <button className="btn btn-sm danger" onClick={async () => { await fetch('/api/admin/leads', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ raw: l._raw }) }); loadLeads(); }}>Delete</button>
+            </div>
+          ))}
+        </>
+      )}
+
       {tab === 'general' && (
         <div className="panel">
-          {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address or place name)']].map(([k, l]) => (
+          {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address or place name)'], ['facebook', 'Facebook page URL (optional)'], ['instagram', 'Instagram URL (optional)'], ['youtube', 'YouTube URL (optional)'], ['googleBusiness', 'Google Business Profile URL (optional)']].map(([k, l]) => (
             <Field key={k} label={l} value={c.site[k]} onChange={(v) => up(['site', k], v)} />
           ))}
+          <Field label="Delivery cities (one per line)" area rows={6} value={(c.cities || []).join('\n')} onChange={(v) => up(['cities'], v.split('\n'))} />
         </div>
       )}
 
