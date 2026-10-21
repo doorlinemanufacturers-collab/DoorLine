@@ -2,14 +2,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink } from '@/lib/site';
-import { productSeo } from '@/lib/seo';
+import { productSeo, productAlt } from '@/lib/seo';
 import ProductImage from '@/components/ProductImage';
 import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 
-export const dynamic = 'force-dynamic';
 
 async function find(slug) {
   const c = await getContent();
@@ -36,7 +35,8 @@ export default async function ProductPage({ params }) {
   const same = c.products.filter((x) => x.slug !== p.slug && x.category === p.category);
   const related = [...same, ...c.products.filter((x) => x.slug !== p.slug && x.category !== p.category)].slice(0, 4);
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'Product', name: `${p.name} ${p.model}`, sku: p.model, description: seo.intro, image: img, category: p.category, keywords: seo.keywords.join(', '), brand: { '@type': 'Brand', name: c.site.name }, manufacturer: { '@type': 'Organization', name: c.site.name } },
+    { '@context': 'https://schema.org', '@type': 'Product', '@id': `${base}/products/${p.slug}#product`, url: `${base}/products/${p.slug}`, name: `${p.name} ${p.model}`, sku: p.model, mpn: p.model, description: seo.intro, image: [img], category: p.category, material: 'Aluminium', color: p.colors, size: p.size, keywords: seo.keywords.join(', '), brand: { '@type': 'Brand', name: c.site.name }, manufacturer: { '@type': 'Organization', name: c.site.name, url: base },
+      ...(p.price && /\d/.test(String(p.price)) ? { offers: { '@type': 'Offer', priceCurrency: 'PKR', price: String(p.price).replace(/[^0-9.]/g, ''), availability: 'https://schema.org/InStock', url: `${base}/products/${p.slug}`, seller: { '@type': 'Organization', name: c.site.name } } } : {}) },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: base },
       { '@type': 'ListItem', position: 2, name: 'Products', item: `${base}/products` },
@@ -47,18 +47,20 @@ export default async function ProductPage({ params }) {
       <div className="container">
         <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / <Link href={`/products?category=${encodeURIComponent(p.category)}`}>{p.category}</Link> / {p.model}</p>
         <div className="pgrid">
-          <Reveal><ProductImage src={p.image} alt={p.alt} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
+          <Reveal><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
           <Reveal delay={120}>
             <h1 className="h1s">{p.name} {p.model}</h1>
             <Badges items={c.badges} />
             <p className="pre">{seo.intro}</p>
+            {seo.options.length > 0 && (<><h2 style={{ fontSize: '1.1rem' }}>Available Colours and Sizes</h2><ul className="ticks">{seo.options.map((o) => <li key={o}>{o} - Lahore</li>)}</ul></>)}
             <table className="spec"><tbody>
               <tr><th>Model</th><td>{p.model}</td></tr>
               <tr><th>Category</th><td>{p.category}</td></tr>
               <tr><th>Size</th><td>{p.size}</td></tr>
               <tr><th>Finish</th><td>{p.finish}</td></tr>
               <tr><th>Colours</th><td>{p.colors}</td></tr>
-              <tr><th>Price</th><td>Wholesale rate - call or WhatsApp</td></tr>
+              <tr><th>Material</th><td>Aluminium</td></tr>
+              <tr><th>Price</th><td>{p.price ? `Rs ${p.price}` : 'Wholesale rate - call or WhatsApp'}</td></tr>
             </tbody></table>
             <div className="row">
               <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need the wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>

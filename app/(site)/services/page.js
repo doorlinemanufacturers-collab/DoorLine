@@ -2,7 +2,6 @@ import { getContent } from '@/lib/store';
 import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Top Aluminium Anodizing & Electroplating in Lahore | Direct Rates',

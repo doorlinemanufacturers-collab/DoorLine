@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import { getContent } from '@/lib/store';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'About Us - Aluminium Handles Manufacturer, Anodizing & Electroplating Lahore',
+  title: 'About Us - Professional Aluminium Handles Manufacturer Lahore',
   description: 'Learn about DoorLine Manufacturers (direct factory rates, no middleman, premium quality), a direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore, with anodizing and electroplating services.',
   alternates: { canonical: '/about' },
 };
@@ -17,6 +16,14 @@ export default async function About() {
         <div className="container narrow">
           <h1 className="h1s">{about.title}</h1>
           <p className="pre">{about.text}</p>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <h2>Our Vision, Mission & Promise</h2>
+          <div className="grid4">
+            {[['Our Vision', about.vision], ['Our Mission', about.mission], ['Our Promise', about.promise]].map(([t, x]) => (<div key={t} className="box"><h3>{t}</h3><p>{x}</p></div>))}
+          </div>
         </div>
       </section>
       <section className="section alt">

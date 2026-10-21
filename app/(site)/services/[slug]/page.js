@@ -8,7 +8,6 @@ import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 
-export const dynamic = 'force-dynamic';
 
 async function find(slug) { const c = await getContent(); return { c, s: c.services.find((x) => x.slug === slug) }; }
 

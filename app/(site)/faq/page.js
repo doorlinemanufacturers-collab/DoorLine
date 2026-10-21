@@ -1,7 +1,6 @@
 import { getContent } from '@/lib/store';
 import FAQ from '@/components/FAQ';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'FAQ - Wholesale Buyers | Aluminium Handles Lahore',

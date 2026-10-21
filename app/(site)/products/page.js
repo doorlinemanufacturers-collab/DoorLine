@@ -4,7 +4,6 @@ import { searchProducts } from '@/lib/seo';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 
-export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ searchParams }) {
   const cat = searchParams?.category;

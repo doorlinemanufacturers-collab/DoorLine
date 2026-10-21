@@ -3,12 +3,12 @@ import './globals.css';
 import { getContent } from '@/lib/store';
 import { siteUrl } from '@/lib/site';
 
-const font = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'], display: 'swap' });
+const font = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'], display: 'swap' });
 
 export const metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: 'Top Aluminium Handles Manufacturers Lahore - Direct Factory Rates | DoorLine', template: '%s | DoorLine Manufacturers Lahore' },
-  description: 'Top aluminium handles manufacturer in Lahore. Cheap wholesale price, no middleman, direct factory rates and premium quality door and cabinet handles, plus anodizing and electroplating. Delivery all over Pakistan.',
+  title: { default: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates', template: '%s | DoorLine' },
+  description: 'Professional aluminium handles manufacturer in Lahore. Cheap wholesale price, no middleman, direct factory rates and premium quality door and cabinet handles, plus anodizing and electroplating. Delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan'],
   openGraph: { type: 'website', siteName: 'DoorLine Manufacturers', locale: 'en_PK', images: ['/images/logo.png'] },
   robots: { index: true, follow: true },
@@ -21,9 +21,10 @@ export default async function RootLayout({ children }) {
     '@type': ['LocalBusiness', 'Organization'],
     '@id': `${siteUrl()}/#business`,
     name: site.name,
-    description: 'Manufacturer of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan, offering aluminium anodizing and electroplating services. Wholesale supply.',
+    description: 'Professional manufacturer of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan, offering aluminium anodizing and electroplating services. Wholesale supply.',
     additionalType: 'https://schema.org/Manufacturer',
     url: siteUrl(),
+    logo: `${siteUrl()}/images/logo.png`,
     image: `${siteUrl()}${(products[0] && products[0].image) || '/images/fluted-bar-handle-white-gold.jpg'}`,
     telephone: '+92' + site.phone.replace(/\D/g, '').replace(/^0/, ''),
     contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: site.owner, telephone: '+' + String(site.whatsapp || '') },

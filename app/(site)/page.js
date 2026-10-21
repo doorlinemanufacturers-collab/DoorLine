@@ -9,18 +9,17 @@ import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: { absolute: 'Top Aluminium Handles Manufacturers in Lahore | Direct Factory Rates, No Middleman' },
-  description: 'Top aluminium handles manufacturer in Lahore: cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
+  title: { absolute: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates' },
+  description: 'Professional aluminium handles manufacturer in Lahore: anodizing, cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'Top Aluminium Handles Manufacturers Lahore - Direct Factory Rates', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
+  openGraph: { title: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
 };
 
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services, badges } = await getContent();
+  const { site, hero, why, products, faqs, seo, services, badges, about } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   return (
     <>
@@ -82,6 +81,15 @@ export default async function Home() {
           <h2>Why Choose Us</h2>
           <div className="grid4">
             {why.map((w, i) => (<Reveal key={i} delay={i * 90} className="box"><h3>{w.title}</h3><p>{w.text}</p></Reveal>))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <h2>Our Vision, Mission & Promise</h2>
+          <div className="grid4">
+            {[['Our Vision', about.vision], ['Our Mission', about.mission], ['Our Promise', about.promise]].map(([t, x], i) => (<Reveal key={t} delay={i * 100} className="box"><h3>{t}</h3><p>{x}</p></Reveal>))}
           </div>
         </div>
       </section>

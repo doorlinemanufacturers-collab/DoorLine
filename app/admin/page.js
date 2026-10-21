@@ -63,7 +63,7 @@ export default function Admin() {
   const delProd = (i) => { if (confirm('Delete this product?')) setC({ ...c, products: c.products.filter((_, x) => x !== i) }); };
   const finalize = (p) => {
     const slug = p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`;
-    return { ...p, slug, alt: p.alt || `${p.name} ${p.model} ${p.size} Lahore Pakistan`.replace(/\s+/g, ' ').trim() };
+    return { ...p, slug, alt: p.alt };
   };
   const doSaveProducts = () => { setC((o) => ({ ...o, products: o.products.map(finalize) })); setTimeout(save, 50); };
   const doSaveServices = () => { setC((o) => ({ ...o, services: o.services.map(finSvc) })); setTimeout(save, 50); };
@@ -131,6 +131,9 @@ export default function Admin() {
           <Field label="Hero image path or URL (leave empty to show no image)" value={c.hero.image} onChange={(v) => up(['hero', 'image'], v)} />
           <Thumb src={c.hero.image} />
           {c.hero.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => up(['hero', 'image'], '')}>Remove hero image</button></p>}
+          <Field label="Our Vision" area value={c.about.vision} onChange={(v) => up(['about', 'vision'], v)} />
+          <Field label="Our Mission" area value={c.about.mission} onChange={(v) => up(['about', 'mission'], v)} />
+          <Field label="Our Promise" area value={c.about.promise} onChange={(v) => up(['about', 'promise'], v)} />
           <Field label="About title" value={c.about.title} onChange={(v) => up(['about', 'title'], v)} />
           <Field label="About text" area rows={7} value={c.about.text} onChange={(v) => up(['about', 'text'], v)} />
         </div>
@@ -221,13 +224,14 @@ export default function Admin() {
                     <div><Field label="Size" value={p.size} onChange={(v) => upProd(i, 'size', v)} /></div>
                     <div><Field label="Finish" value={p.finish} onChange={(v) => upProd(i, 'finish', v)} /></div>
                   </div>
-                  <Field label="Colours" value={p.colors} onChange={(v) => upProd(i, 'colors', v)} />
+                  <Field label="Colours (comma separated, e.g. Black, Gold)" value={p.colors} onChange={(v) => upProd(i, 'colors', v)} />
+                  <Field label="Price in PKR (optional - leave empty to show 'call for rate')" value={p.price} onChange={(v) => upProd(i, 'price', v)} />
                   <Field label="Image path or URL" value={p.image} onChange={(v) => upProd(i, 'image', v)} />
                   <label>Or upload a new image (max 4MB)</label>
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
-                  <Field label="Image alt text (SEO) - leave empty to generate automatically" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
+                  <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
                   <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />
                   <Field label="Custom meta title (optional, max 70 characters)" value={p.metaTitle} onChange={(v) => upProd(i, 'metaTitle', v)} />

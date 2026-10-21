@@ -2,7 +2,6 @@ import { getContent } from '@/lib/store';
 import ContactLines from '@/components/ContactLines';
 import CatalogueForm from '@/components/CatalogueForm';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Contact Us - Aluminium Handles Factory Lahore',
