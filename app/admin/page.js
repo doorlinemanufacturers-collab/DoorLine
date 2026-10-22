@@ -67,6 +67,7 @@ export default function Admin() {
   };
   const doSaveProducts = () => { setC((o) => ({ ...o, products: o.products.map(finalize) })); setTimeout(save, 50); };
   const doSaveServices = () => { setC((o) => ({ ...o, services: o.services.map(finSvc) })); setTimeout(save, 50); };
+  const doSaveGuides = () => { setC((o) => ({ ...o, guides: o.guides.map((g) => ({ ...g, slug: slugify(g.slug || g.title) })) })); setTimeout(save, 50); };
   const finSvc = (x) => ({ ...x, slug: slugify(x.slug || x.title) });
 
   const upload = async (i, file) => {
@@ -123,7 +124,7 @@ export default function Admin() {
     );
   }
 
-  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['services', `Services (${c.services.length})`], ['leads', 'Inquiries'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
+  const tabs = [['general', 'Contact & Info'], ['hero', 'Hero & About'], ['why', 'Why Us'], ['seo', 'Home SEO Text'], ['services', `Services (${c.services.length})`], ['guides', `Guides (${(c.guides || []).length})`], ['leads', 'Inquiries'], ['products', `Products (${c.products.length})`], ['faqs', `FAQs (${c.faqs.length})`]];
   return (
     <div className="adm">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -132,6 +133,27 @@ export default function Admin() {
       </div>
       {!storage && <p className="err">⚠️ Storage is not connected, so changes cannot be saved yet. In Vercel open your project, then the Storage tab, create an Upstash Redis (KV) database, connect it to this project and redeploy. See the README for details.</p>}
       <div className="tabs">{tabs.map(([k, l]) => <button key={k} className={`tab ${tab === k ? 'on' : ''}`} onClick={() => setTab(k)}>{l}</button>)}</div>
+
+      {tab === 'guides' && (
+        <>
+          <p className="muted" style={{ marginBottom: 10 }}>Guides are helpful articles that bring buyers from Google. Start a line with ## for a heading and separate blocks with a blank line.</p>
+          <p><button className="btn btn-sm" onClick={() => { setC({ ...c, guides: [{ slug: '', title: 'New Guide', description: '', body: '' }, ...(c.guides || [])] }); setOpen(0); }}>+ Add Guide</button></p>
+          {(c.guides || []).map((g, i) => (
+            <div className="panel" key={i}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }} onClick={() => setOpen(open === i ? null : i)}><strong>{g.title}</strong><span>{open === i ? '▲' : '▼'}</span></div>
+              {open === i && (
+                <>
+                  <Field label="Title" value={g.title} onChange={(v) => up(['guides', i, 'title'], v)} />
+                  <Field label="URL slug (leave empty to generate automatically)" value={g.slug} onChange={(v) => up(['guides', i, 'slug'], v)} />
+                  <Field label="Short description (Google description, max 158 characters)" area value={g.description} onChange={(v) => up(['guides', i, 'description'], v)} />
+                  <Field label="Article text" area rows={14} value={g.body} onChange={(v) => up(['guides', i, 'body'], v)} />
+                  <p style={{ marginTop: 10 }}><button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this guide?')) setC({ ...c, guides: c.guides.filter((_, z) => z !== i) }); }}>Delete Guide</button></p>
+                </>
+              )}
+            </div>
+          ))}
+        </>
+      )}
 
       {tab === 'leads' && (
         <>
@@ -200,6 +222,7 @@ export default function Admin() {
                 <>
                   <Field label="Title (include the keyword, e.g. Aluminium Anodizing Service in Lahore)" value={x.title} onChange={(v) => up(['services', i, 'title'], v)} />
                   <Field label="URL slug (leave empty to generate automatically)" value={x.slug} onChange={(v) => up(['services', i, 'slug'], v)} />
+                  <Field label="Google title (meta title, max 70 characters)" value={x.metaTitle} onChange={(v) => up(['services', i, 'metaTitle'], v)} />
                   <Field label="Short description" area value={x.short} onChange={(v) => up(['services', i, 'short'], v)} />
                   <Field label="Image path or URL" value={x.image} onChange={(v) => up(['services', i, 'image'], v)} />
                   <Thumb src={x.image} />
@@ -209,7 +232,7 @@ export default function Admin() {
                   <Field label="SEO keywords (comma separated)" area value={x.keywords} onChange={(v) => up(['services', i, 'keywords'], v)} />
                   <Field label="Introduction" area rows={4} value={x.intro} onChange={(v) => up(['services', i, 'intro'], v)} />
                   <Field label="Key points (one per line)" area rows={5} value={x.points} onChange={(v) => up(['services', i, 'points'], v)} />
-                  <Field label="Details text" area rows={7} value={x.body} onChange={(v) => up(['services', i, 'body'], v)} />
+                  <Field label="Details text (start a line with ## for a heading; separate blocks with a blank line)" area rows={14} value={x.body} onChange={(v) => up(['services', i, 'body'], v)} />
                   <label>FAQs</label>
                   {(x.faqs || []).map((f, k) => (
                     <div key={k} style={{ borderTop: '1px solid #eee', paddingTop: 8 }}>
@@ -294,7 +317,7 @@ export default function Admin() {
       )}
 
       <div className="bar">
-        <button className="btn" disabled={busy} onClick={tab === 'products' ? doSaveProducts : tab === 'services' ? doSaveServices : save}>{busy ? 'Saving...' : 'Save Changes'}</button>
+        <button className="btn" disabled={busy} onClick={tab === 'products' ? doSaveProducts : tab === 'services' ? doSaveServices : tab === 'guides' ? doSaveGuides : save}>{busy ? 'Saving...' : 'Save Changes'}</button>
         {msg && <span className="ok">{msg}</span>}{err && <span className="err">{err}</span>}
       </div>
     </div>

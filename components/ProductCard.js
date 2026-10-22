@@ -11,6 +11,7 @@ export default function ProductCard({ p }) {
           <span className="cat">{p.category}</span>
           <h3>{p.name} {p.model}</h3>
           <p className="muted">{p.colors}</p>
+          {p.price ? <p className="price">From Rs {p.price}</p> : null}
           <span className="link">View details →</span>
         </div>
       </Link>

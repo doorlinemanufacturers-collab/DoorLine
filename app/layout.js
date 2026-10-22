@@ -7,9 +7,9 @@ const font = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'], displa
 
 export const metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates', template: '%s | DoorLine' },
+  title: { default: 'Aluminum Handles Manufacturer in Lahore | Aluminium Anodizing - DoorLine', template: '%s | DoorLine' },
   description: 'Professional aluminium handles manufacturer in Lahore. Cheap wholesale price, no middleman, direct factory rates and premium quality door and cabinet handles, plus anodizing and electroplating. Delivery all over Pakistan.',
-  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan'],
+  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan'],
   openGraph: { type: 'website', siteName: 'DoorLine Manufacturers', locale: 'en_PK', images: ['/images/logo.png'] },
   robots: { index: true, follow: true },
   twitter: { card: 'summary_large_image' },
@@ -22,6 +22,7 @@ export default async function RootLayout({ children }) {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'Organization'],
     '@id': `${siteUrl()}/#business`,
+    alternateName: ['DoorLine', 'Door Line Manufacturers', 'DoorLine Aluminium Handles Lahore'],
     name: site.name,
     description: 'Professional manufacturer of aluminium door handles, cabinet handles, window locks and hinges in Lahore, Pakistan, offering aluminium anodizing and electroplating services. Wholesale supply.',
     additionalType: 'https://schema.org/Manufacturer',
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }) {
       <body className={font.className}>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${siteUrl()}/#website`, url: siteUrl(), name: site.name, alternateName: ['DoorLine', 'Door Line Manufacturers'], inLanguage: 'en' }) }} />
         {children}
       </body>
     </html>

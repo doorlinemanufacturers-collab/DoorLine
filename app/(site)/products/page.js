@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getContent } from '@/lib/store';
 import { searchProducts } from '@/lib/seo';
 import ProductCard from '@/components/ProductCard';
+import { catSlug } from '@/lib/categories';
 import Reveal from '@/components/Reveal';
 
 
@@ -12,7 +13,7 @@ export async function generateMetadata({ searchParams }) {
   return {
     title,
     description: `Browse ${cat || 'aluminium door handles, cabinet handles, window locks and hinges'} from DoorLine Manufacturers, Lahore. Factory price for bulk buyers across Pakistan. Cheap wholesale price, no middleman, premium quality. Anodizing and electroplating available.`,
-    alternates: { canonical: cat ? `/products?category=${encodeURIComponent(cat)}` : '/products' },
+    alternates: { canonical: cat ? `/collections/${catSlug(cat)}` : '/products' },
     robots: q ? { index: false, follow: true } : undefined,
   };
 }

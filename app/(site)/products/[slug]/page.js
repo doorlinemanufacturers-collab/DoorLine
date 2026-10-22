@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
+import { catSlug } from '@/lib/categories';
 
 
 async function find(slug) {
@@ -45,7 +46,7 @@ export default async function ProductPage({ params }) {
   return (
     <section className="section">
       <div className="container">
-        <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / <Link href={`/products?category=${encodeURIComponent(p.category)}`}>{p.category}</Link> / {p.model}</p>
+        <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / <Link href={`/collections/${catSlug(p.category)}`}>{p.category}</Link> / {p.model}</p>
         <div className="pgrid">
           <Reveal><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
           <Reveal delay={120}>

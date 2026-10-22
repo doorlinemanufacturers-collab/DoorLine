@@ -129,3 +129,5 @@ address{font-style:normal;margin-bottom:16px}
 .cicon{font-size:2rem;width:56px;height:56px;border-radius:50%;background:var(--alt);display:flex;align-items:center;justify-content:center;margin-bottom:6px}
 .ctext{color:var(--muted);font-size:.92rem;word-break:break-word}
 .chours{margin-top:18px;text-align:center;background:var(--alt);border-radius:10px;padding:12px;font-size:.95rem}
+
+.price{font-weight:700;color:var(--brand);margin:4px 0}

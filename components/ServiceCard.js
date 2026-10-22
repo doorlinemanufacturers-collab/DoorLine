@@ -7,7 +7,7 @@ export function ServiceVisual({ s, big = false }) {
   return (
     <div className={`svcvisual ${big ? 'big' : ''}`} role="img" aria-label={s.title}>
       <span className="svcicon">{icon}</span>
-      <strong>{s.title.replace(' in Lahore', '').replace(' Service', '')}</strong>
+      <strong>{s.title.replace(' in Lahore', '').replace(/ Services?/, '')}</strong>
     </div>
   );
 }

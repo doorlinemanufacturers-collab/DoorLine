@@ -11,7 +11,7 @@ export default function Footer({ site }) {
           <p>{site.tagline}</p>
           <p className="muted" style={{ color: '#aaa' }}>Professional aluminium handles manufacturer in Lahore. Direct factory rates, no middleman, premium quality, plus anodizing and electroplating.</p>
           <p className="footlinks">
-            <Link href="/">Home</Link> · <Link href="/products">Products</Link> · <Link href="/services">Services</Link> · <Link href="/delivery-across-pakistan">Delivery</Link> · <Link href="/about">About</Link> · <Link href="/faq">FAQ</Link> · <Link href="/contact">Contact Us</Link> · <Link href="/privacy-policy">Privacy</Link>
+            <Link href="/">Home</Link> · <Link href="/products">Products</Link> · <Link href="/services">Services</Link> · <Link href="/delivery-across-pakistan">Delivery</Link> · <Link href="/about">About</Link> · <Link href="/faq">FAQ</Link> · <Link href="/contact">Contact Us</Link> · <Link href="/guides">Guides</Link> · <Link href="/privacy-policy">Privacy</Link> · <Link href="/terms">Terms</Link>
           </p>
           {social.length > 0 && <p className="footlinks">{social.map(([n, u], i) => <span key={n}>{i > 0 && ' · '}<a href={u} target="_blank" rel="noopener noreferrer">{n}</a></span>)}</p>}
         </div>

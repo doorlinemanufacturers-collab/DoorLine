@@ -55,7 +55,7 @@ export default async function ServicePage({ params }) {
       </section>
       <section className="section alt">
         <div className="container narrow">
-          <Reveal><p className="pre">{s.body}</p></Reveal>
+          <Reveal>{String(s.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 26 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}</Reveal>
           <h2 style={{ marginTop: 28 }}>Frequently Asked Questions</h2>
           <FAQ faqs={s.faqs || []} />
         </div>

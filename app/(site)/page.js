@@ -9,18 +9,19 @@ import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 import { slugify } from '@/lib/site';
+import { catSlug } from '@/lib/categories';
 
 
 export const metadata = {
-  title: { absolute: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates' },
+  title: { absolute: 'Aluminum Handles Manufacturer in Lahore | Aluminium Anodizing - DoorLine' },
   description: 'Professional aluminium handles manufacturer in Lahore: anodizing, cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
-  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan'],
+  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'Professional Aluminium Handles Manufacturer Lahore | Anodizing & Factory Rates', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
+  openGraph: { title: 'Aluminum Handles Manufacturer in Lahore | Aluminium Anodizing - DoorLine', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
 };
 
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services, badges, about, cities } = await getContent();
+  const { site, hero, why, products, faqs, seo, services, badges, about, cities, guides } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   return (
     <>
@@ -51,7 +52,7 @@ export default async function Home() {
           <p className="lead">Browse our aluminium handle range by category.</p>
           <div className="grid4">
             {categories.map((c) => (
-              <Link key={c} href={`/products?category=${encodeURIComponent(c)}`} className="box catbox">
+              <Link key={c} href={`/collections/${catSlug(c)}`} className="box catbox">
                 <h3>{c}</h3>
                 <span className="link">Browse {c} →</span>
               </Link>
@@ -115,11 +116,18 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <h2>Aluminium Handles Buying Guides</h2>
+          <div className="grid4">{guides.slice(0, 4).map((g, i) => (<Reveal key={g.slug} delay={i * 90} className="box"><h3>{g.title}</h3><p className="muted">{g.description}</p><Link className="link" href={`/guides/${g.slug}`}>Read guide →</Link></Reveal>))}</div>
+        </div>
+      </section>
+
       <section className="section alt">
         <div className="container">
           <h2>Delivery All Over Pakistan</h2>
           <p className="lead">We supply aluminium handles, locks and hinges from Lahore to dealers and fabricators in every major city.</p>
-          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/delivery-across-pakistan#${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
+          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
         </div>
       </section>
 

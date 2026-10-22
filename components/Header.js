@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { waLink } from '@/lib/site';
+import { catSlug } from '@/lib/categories';
 
 export default function Header({ site, categories, services = [] }) {
   const [open, setOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function Header({ site, categories, services = [] }) {
         <nav className="desknav" aria-label="Main">
           <Link href="/">Home</Link>
           <Link href="/services">Services</Link>
+          <Link href="/guides">Guides</Link>
           <Link href="/about">About</Link>
           <Link href="/faq">FAQ</Link>
           <Link href="/contact">Contact Us</Link>
@@ -35,16 +37,17 @@ export default function Header({ site, categories, services = [] }) {
         {sub && (
           <div className="subs">
             <Link href="/products" onClick={close}>All Products</Link>
-            {categories.map((c) => <Link key={c} href={`/products?category=${encodeURIComponent(c)}`} onClick={close}>{c}</Link>)}
+            {categories.map((c) => <Link key={c} href={`/collections/${catSlug(c)}`} onClick={close}>{c}</Link>)}
           </div>
         )}
         <button className="dlink" onClick={() => setSv(!sv)} aria-expanded={sv}>Services <span>{sv ? '▲' : '▼'}</span></button>
         {sv && (
           <div className="subs">
             <Link href="/services" onClick={close}>All Services</Link>
-            {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(' Service', '')}</Link>)}
+            {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(/ Services?/, '')}</Link>)}
           </div>
         )}
+        <Link href="/guides" onClick={close}>Buying Guides</Link>
         <Link href="/delivery-across-pakistan" onClick={close}>Delivery Across Pakistan</Link>
         <Link href="/about" onClick={close}>About Us</Link>
         <Link href="/faq" onClick={close}>FAQ - Wholesale Buyers</Link>
