@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://doorlinemanufacturers.com').replace(/\/$/, '');
+const pSlug = (p) => (p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`);
+const pUrl = (p) => `${SITE}/products/${pSlug(p)}`;
 
 function Field({ label, value, onChange, area, rows = 3 }) {
   return (
@@ -46,11 +49,12 @@ export default function Admin() {
   };
   const logout = async () => { await fetch('/api/admin/logout', { method: 'POST' }); setAuth(false); setC(null); };
 
-  const save = async () => {
+  const save = async (override) => {
+    const data = override && override.products ? override : c;
     setBusy(true); setMsg(''); setErr('');
-    const r = await fetch('/api/admin/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: c }) });
+    const r = await fetch('/api/admin/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: data }) });
     const j = await r.json(); setBusy(false);
-    if (!r.ok) setErr(j.error || 'Save fail'); else setMsg('Saved. Your website is updated.');
+    if (!r.ok) setErr(j.error || 'Save fail'); else setMsg(tab === 'products' ? 'Saved. Product pages are live. Copy each new product link and request indexing in Google Search Console.' : 'Saved. Your website is updated.');
   };
 
   const up = (path, v) => setC((o) => { const n = structuredClone(o); let t = n; for (let i = 0; i < path.length - 1; i++) t = t[path[i]]; t[path[path.length - 1]] = v; return n; });
@@ -65,9 +69,13 @@ export default function Admin() {
     const slug = p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`;
     return { ...p, slug, alt: p.alt };
   };
-  const doSaveProducts = () => { setC((o) => ({ ...o, products: o.products.map(finalize) })); setTimeout(save, 50); };
-  const doSaveServices = () => { setC((o) => ({ ...o, services: o.services.map(finSvc) })); setTimeout(save, 50); };
-  const doSaveGuides = () => { setC((o) => ({ ...o, guides: o.guides.map((g) => ({ ...g, slug: slugify(g.slug || g.title) })) })); setTimeout(save, 50); };
+  const doSaveProducts = () => {
+    const seen = {};
+    const next = { ...c, products: c.products.map(finalize).map((p) => { let sl = p.slug; let n = 2; while (seen[sl]) { sl = `${p.slug}-${n}`; n += 1; } seen[sl] = 1; return { ...p, slug: sl }; }) };
+    setC(next); save(next);
+  };
+  const doSaveServices = () => { const next = { ...c, services: c.services.map(finSvc) }; setC(next); save(next); };
+  const doSaveGuides = () => { const next = { ...c, guides: (c.guides || []).map((g) => ({ ...g, slug: slugify(g.slug || g.title) })) }; setC(next); save(next); };
   const finSvc = (x) => ({ ...x, slug: slugify(x.slug || x.title) });
 
   const upload = async (i, file) => {
@@ -78,6 +86,8 @@ export default function Admin() {
     if (!r.ok) { setMsg(''); return setErr(j.error); }
     upProd(i, 'image', j.url); setMsg((j.storage === 'blob' ? 'Image uploaded to Blob storage. Now click Save Changes.' : 'Blob is not connected, so the image was saved in backup storage. Now click Save Changes.'));
   };
+
+  const copyText = async (t) => { try { await navigator.clipboard.writeText(t); setMsg('Link copied.'); } catch (e) { setMsg('Copy failed. Select the link and copy it manually.'); } };
 
   const uploadSvc = async (i, file) => {
     if (!file) return; setMsg('Uploading...'); setErr('');
@@ -264,7 +274,7 @@ export default function Admin() {
 
       {tab === 'products' && (
         <>
-          <p><button className="btn btn-sm" onClick={addProd}>+ Add New Product</button></p>
+          <p><button className="btn btn-sm" onClick={addProd}>+ Add New Product</button> <button className="btn btn-sm btn-outline" onClick={() => copyText(c.products.map(pUrl).join('\n'))}>Copy all product links</button></p>
           {c.products.map((p, i) => (
             <div className="panel" key={p.id + i}>
               <div style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }} onClick={() => setOpen(open === i ? null : i)}>
@@ -278,6 +288,10 @@ export default function Admin() {
                   </div>
                   <Field label="Product Name" value={p.name} onChange={(v) => upProd(i, 'name', v)} />
                   <Field label="URL slug (leave empty to generate automatically)" value={p.slug} onChange={(v) => upProd(i, 'slug', v)} />
+                  <label>Public page link (works after you click Save Changes)</label>
+                  <input readOnly value={pUrl(p)} onFocus={(e) => e.target.select()} />
+                  <p style={{ marginTop: 8 }}><button type="button" className="btn btn-sm" onClick={() => copyText(pUrl(p))}>Copy link</button> <a className="btn btn-sm btn-outline" href={pUrl(p)} target="_blank" rel="noopener noreferrer">Open page</a></p>
+                  <p className="muted">After saving: Google Search Console, URL Inspection, paste this link, Request Indexing.</p>
                   <Field label="Description" area value={p.desc} onChange={(v) => upProd(i, 'desc', v)} />
                   <div className="two">
                     <div><Field label="Size" value={p.size} onChange={(v) => upProd(i, 'size', v)} /></div>
