@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  async redirects() {
+    return [{ source: '/products', destination: '/aluminum-handles', permanent: true }];
+  },
   compress: true,
   poweredByHeader: false,
   images: {

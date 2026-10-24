@@ -21,6 +21,7 @@ export default async function Delivery() {
       <div className="container">
         <h1 className="h1s">Aluminium Handles Supplier & Delivery Across Pakistan</h1>
         <p className="lead">DoorLine Manufacturers is a professional aluminium handles manufacturer in Lahore. We deliver door handles, cabinet handles, window locks, hinges and finished anodized or electroplated parts to every city in Pakistan by transport and cargo, at direct factory rates with no middleman.</p>
+        <p><Link className="link" href="/aluminium-handles-manufacturer/pakistan">Aluminum handles manufacturer in Pakistan →</Link></p>
         <div className="chips">{list.map((c) => <a key={c} className="chip" href={`#${slugify(c)}`}>{c}</a>)}</div>
         <div className="grid4">
           {list.map((c, i) => (
@@ -33,7 +34,7 @@ export default async function Delivery() {
         </div>
         <p style={{ marginTop: 28 }}>
           <a className="btn" href={waLink(site.whatsapp, 'Hello, please share wholesale rates and delivery details for my city.')} target="_blank" rel="noopener noreferrer">Ask Rates for Your City</a>{' '}
-          <Link className="btn btn-outline" href="/products">View Products</Link>
+          <Link className="btn btn-outline" href="/aluminum-handles">View Aluminum Handles</Link>
         </p>
       </div>
     </section>

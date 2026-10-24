@@ -30,13 +30,13 @@ export default async function Collection({ params }) {
   const base = siteUrl();
   const ld = [
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: p.h1, description: p.description, url: `${base}/collections/${params.slug}`, mainEntity: { '@type': 'ItemList', itemListElement: list.map((x, i) => ({ '@type': 'ListItem', position: i + 1, url: `${base}/products/${x.slug}`, name: `${x.name} ${x.model}` })) } },
-    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: base }, { '@type': 'ListItem', position: 2, name: 'Products', item: `${base}/products` }, { '@type': 'ListItem', position: 3, name: cat, item: `${base}/collections/${params.slug}` }] },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: base }, { '@type': 'ListItem', position: 2, name: 'Aluminum Handles', item: `${base}/aluminum-handles` }, { '@type': 'ListItem', position: 3, name: cat, item: `${base}/collections/${params.slug}` }] },
   ];
   return (
     <>
       <section className="section">
         <div className="container">
-          <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / {cat}</p>
+          <p className="crumb"><Link href="/">Home</Link> / <Link href="/aluminum-handles">Aluminum Handles</Link> / {cat}</p>
           <h1 className="h1s">{p.h1}</h1>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 820 }}>{p.intro}</p>

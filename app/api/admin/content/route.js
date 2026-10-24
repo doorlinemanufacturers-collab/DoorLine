@@ -18,7 +18,7 @@ export async function PUT(req) {
     await saveContent(content);
     revalidateTag('content');
     revalidatePath('/', 'layout');
-    await pingIndexNow([ '/', '/products', ...content.products.map((p) => `/products/${p.slug}`).filter((u) => u !== '/products/') ]);
+    await pingIndexNow([ '/', '/aluminum-handles', ...content.products.map((p) => `/products/${p.slug}`).filter((u) => u !== '/products/') ]);
     return NextResponse.json({ ok: true });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 400 });

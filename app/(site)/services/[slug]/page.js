@@ -56,6 +56,7 @@ export default async function ServicePage({ params }) {
       <section className="section alt">
         <div className="container narrow">
           <Reveal>{String(s.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 26 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}</Reveal>
+          {(() => { const re = /anodiz/i.test(s.title) ? /anodiz|powder/ : /plating/i.test(s.title) ? /plating/ : /^$/; const rel = (c.guides || []).filter((g) => re.test(g.slug)); return rel.length ? (<p style={{ marginTop: 20 }}>Related guides: {rel.map((g, i) => <span key={g.slug}>{i > 0 && ', '}<Link className="link" href={`/guides/${g.slug}`}>{g.title}</Link></span>)}</p>) : null; })()}
           <h2 style={{ marginTop: 28 }}>Frequently Asked Questions</h2>
           <FAQ faqs={s.faqs || []} />
         </div>

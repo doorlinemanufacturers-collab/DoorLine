@@ -11,7 +11,7 @@ import Badges from '@/components/Badges';
 async function find(slug) {
   const c = await getContent();
   const all = ['Lahore', ...c.cities.map((x) => x.trim()).filter((x) => x && x !== 'Lahore')];
-  const city = all.find((x) => slugify(x) === slug);
+  const city = slug === 'pakistan' ? 'Pakistan' : all.find((x) => slugify(x) === slug);
   return { c, city, all };
 }
 
@@ -28,7 +28,7 @@ export default async function CityPage({ params }) {
   const p = cityPage(city, c.site);
   const base = siteUrl();
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'Service', name: `Aluminum handles manufacturer, anodizing and electroplating for ${city}`, serviceType: 'Aluminium handles manufacturing, anodizing and electroplating', provider: { '@type': 'LocalBusiness', '@id': `${base}/#business`, name: c.site.name }, areaServed: { '@type': 'City', name: city }, url: `${base}/aluminium-handles-manufacturer/${params.city}` },
+    { '@context': 'https://schema.org', '@type': 'Service', name: `Aluminum handles manufacturer, anodizing and electroplating for ${city}`, serviceType: 'Aluminium handles manufacturing, anodizing and electroplating', provider: { '@type': 'LocalBusiness', '@id': `${base}/#business`, name: c.site.name }, areaServed: { '@type': city === 'Pakistan' ? 'Country' : 'City', name: city }, url: `${base}/aluminium-handles-manufacturer/${params.city}` },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: base }, { '@type': 'ListItem', position: 2, name: 'Delivery Across Pakistan', item: `${base}/delivery-across-pakistan` }, { '@type': 'ListItem', position: 3, name: city, item: `${base}/aluminium-handles-manufacturer/${params.city}` }] },
   ];
   return (
@@ -41,7 +41,7 @@ export default async function CityPage({ params }) {
           <p className="pre">{p.intro}</p>
           <div className="row">
             <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need wholesale rates for aluminium handles in ${city}.`)} target="_blank" rel="noopener noreferrer">Get Rates for {city}</a>
-            <Link className="btn btn-outline" href="/products">View Products</Link>
+            <Link className="btn btn-outline" href="/aluminum-handles">View Aluminum Handles</Link>
           </div>
         </div>
       </section>
@@ -61,7 +61,7 @@ export default async function CityPage({ params }) {
           <h2>{city} - Frequently Asked Questions</h2>
           <FAQ faqs={p.faqs} />
           <h2 style={{ marginTop: 32 }}>We Also Deliver To</h2>
-          <div className="chips">{all.filter((x) => x !== city).map((x) => <Link key={x} className="chip" href={`/aluminium-handles-manufacturer/${slugify(x)}`}>{x}</Link>)}</div>
+          <div className="chips">{city !== 'Pakistan' && <Link className="chip on" href="/aluminium-handles-manufacturer/pakistan">All Pakistan</Link>}{all.filter((x) => x !== city).map((x) => <Link key={x} className="chip" href={`/aluminium-handles-manufacturer/${slugify(x)}`}>{x}</Link>)}</div>
         </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />

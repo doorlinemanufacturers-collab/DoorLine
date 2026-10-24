@@ -17,8 +17,8 @@ export default function Header({ site, categories, services = [] }) {
           <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer, anodizing and electroplating Lahore" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
         </Link>
         <nav className="desknav" aria-label="Main">
-          <Link href="/">Home</Link>
-          <Link href="/services">Services</Link>
+          <Link href="/aluminum-handles">Aluminum Handles</Link>
+          {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`}>{/anodiz/i.test(x.title) ? 'Anodizing' : /plating/i.test(x.title) ? 'Electroplating' : x.title}</Link>)}
           <Link href="/guides">Guides</Link>
           <Link href="/about">About</Link>
           <Link href="/faq">FAQ</Link>
@@ -33,10 +33,10 @@ export default function Header({ site, categories, services = [] }) {
       <aside className={`drawer ${open ? 'open' : ''}`} aria-hidden={!open}>
         <div className="drawerhead"><strong>Menu</strong><button className="x" onClick={close} aria-label="Close menu">×</button></div>
         <Link href="/" onClick={close}>Home</Link>
-        <button className="dlink" onClick={() => setSub(!sub)} aria-expanded={sub}>Products <span>{sub ? '▲' : '▼'}</span></button>
+        <button className="dlink" onClick={() => setSub(!sub)} aria-expanded={sub}>Aluminum Handles <span>{sub ? '▲' : '▼'}</span></button>
         {sub && (
           <div className="subs">
-            <Link href="/products" onClick={close}>All Products</Link>
+            <Link href="/aluminum-handles" onClick={close}>All Aluminum Handles</Link>
             {categories.map((c) => <Link key={c} href={`/collections/${catSlug(c)}`} onClick={close}>{c}</Link>)}
           </div>
         )}

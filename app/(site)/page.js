@@ -13,11 +13,11 @@ import { catSlug } from '@/lib/categories';
 
 
 export const metadata = {
-  title: { absolute: 'Aluminum Handles Manufacturer in Lahore | Aluminium Anodizing - DoorLine' },
+  title: { absolute: 'Aluminum Handles Manufacturer in Lahore, Pakistan | Anodizing - DoorLine' },
   description: 'Professional aluminium handles manufacturer in Lahore: anodizing, cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
   keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'Aluminum Handles Manufacturer in Lahore | Aluminium Anodizing - DoorLine', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
+  openGraph: { title: 'Aluminum Handles Manufacturer in Lahore, Pakistan | Anodizing - DoorLine', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
 };
 
 export default async function Home() {
@@ -32,7 +32,7 @@ export default async function Home() {
             <p>{hero.sub}</p>
             <Badges items={badges} center={!hero.image} />
             <div className="row">
-              <Link className="btn" href="/products">View Products</Link>
+              <Link className="btn" href="/aluminum-handles">View Aluminum Handles</Link>
               <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">WhatsApp Rates</a>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default async function Home() {
           <h2>Featured Aluminium Handles</h2>
           <p className="lead">Door handles, cabinet handles, window locks and hinges at wholesale factory prices. Anodizing and electroplating available.</p>
           <div className="grid">{products.slice(0, 8).map((p, i) => <Reveal key={p.slug} delay={(i % 4) * 80}><ProductCard p={p} /></Reveal>)}</div>
-          <p style={{ marginTop: 28, textAlign: 'center' }}><Link className="btn" href="/products">View All Products</Link></p>
+          <p style={{ marginTop: 28, textAlign: 'center' }}><Link className="btn" href="/aluminum-handles">View All Aluminum Handles</Link></p>
         </div>
       </section>
 
@@ -127,7 +127,7 @@ export default async function Home() {
         <div className="container">
           <h2>Delivery All Over Pakistan</h2>
           <p className="lead">We supply aluminium handles, locks and hinges from Lahore to dealers and fabricators in every major city.</p>
-          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
+          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan →</Link><Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
         </div>
       </section>
 

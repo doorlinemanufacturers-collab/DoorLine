@@ -40,13 +40,13 @@ export default async function ProductPage({ params }) {
       ...(p.price && /\d/.test(String(p.price)) ? { offers: { '@type': 'Offer', priceCurrency: 'PKR', price: String(p.price).replace(/[^0-9.]/g, ''), availability: 'https://schema.org/InStock', url: `${base}/products/${p.slug}`, seller: { '@type': 'Organization', name: c.site.name } } } : {}) },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: base },
-      { '@type': 'ListItem', position: 2, name: 'Products', item: `${base}/products` },
+      { '@type': 'ListItem', position: 2, name: 'Aluminum Handles', item: `${base}/aluminum-handles` },
       { '@type': 'ListItem', position: 3, name: `${p.name} ${p.model}`, item: `${base}/products/${p.slug}` } ] },
   ];
   return (
     <section className="section">
       <div className="container">
-        <p className="crumb"><Link href="/">Home</Link> / <Link href="/products">Products</Link> / <Link href={`/collections/${catSlug(p.category)}`}>{p.category}</Link> / {p.model}</p>
+        <p className="crumb"><Link href="/">Home</Link> / <Link href="/aluminum-handles">Aluminum Handles</Link> / <Link href={`/collections/${catSlug(p.category)}`}>{p.category}</Link> / {p.model}</p>
         <div className="pgrid">
           <Reveal><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
           <Reveal delay={120}>
@@ -72,7 +72,7 @@ export default async function ProductPage({ params }) {
 
         <Reveal className="narrow-block">
           <h2 style={{ marginTop: 44 }}>Popular Searches</h2>
-          <div className="chips">{seo.variants.map((v) => <Link key={v} href={`/products?q=${encodeURIComponent(v)}`} className="chip">{v}</Link>)}</div>
+          <div className="chips">{seo.variants.map((v) => <Link key={v} href={`/aluminum-handles?q=${encodeURIComponent(v)}`} className="chip">{v}</Link>)}</div>
           <p className="muted">Need a finish on your own aluminium parts? See our <Link className="link" href="/services/aluminium-anodizing-service-lahore">anodizing</Link> and <Link className="link" href="/services/aluminium-electroplating-service-lahore">electroplating</Link> services.</p>
         </Reveal>
 
