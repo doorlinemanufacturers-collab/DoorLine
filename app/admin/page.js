@@ -87,6 +87,23 @@ export default function Admin() {
     upProd(i, 'image', j.url); setMsg((j.storage === 'blob' ? 'Image uploaded to Blob storage. Now click Save Changes.' : 'Blob is not connected, so the image was saved in backup storage. Now click Save Changes.'));
   };
 
+  const applyLatest = async () => {
+    if (!confirm('Replace the website texts (SEO blocks, FAQs, guides, services text, cities, badges, Why Us, hero heading) with the latest version? Products, contact info and images stay as they are.')) return;
+    const r = await fetch('/api/admin/defaults');
+    const j = await r.json();
+    const d = j.defaults;
+    if (!d) return setErr('Could not load the latest texts.');
+    setC((o) => ({
+      ...o,
+      seo: d.seo, faqs: d.faqs, cities: d.cities, badges: d.badges, why: d.why, guides: d.guides,
+      services: d.services.map((x) => ({ ...x, image: ((o.services || []).find((y) => y.slug === x.slug) || {}).image || x.image })),
+      hero: { ...o.hero, h1: d.hero.h1, sub: d.hero.sub },
+      about: { ...o.about, vision: d.about.vision, mission: d.about.mission, promise: d.about.promise },
+      deleted: [],
+    }));
+    setMsg('Latest texts loaded. Now click Save Changes to publish them.');
+  };
+
   const copyText = async (t) => { try { await navigator.clipboard.writeText(t); setMsg('Link copied.'); } catch (e) { setMsg('Copy failed. Select the link and copy it manually.'); } };
 
   const uploadSvc = async (i, file) => {
@@ -157,7 +174,7 @@ export default function Admin() {
                   <Field label="URL slug (leave empty to generate automatically)" value={g.slug} onChange={(v) => up(['guides', i, 'slug'], v)} />
                   <Field label="Short description (Google description, max 158 characters)" area value={g.description} onChange={(v) => up(['guides', i, 'description'], v)} />
                   <Field label="Article text" area rows={14} value={g.body} onChange={(v) => up(['guides', i, 'body'], v)} />
-                  <p style={{ marginTop: 10 }}><button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this guide?')) setC({ ...c, guides: c.guides.filter((_, z) => z !== i) }); }}>Delete Guide</button></p>
+                  <p style={{ marginTop: 10 }}><button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this guide?')) setC({ ...c, guides: c.guides.filter((_, z) => z !== i), deleted: [...(c.deleted || []), g.slug] }); }}>Delete Guide</button></p>
                 </>
               )}
             </div>
@@ -184,6 +201,7 @@ export default function Admin() {
 
       {tab === 'general' && (
         <div className="panel">
+          <p style={{ marginBottom: 12 }}><button className="btn btn-sm btn-outline" onClick={applyLatest}>Update website texts to the latest version</button></p>
           {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address or place name)'], ['facebook', 'Facebook page URL (optional)'], ['instagram', 'Instagram URL (optional)'], ['youtube', 'YouTube URL (optional)'], ['googleBusiness', 'Google Business Profile URL (optional)']].map(([k, l]) => (
             <Field key={k} label={l} value={c.site[k]} onChange={(v) => up(['site', k], v)} />
           ))}
@@ -251,7 +269,7 @@ export default function Admin() {
                       <button className="btn btn-sm danger" style={{ marginTop: 6 }} onClick={() => up(['services', i, 'faqs'], x.faqs.filter((_, z) => z !== k))}>Delete FAQ</button>
                     </div>
                   ))}
-                  <p style={{ marginTop: 10 }}><button className="btn btn-sm" onClick={() => up(['services', i, 'faqs'], [...(x.faqs || []), { q: '', a: '' }])}>+ Add FAQ</button> <button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this service?')) setC({ ...c, services: c.services.filter((_, z) => z !== i) }); }}>Delete Service</button></p>
+                  <p style={{ marginTop: 10 }}><button className="btn btn-sm" onClick={() => up(['services', i, 'faqs'], [...(x.faqs || []), { q: '', a: '' }])}>+ Add FAQ</button> <button className="btn btn-sm danger" onClick={() => { if (confirm('Delete this service?')) setC({ ...c, services: c.services.filter((_, z) => z !== i), deleted: [...(c.deleted || []), x.slug] }); }}>Delete Service</button></p>
                 </>
               )}
             </div>

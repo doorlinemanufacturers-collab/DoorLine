@@ -43,6 +43,11 @@ export default async function ProductPage({ params }) {
       { '@type': 'ListItem', position: 2, name: 'Aluminum Handles', item: `${base}/aluminum-handles` },
       { '@type': 'ListItem', position: 3, name: `${p.name} ${p.model}`, item: `${base}/products/${p.slug}` } ] },
   ];
+  // Google only accepts Product markup when offers, review or aggregateRating exists.
+  // Without a price we publish a plain WebPage description instead, to avoid a structured data error.
+  if (!(p.price && /\d/.test(String(p.price)))) {
+    ld[0] = { '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${base}/products/${p.slug}#webpage`, url: `${base}/products/${p.slug}`, name: `${p.name} ${p.model}`, description: seo.description, primaryImageOfPage: { '@type': 'ImageObject', url: img }, about: { '@type': 'Thing', name: `${p.name} ${p.model}`, description: seo.intro, image: img } };
+  }
   return (
     <section className="section">
       <div className="container">
