@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink } from '@/lib/site';
-import { productSeo, productAlt } from '@/lib/seo';
+import { productSeo, productAlt, previewInfo } from '@/lib/seo';
 import ProductImage from '@/components/ProductImage';
 import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }) {
               <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need the wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>
               <a className="btn btn-outline" href={`tel:${c.site.phone.replace(/\s/g, '')}`}>Call {c.site.phone}</a>
             </div>
-            <DoorPreview kind={seo.type} colors={String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean)} cutout={p.previewImage} name={p.name} />
+            <DoorPreview info={previewInfo(p)} colors={String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean)} cutout={p.previewImage} name={p.name} />
           </Reveal>
         </div>
 

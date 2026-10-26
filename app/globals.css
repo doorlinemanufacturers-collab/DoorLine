@@ -135,19 +135,22 @@ address{font-style:normal;margin-bottom:16px}
 .footmapwrap{padding-bottom:24px}.footmap{width:100%;height:240px;border:0;border-radius:12px}
 /* door preview */
 .dprev{margin-top:16px}.dbox{margin-top:12px;background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;animation:fadeUp .5s ease both}
-.dscene{perspective:900px;display:flex;justify-content:center;padding:10px 0 4px}
-.dwall{position:relative;width:min(240px,70vw);aspect-ratio:240/410;background:#d9d2c3;border:10px solid #8b7b66;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
-.dwall.cab{aspect-ratio:1/1.15}.droom{position:absolute;inset:0;background:linear-gradient(90deg,#fff6dc,#f0e4c6)}
-.ddoor{position:absolute;inset:0;transform-origin:left center;transition:transform .35s ease;cursor:pointer;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),0 0 18px rgba(0,0,0,.25)}
+.dscene{perspective:1000px;display:flex;justify-content:center;padding:14px 0 6px}
+.dwall{position:relative;width:min(250px,72vw);aspect-ratio:250/420;background:#cfc8b8;border:11px solid #7d6c57;border-radius:4px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25),inset 0 0 14px rgba(0,0,0,.35),0 14px 28px rgba(0,0,0,.25)}
+.dwall.cab{aspect-ratio:1/1.15}
+.droom{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,#fffbe8,#ecdfc0 60%,#cdbb94)}
+.droom.shelves{background:repeating-linear-gradient(180deg,#e9dcc0 0 28%,#9b8660 28% 29.5%,#e9dcc0 29.5% 100%)}
+.ddoor{position:absolute;inset:0;transform-origin:left center;transition:transform .35s ease,filter .35s ease;cursor:pointer;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 2px,rgba(255,255,255,.04) 2px 6px),linear-gradient(100deg,rgba(255,255,255,.14),rgba(0,0,0,.18));box-shadow:inset 0 0 0 3px rgba(0,0,0,.22),inset 4px 0 8px rgba(255,255,255,.12),4px 0 22px rgba(0,0,0,.35)}
 .ddoor.r{transform-origin:right center}
-.dinset{position:absolute;left:12%;right:12%;top:6%;height:36%;border-radius:3px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),inset 3px 3px 8px rgba(255,255,255,.12)}
+.dinset{position:absolute;left:12%;right:12%;top:6%;height:36%;border-radius:3px;background:linear-gradient(135deg,rgba(0,0,0,.1),rgba(255,255,255,.06));box-shadow:inset 0 0 0 3px rgba(0,0,0,.2),inset 4px 4px 10px rgba(0,0,0,.28),2px 2px 3px rgba(255,255,255,.18)}
 .dinset.b{top:50%;height:42%}
-.dhandle{position:absolute;right:9%;top:35%;width:11%;height:40%}
-.chandle{position:absolute;left:10%;top:50%;width:8%;height:30%}
-.dhinge{position:absolute;left:-3%;width:9%;height:11%}
-.wwall{aspect-ratio:300/230;width:min(300px,86vw);background:#9aa0a6;display:flex;overflow:hidden}
-.wpane{position:absolute;top:0;bottom:0;border:6px solid #b9bec3;background:#cfe6f3;transition:transform .35s ease}
-.wpane.back{right:0;width:52%}.wpane.front{left:0;width:52%;z-index:2;background:rgba(207,230,243,.85)}
-.wglass{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,0) 55%)}
-.wlock{position:absolute;right:-4px;top:44%;width:26px;height:26px}
-.dctrl{display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0}.dctrl input{flex:1;max-width:220px}
+.dhandle{position:absolute;right:8%;top:33%;width:13%;height:44%;filter:drop-shadow(3px 5px 3px rgba(0,0,0,.45))}
+.chandle{position:absolute;left:9%;top:46%;width:10%;height:34%;filter:drop-shadow(2px 4px 3px rgba(0,0,0,.4))}
+.dhinge{position:absolute;left:-11%;width:26%;aspect-ratio:1/1;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.45))}
+.dfloor{position:absolute;left:-14px;right:-14px;bottom:-24px;height:14px;background:radial-gradient(ellipse at center,rgba(0,0,0,.35),transparent 70%)}
+.wwall{aspect-ratio:300/230;width:min(300px,86vw);background:#8c9298;display:block;overflow:hidden}
+.wpane{position:absolute;top:0;bottom:0;border:7px solid #aeb4ba;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4),inset 0 0 8px rgba(0,0,0,.3);background:linear-gradient(160deg,#bfe0f2,#7fb2d4);transition:transform .35s ease}
+.wpane.back{right:0;width:52%}.wpane.front{left:0;width:52%;z-index:2;background:linear-gradient(160deg,rgba(207,232,245,.88),rgba(130,180,212,.8));box-shadow:4px 0 12px rgba(0,0,0,.3),inset 0 0 0 2px rgba(255,255,255,.4)}
+.wglass{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.6) 0,rgba(255,255,255,0) 40%,rgba(255,255,255,.25) 55%,rgba(255,255,255,0) 70%)}
+.wlock{position:absolute;right:-6px;top:40%;width:34px;height:34px;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.4))}
+.dctrl{display:flex;align-items:center;gap:12px;justify-content:center;margin:22px 0 10px}.dctrl input{flex:1;max-width:220px}

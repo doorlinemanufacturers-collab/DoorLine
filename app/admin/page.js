@@ -370,6 +370,10 @@ export default function Admin() {
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
+                  <label>Door preview type (Auto picks it from the category and name)</label>
+                  <select value={p.previewType || 'auto'} onChange={(e) => upProd(i, 'previewType', e.target.value)}>
+                    <option value="auto">Auto</option><option value="door">Door handle</option><option value="cabinet">Cabinet handle</option><option value="window">Window lock</option><option value="hinge">Hinge (Qabza)</option>
+                  </select>
                   <Field label="Door preview image (optional): transparent PNG of the handle, shown on the door preview. Leave empty to use the drawn handle" value={p.previewImage} onChange={(v) => upProd(i, 'previewImage', v)} />
                   <input type="file" accept="image/png,image/webp" onChange={(e) => uploadPreview(i, e.target.files[0])} />
                   <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
