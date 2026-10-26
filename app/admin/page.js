@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://doorlinemanufacturers.com').replace(/\/$/, '');
-const pSlug = (p) => (p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`);
+const pSlug = (p) => (p.slug ? slugify(p.slug) : slugify(p.name));
 const pUrl = (p) => `${SITE}/products/${pSlug(p)}`;
 
 function Field({ label, value, onChange, area, rows = 3 }) {
@@ -37,7 +37,7 @@ export default function Admin() {
     const r = await fetch('/api/admin/content', { cache: 'no-store' });
     if (r.status === 401) return setAuth(false);
     const j = await r.json();
-    setC(j.content); setStorage(j.storage); setAuth(true);
+    setC({ ...j.content, products: (j.content.products || []).map((x) => ({ ...x, _s0: x.slug })) }); setStorage(j.storage); setAuth(true);
   };
   useEffect(() => { load(); }, []);
 
@@ -66,8 +66,11 @@ export default function Admin() {
   };
   const delProd = (i) => { if (confirm('Delete this product?')) setC({ ...c, products: c.products.filter((_, x) => x !== i) }); };
   const finalize = (p) => {
-    const slug = p.slug ? slugify(p.slug) : `${slugify(p.name)}-${slugify(p.model)}-lahore`;
-    return { ...p, slug, alt: p.alt };
+    const slug = p.slug ? slugify(p.slug) : slugify(p.name);
+    const old = new Set(p.oldSlugs || []);
+    if (p._s0 && p._s0 !== slug) old.add(p._s0);
+    const { _s0, ...rest } = p;
+    return { ...rest, slug, oldSlugs: [...old], alt: p.alt };
   };
   const doSaveProducts = () => {
     const seen = {};
@@ -104,6 +107,15 @@ export default function Admin() {
     setMsg('Latest texts loaded. Now click Save Changes to publish them.');
   };
 
+  const uploadPreview = async (i, file) => {
+    if (!file) return; setMsg('Uploading...'); setErr('');
+    const fd = new FormData(); fd.append('file', file);
+    const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+    const j = await r.json();
+    if (!r.ok) { setMsg(''); return setErr(j.error); }
+    upProd(i, 'previewImage', j.url); setMsg('Preview image uploaded. Now click Save Changes.');
+  };
+
   const copyText = async (t) => { try { await navigator.clipboard.writeText(t); setMsg('Link copied.'); } catch (e) { setMsg('Copy failed. Select the link and copy it manually.'); } };
 
   const uploadSvc = async (i, file) => {
@@ -128,6 +140,24 @@ export default function Admin() {
     img.onerror = () => resolve(file);
     img.src = u;
   });
+
+  const [draft, setDraft] = useState(null);
+  const [aiBusy, setAiBusy] = useState(false);
+  const aiWrite = async (i) => {
+    const p = c.products[i];
+    setAiBusy(true); setErr(''); setMsg('Writing draft...');
+    try {
+      const r = await fetch('/api/admin/ai-product', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: p.name, category: p.category, colors: p.colors, size: p.size, finish: p.finish, notes: p.aiNotes || '' }) });
+      const j = await r.json();
+      if (!r.ok) { setMsg(''); setErr(j.error || 'AI failed'); } else { setDraft({ i, data: j.draft }); setMsg('Draft ready. Review it below.'); }
+    } catch (e) { setMsg(''); setErr('AI request failed.'); }
+    setAiBusy(false);
+  };
+  const applyDraft = () => {
+    const d = draft.data; const i = draft.i;
+    setC((o) => { const n = structuredClone(o); const p = n.products[i]; p.desc = d.desc; p.useCase = d.useCase; p.specs = (d.specs || []).join('\n'); p.keywords = (d.keywords || []).join(', '); return n; });
+    setDraft(null); setMsg('Draft applied. Check it, then click Save Changes.');
+  };
 
   const [leads, setLeads] = useState(null);
   const loadLeads = async () => { const r = await fetch('/api/admin/leads', { cache: 'no-store' }); const j = await r.json(); setLeads(j.leads || []); };
@@ -310,11 +340,29 @@ export default function Admin() {
                   <input readOnly value={pUrl(p)} onFocus={(e) => e.target.select()} />
                   <p style={{ marginTop: 8 }}><button type="button" className="btn btn-sm" onClick={() => copyText(pUrl(p))}>Copy link</button> <a className="btn btn-sm btn-outline" href={pUrl(p)} target="_blank" rel="noopener noreferrer">Open page</a></p>
                   <p className="muted">After saving: Google Search Console, URL Inspection, paste this link, Request Indexing.</p>
+                  <div className="panel" style={{ background: '#faf7f0' }}>
+                    <strong>AI Product Writer</strong>
+                    <p className="muted">Writes the description, use case, specs and keywords from the name, category, colours, size, finish and your notes. It uses only the facts you give. Always review before saving.</p>
+                    <Field label="Notes for AI (optional: features, sizes, where it is used)" area rows={3} value={p.aiNotes} onChange={(v) => upProd(i, 'aiNotes', v)} />
+                    <p style={{ marginTop: 10 }}><button type="button" className="btn btn-sm" disabled={aiBusy} onClick={() => aiWrite(i)}>{aiBusy ? 'Writing...' : 'Write draft with AI'}</button></p>
+                    {draft && draft.i === i && (
+                      <div style={{ marginTop: 12, borderTop: '1px solid #e4d5b0', paddingTop: 10 }}>
+                        <p><strong>Description:</strong> {draft.data.desc}</p>
+                        <p><strong>Use case:</strong> {draft.data.useCase}</p>
+                        <p className="pre"><strong>Specs:</strong>{'\n'}{(draft.data.specs || []).join('\n')}</p>
+                        <p><strong>Keywords:</strong> {(draft.data.keywords || []).join(', ')}</p>
+                        <p className="muted">Using this draft replaces the description, use case, specs and extra keywords of this product.</p>
+                        <p style={{ marginTop: 8 }}><button type="button" className="btn btn-sm" onClick={applyDraft}>Use this draft</button> <button type="button" className="btn btn-sm btn-outline" onClick={() => setDraft(null)}>Discard</button></p>
+                      </div>
+                    )}
+                  </div>
                   <Field label="Description" area value={p.desc} onChange={(v) => upProd(i, 'desc', v)} />
                   <div className="two">
                     <div><Field label="Size" value={p.size} onChange={(v) => upProd(i, 'size', v)} /></div>
                     <div><Field label="Finish" value={p.finish} onChange={(v) => upProd(i, 'finish', v)} /></div>
                   </div>
+ <Field label="Use case (for the Google description, e.g. aluminum doors and windows)" value={p.useCase} onChange={(v) => upProd(i, 'useCase', v)} />
+                  <Field label="Technical specs (one per line, Name: Value)" area rows={4} value={p.specs} onChange={(v) => upProd(i, 'specs', v)} />
                   <Field label="Colours (comma separated, e.g. Black, Gold)" value={p.colors} onChange={(v) => upProd(i, 'colors', v)} />
                   <Field label="Price in PKR (optional - leave empty to show 'call for rate')" value={p.price} onChange={(v) => upProd(i, 'price', v)} />
                   <Field label="Image path or URL" value={p.image} onChange={(v) => upProd(i, 'image', v)} />
@@ -322,6 +370,8 @@ export default function Admin() {
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
+                  <Field label="Door preview image (optional): transparent PNG of the handle, shown on the door preview. Leave empty to use the drawn handle" value={p.previewImage} onChange={(v) => upProd(i, 'previewImage', v)} />
+                  <input type="file" accept="image/png,image/webp" onChange={(e) => uploadPreview(i, e.target.files[0])} />
                   <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
                   <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />

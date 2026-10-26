@@ -18,3 +18,6 @@ Put images in /public/images and enter the path in the admin, for example /image
 
 ## Security
 Set ADMIN_USER, ADMIN_PASS and AUTH_SECRET in Vercel environment variables to override the defaults in the code.
+
+## AI Product Writer (optional)
+Add ANTHROPIC_API_KEY (from console.anthropic.com) in Vercel Environment Variables and Redeploy. In the admin, open a product and click Write draft with AI. Review the draft before saving.

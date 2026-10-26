@@ -12,12 +12,12 @@ import Badges from '@/components/Badges';
 export async function generateMetadata({ searchParams }) {
   const q = searchParams?.q;
   return {
-    title: { absolute: 'Aluminum Handles - Door, Cabinet & Window Handles | DoorLine Lahore' },
-    description: 'Aluminum handles from the manufacturer: door handles, cabinet handles, window locks and hinges in anodized and powder coated finishes. Direct factory rates, delivery all over Pakistan.',
+    title: { absolute: 'Aluminum Handles - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline' },
+    description: 'Aluminum door handles, cabinet handles, hinges and window locks. Wholesaler & Manufacturer in Pakistan and Lahore. Call for factory price.',
     keywords: ['aluminum handles', 'aluminium handles', 'aluminum handles Pakistan', 'aluminum door handles', 'aluminum cabinet handles', 'aluminum handles price in Pakistan', 'aluminum handels'],
     alternates: { canonical: '/aluminum-handles' },
     robots: q ? { index: false, follow: true } : undefined,
-    openGraph: { title: 'Aluminum Handles - Door, Cabinet & Window Handles | DoorLine Lahore', url: '/aluminum-handles', images: ['/images/logo.png'] },
+    openGraph: { title: 'Aluminum Handles - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline', url: '/aluminum-handles', images: ['/images/logo.png'] },
   };
 }
 

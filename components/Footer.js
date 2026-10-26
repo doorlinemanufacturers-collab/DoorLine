@@ -17,6 +17,9 @@ export default function Footer({ site }) {
         </div>
         <address><ContactLines site={site} /></address>
       </div>
+      <div className="container footmapwrap">
+        <iframe title={`${site.name} factory location, Lahore, Pakistan`} src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery || site.address)}&output=embed`} loading="lazy" className="footmap" referrerPolicy="no-referrer-when-downgrade" />
+      </div>
       <div className="copy">© {new Date().getFullYear()} {site.name}. All rights reserved.</div>
     </footer>
   );

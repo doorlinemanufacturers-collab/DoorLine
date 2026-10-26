@@ -131,3 +131,23 @@ address{font-style:normal;margin-bottom:16px}
 .chours{margin-top:18px;text-align:center;background:var(--alt);border-radius:10px;padding:12px;font-size:.95rem}
 
 .price{font-weight:700;color:var(--brand);margin:4px 0}
+
+.footmapwrap{padding-bottom:24px}.footmap{width:100%;height:240px;border:0;border-radius:12px}
+/* door preview */
+.dprev{margin-top:16px}.dbox{margin-top:12px;background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;animation:fadeUp .5s ease both}
+.dscene{perspective:900px;display:flex;justify-content:center;padding:10px 0 4px}
+.dwall{position:relative;width:min(240px,70vw);aspect-ratio:240/410;background:#d9d2c3;border:10px solid #8b7b66;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.dwall.cab{aspect-ratio:1/1.15}.droom{position:absolute;inset:0;background:linear-gradient(90deg,#fff6dc,#f0e4c6)}
+.ddoor{position:absolute;inset:0;transform-origin:left center;transition:transform .35s ease;cursor:pointer;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),0 0 18px rgba(0,0,0,.25)}
+.ddoor.r{transform-origin:right center}
+.dinset{position:absolute;left:12%;right:12%;top:6%;height:36%;border-radius:3px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18),inset 3px 3px 8px rgba(255,255,255,.12)}
+.dinset.b{top:50%;height:42%}
+.dhandle{position:absolute;right:9%;top:35%;width:11%;height:40%}
+.chandle{position:absolute;left:10%;top:50%;width:8%;height:30%}
+.dhinge{position:absolute;left:-3%;width:9%;height:11%}
+.wwall{aspect-ratio:300/230;width:min(300px,86vw);background:#9aa0a6;display:flex;overflow:hidden}
+.wpane{position:absolute;top:0;bottom:0;border:6px solid #b9bec3;background:#cfe6f3;transition:transform .35s ease}
+.wpane.back{right:0;width:52%}.wpane.front{left:0;width:52%;z-index:2;background:rgba(207,230,243,.85)}
+.wglass{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,0) 55%)}
+.wlock{position:absolute;right:-4px;top:44%;width:26px;height:26px}
+.dctrl{display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0}.dctrl input{flex:1;max-width:220px}

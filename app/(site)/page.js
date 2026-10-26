@@ -12,13 +12,17 @@ import { slugify } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
 
 
-export const metadata = {
-  title: { absolute: 'Aluminum Handles Manufacturer in Lahore, Pakistan | Anodizing - DoorLine' },
-  description: 'Professional aluminium handles manufacturer and wholesaler in Lahore: anodizing, cheap wholesale price, no middleman, direct factory rates and premium quality. Anodizing and electroplating services. Delivery all over Pakistan.',
-  keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan'],
-  alternates: { canonical: '/' },
-  openGraph: { title: 'Aluminum Handles Manufacturer in Lahore, Pakistan | Anodizing - DoorLine', description: 'Cheap wholesale price, no middleman, premium quality aluminium handles, anodizing and electroplating. Delivery all over Pakistan.', url: '/', images: ['/images/logo.png'] },
-};
+export async function generateMetadata() {
+  const { site } = await getContent();
+  const title = 'Aluminum Handles, Hinges & Locks - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline';
+  const description = `Wholesaler & Manufacturer of aluminum handles, hinges and window locks in Pakistan and Lahore. Anodizing and electroplating. Call ${site.phone} for price.`.slice(0, 155);
+  return {
+    title: { absolute: title }, description,
+    keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan', 'wholesaler and manufacturer in Pakistan', 'aluminium handles wholesaler Lahore', 'aluminium hinges wholesaler Pakistan', 'aluminium handles supplier Pakistan'],
+    alternates: { canonical: '/' },
+    openGraph: { title, description, url: '/', images: ['/images/logo.png'] },
+  };
+}
 
 export default async function Home() {
   const { site, hero, why, products, faqs, seo, services, badges, about, cities, guides } = await getContent();
