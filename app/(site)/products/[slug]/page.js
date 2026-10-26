@@ -77,7 +77,7 @@ export default async function ProductPage({ params }) {
 
         <Reveal className="narrow-block">
           <h2 style={{ marginTop: 44 }}>Popular Searches</h2>
-          <div className="chips">{seo.variants.map((v) => <Link key={v} href={`/aluminum-handles?q=${encodeURIComponent(v)}`} className="chip">{v}</Link>)}</div>
+          <div className="chips">{seo.variants.map((v) => <Link key={v} href={`/aluminum-handles?q=${encodeURIComponent(v)}`} className="chip" rel="nofollow">{v}</Link>)}</div>
           <p className="muted">Need a finish on your own aluminium parts? See our <Link className="link" href="/services/aluminium-anodizing-service-lahore">anodizing</Link> and <Link className="link" href="/services/aluminium-electroplating-service-lahore">electroplating</Link> services.</p>
         </Reveal>
 

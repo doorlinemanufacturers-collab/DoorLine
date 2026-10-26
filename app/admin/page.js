@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://doorlinemanufacturers.com').replace(/\/$/, '');
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.doorlinemanufacturers.com').replace(/\/$/, '');
 const pSlug = (p) => (p.slug ? slugify(p.slug) : slugify(p.name));
 const pUrl = (p) => `${SITE}/products/${pSlug(p)}`;
 
