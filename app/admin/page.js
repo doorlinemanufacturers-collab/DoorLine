@@ -107,15 +107,6 @@ export default function Admin() {
     setMsg('Latest texts loaded. Now click Save Changes to publish them.');
   };
 
-  const uploadPreview = async (i, file) => {
-    if (!file) return; setMsg('Uploading...'); setErr('');
-    const fd = new FormData(); fd.append('file', file);
-    const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-    const j = await r.json();
-    if (!r.ok) { setMsg(''); return setErr(j.error); }
-    upProd(i, 'previewImage', j.url); setMsg('Preview image uploaded. Now click Save Changes.');
-  };
-
   const copyText = async (t) => { try { await navigator.clipboard.writeText(t); setMsg('Link copied.'); } catch (e) { setMsg('Copy failed. Select the link and copy it manually.'); } };
 
   const uploadSvc = async (i, file) => {
@@ -363,6 +354,10 @@ export default function Admin() {
                   </div>
  <Field label="Use case (for the Google description, e.g. aluminum doors and windows)" value={p.useCase} onChange={(v) => upProd(i, 'useCase', v)} />
                   <Field label="Technical specs (one per line, Name: Value)" area rows={4} value={p.specs} onChange={(v) => upProd(i, 'specs', v)} />
+                  <label>Colour changer drawing (Auto picks the shape from the category and name)</label>
+                  <select value={p.previewType || 'auto'} onChange={(e) => upProd(i, 'previewType', e.target.value)}>
+                    <option value="auto">Auto</option><option value="door">Door handle</option><option value="cabinet">Cabinet handle</option><option value="window">Window lock</option><option value="hinge">Hinge (Qabza)</option>
+                  </select>
                   <Field label="Colours (comma separated, e.g. Black, Gold)" value={p.colors} onChange={(v) => upProd(i, 'colors', v)} />
                   <Field label="Price in PKR (optional - leave empty to show 'call for rate')" value={p.price} onChange={(v) => upProd(i, 'price', v)} />
                   <Field label="Image path or URL" value={p.image} onChange={(v) => upProd(i, 'image', v)} />
@@ -370,12 +365,6 @@ export default function Admin() {
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
-                  <label>Door preview type (Auto picks it from the category and name)</label>
-                  <select value={p.previewType || 'auto'} onChange={(e) => upProd(i, 'previewType', e.target.value)}>
-                    <option value="auto">Auto</option><option value="door">Door handle</option><option value="cabinet">Cabinet handle</option><option value="window">Window lock</option><option value="hinge">Hinge (Qabza)</option>
-                  </select>
-                  <Field label="Door preview image (optional): transparent PNG of the handle, shown on the door preview. Leave empty to use the drawn handle" value={p.previewImage} onChange={(v) => upProd(i, 'previewImage', v)} />
-                  <input type="file" accept="image/png,image/webp" onChange={(e) => uploadPreview(i, e.target.files[0])} />
                   <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
                   <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />

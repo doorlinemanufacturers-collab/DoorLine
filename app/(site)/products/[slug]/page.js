@@ -8,7 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
-import DoorPreview from '@/components/DoorPreview';
+import ColourChanger from '@/components/ColourChanger';
 import { catSlug } from '@/lib/categories';
 
 async function find(slug) {
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }) {
               <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need the wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>
               <a className="btn btn-outline" href={`tel:${c.site.phone.replace(/\s/g, '')}`}>Call {c.site.phone}</a>
             </div>
-            <DoorPreview info={previewInfo(p)} colors={String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean)} cutout={p.previewImage} name={p.name} />
+            <ColourChanger info={previewInfo(p)} colors={String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean)} name={p.name} />
           </Reveal>
         </div>
 

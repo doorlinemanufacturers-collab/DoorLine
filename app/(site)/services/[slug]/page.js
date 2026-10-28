@@ -7,19 +7,20 @@ import FAQ from '@/components/FAQ';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
+import AnodizingAnimation from '@/components/AnodizingAnimation';
 
 
 async function find(slug) { const c = await getContent(); return { c, s: c.services.find((x) => x.slug === slug) }; }
 
 export async function generateMetadata({ params }) {
-  const { s } = await find(params.slug);
+  const { c, s } = await find(params.slug);
   if (!s) return { title: 'Service not found' };
-  const description = `${s.short} Premium quality, cheap price, direct factory rates and no middleman. DoorLine Manufacturers, Lahore. Bulk orders across Pakistan.`.slice(0, 158);
+  const description = `${s.short} Call ${c.site.phone} for price. Direct factory rates, bulk orders across Pakistan.`.slice(0, 155);
   return {
-    title: s.metaTitle || `${s.title} | Premium Quality & Direct Rates`, description,
+    title: { absolute: s.metaTitle || `${s.title} | Doorline` }, description,
     keywords: String(s.keywords || '').split(',').map((k) => k.trim()).filter(Boolean),
     alternates: { canonical: `/services/${s.slug}` },
-    openGraph: { title: s.title, description, url: `/services/${s.slug}`, images: [s.image] },
+    openGraph: { title: s.title, description, url: `/services/${s.slug}`, images: [s.image || '/images/logo.png'] },
   };
 }
 
@@ -53,6 +54,15 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
       </section>
+      {/anodiz/i.test(s.title) && (
+        <section className="section">
+          <div className="container narrow">
+            <h2>How Anodizing Works - Watch the Process</h2>
+            <p className="lead">Watch an aluminium part go through cleaning, anodizing, colouring and sealing. Tap a colour to see the final finish.</p>
+            <AnodizingAnimation />
+          </div>
+        </section>
+      )}
       <section className="section alt">
         <div className="container narrow">
           <Reveal>{String(s.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 26 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}</Reveal>

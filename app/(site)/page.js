@@ -8,6 +8,7 @@ import FAQ from '@/components/FAQ';
 import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
+import AnodizingAnimation from '@/components/AnodizingAnimation';
 import { slugify } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
 
@@ -117,6 +118,15 @@ export default async function Home() {
           <div className="grid4">
             {[['1. Send Your Requirement', 'Share the models, colours and quantities you need on WhatsApp or through the form.'], ['2. Get Factory Rates', 'We reply with the latest wholesale rate list directly from the factory, no middleman.'], ['3. Confirm and Produce', 'Confirm the order. Ready stock ships fast and bulk orders are produced with your required finish.'], ['4. Delivery Across Pakistan', 'Your order is dispatched from Lahore by transport or cargo to your city.']].map(([t, x], i) => (<Reveal key={t} delay={i * 90} className="box"><h3>{t}</h3><p>{x}</p></Reveal>))}
           </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container narrow">
+          <h2>See How Anodizing Works</h2>
+          <p className="lead">Our anodizing services in Pakistan and Lahore: watch the process and pick a colour.</p>
+          <AnodizingAnimation />
+          <p style={{ marginTop: 16, textAlign: 'center' }}><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link></p>
         </div>
       </section>
 
