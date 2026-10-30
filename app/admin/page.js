@@ -98,8 +98,8 @@ export default function Admin() {
     if (!d) return setErr('Could not load the latest texts.');
     setC((o) => ({
       ...o,
-      seo: d.seo, faqs: d.faqs, cities: d.cities, badges: d.badges, why: d.why, guides: d.guides,
-      services: d.services.map((x) => ({ ...x, image: ((o.services || []).find((y) => y.slug === x.slug) || {}).image || x.image })),
+      seo: d.seo, faqs: d.faqs, homeFaqs: d.homeFaqs, popular: d.popular, cities: d.cities, badges: d.badges, why: d.why, guides: d.guides,
+      services: d.services.map((x) => { const old = (o.services || []).find((y) => y.slug === x.slug) || {}; return { ...x, image: old.image || x.image, gallery: old.gallery || [] }; }),
       hero: { ...o.hero, h1: d.hero.h1, sub: d.hero.sub },
       about: { ...o.about, vision: d.about.vision, mission: d.about.mission, promise: d.about.promise },
       deleted: [],
@@ -108,6 +108,23 @@ export default function Admin() {
   };
 
   const copyText = async (t) => { try { await navigator.clipboard.writeText(t); setMsg('Link copied.'); } catch (e) { setMsg('Copy failed. Select the link and copy it manually.'); } };
+
+  const uploadGallery = async (i, files) => {
+    if (!files || !files.length) return;
+    setMsg('Uploading pictures...'); setErr('');
+    const added = [];
+    for (const file of Array.from(files).slice(0, 12)) {
+      const fd = new FormData(); fd.append('file', await compress(file));
+      const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      const j = await r.json();
+      if (!r.ok) { setErr(j.error || 'Upload failed'); break; }
+      added.push({ url: j.url, alt: '' });
+    }
+    if (added.length) {
+      setC((o) => { const n = structuredClone(o); n.services[i].gallery = [...(n.services[i].gallery || []), ...added]; return n; });
+      setMsg(`${added.length} picture(s) uploaded. Now click Save Changes.`);
+    } else setMsg('');
+  };
 
   const uploadSvc = async (i, file) => {
     if (!file) return; setMsg('Uploading...'); setErr('');
@@ -249,6 +266,9 @@ export default function Admin() {
       {tab === 'seo' && (
         <>
           <p className="muted" style={{ marginBottom: 10 }}>These text blocks appear on the home page and help your Google ranking. Keep them natural and useful.</p>
+          <div className="panel">
+            <Field label="Popular Searches links (one per line: Label | /page-link). Shown in the footer and on the home page." area rows={8} value={(c.popular || []).map((x) => `${x.label} | ${x.href}`).join('\n')} onChange={(v) => up(['popular'], v.split('\n').map((l) => { const [a, b] = l.split('|'); return { label: (a || '').trim(), href: (b || '').trim() }; }))} />
+          </div>
           {c.seo.map((b, i) => (
             <div className="panel" key={i}>
               <Field label="Heading" value={b.title} onChange={(v) => up(['seo', i, 'title'], v)} />
@@ -278,6 +298,15 @@ export default function Admin() {
                   {x.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => up(['services', i, 'image'], '')}>Remove image</button></p>}
                   <label>Or upload a new image (max 4MB)</label>
                   <input type="file" accept="image/*" onChange={(e) => uploadSvc(i, e.target.files[0])} />
+                  <label>Gallery pictures: select several images at once (up to 12 per upload)</label>
+                  <input type="file" accept="image/*" multiple onChange={(e) => { uploadGallery(i, e.target.files); e.target.value = ''; }} />
+                  {(x.gallery || []).map((g, k) => (
+                    <div key={k} className="galitem">
+                      <Thumb src={g.url} />
+                      <input placeholder="Picture description for Google (alt text), optional" value={g.alt || ''} onChange={(e) => up(['services', i, 'gallery', k, 'alt'], e.target.value)} />
+                      <button type="button" className="btn btn-sm danger" onClick={() => up(['services', i, 'gallery'], x.gallery.filter((_, z) => z !== k))}>Remove</button>
+                    </div>
+                  ))}
                   <Field label="SEO keywords (comma separated)" area value={x.keywords} onChange={(v) => up(['services', i, 'keywords'], v)} />
                   <Field label="Introduction" area rows={4} value={x.intro} onChange={(v) => up(['services', i, 'intro'], v)} />
                   <Field label="Key points (one per line)" area rows={5} value={x.points} onChange={(v) => up(['services', i, 'points'], v)} />
@@ -388,6 +417,15 @@ export default function Admin() {
             </div>
           ))}
           <button className="btn btn-sm" onClick={() => setC({ ...c, faqs: [...c.faqs, { q: '', a: '' }] })}>+ Add FAQ</button>
+          <h2 style={{ marginTop: 28 }}>Home page FAQs</h2>
+          {(c.homeFaqs || []).map((f, i) => (
+            <div className="panel" key={`h${i}`}>
+              <Field label="Question" value={f.q} onChange={(v) => up(['homeFaqs', i, 'q'], v)} />
+              <Field label="Answer" area value={f.a} onChange={(v) => up(['homeFaqs', i, 'a'], v)} />
+              <p style={{ marginTop: 10 }}><button className="btn btn-sm danger" onClick={() => setC({ ...c, homeFaqs: c.homeFaqs.filter((_, x) => x !== i) })}>Delete</button></p>
+            </div>
+          ))}
+          <button className="btn btn-sm" onClick={() => setC({ ...c, homeFaqs: [...(c.homeFaqs || []), { q: '', a: '' }] })}>+ Add Home FAQ</button>
         </>
       )}
 

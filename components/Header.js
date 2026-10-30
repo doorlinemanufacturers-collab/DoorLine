@@ -18,10 +18,9 @@ export default function Header({ site, categories, services = [] }) {
         </Link>
         <nav className="desknav" aria-label="Main">
           <Link href="/aluminum-handles">Aluminum Handles</Link>
+          <Link href="/aluminum-hardware">Aluminum Hardware</Link>
           {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`}>{/anodiz/i.test(x.title) ? 'Anodizing' : /plating/i.test(x.title) ? 'Electroplating' : x.title}</Link>)}
           <Link href="/guides">Guides</Link>
-          <Link href="/about">About</Link>
-          <Link href="/faq">FAQ</Link>
           <Link href="/contact">Contact Us</Link>
         </nav>
         <a className="btn btn-sm" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">WhatsApp</a>
@@ -47,6 +46,7 @@ export default function Header({ site, categories, services = [] }) {
             {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(/ Services?/, '')}</Link>)}
           </div>
         )}
+        <Link href="/aluminum-hardware" onClick={close}>Aluminum Hardware</Link>
         <Link href="/guides" onClick={close}>Buying Guides</Link>
         <Link href="/delivery-across-pakistan" onClick={close}>Delivery Across Pakistan</Link>
         <Link href="/about" onClick={close}>About Us</Link>

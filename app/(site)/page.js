@@ -8,6 +8,7 @@ import FAQ from '@/components/FAQ';
 import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
+import PopularSearches from '@/components/PopularSearches';
 import AnodizingAnimation from '@/components/AnodizingAnimation';
 import { slugify } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
@@ -15,8 +16,8 @@ import { catSlug } from '@/lib/categories';
 
 export async function generateMetadata() {
   const { site } = await getContent();
-  const title = 'Aluminum Handles, Hinges & Locks - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline';
-  const description = `Wholesaler & Manufacturer of aluminum handles, hinges and window locks in Pakistan and Lahore. Anodizing and electroplating. Call ${site.phone} for price.`.slice(0, 155);
+  const title = 'Aluminum Handles & Aluminum Hardware - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline';
+  const description = `Aluminum handles & aluminum hardware: Wholesaler & Manufacturer in Pakistan and Lahore. Anodizing, electroplating. Call ${site.phone} for price.`.slice(0, 155);
   return {
     title: { absolute: title }, description,
     keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan', 'wholesaler and manufacturer in Pakistan', 'aluminium handles wholesaler Lahore', 'aluminium hinges wholesaler Pakistan', 'aluminium handles supplier Pakistan'],
@@ -26,7 +27,7 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services, badges, about, cities, guides } = await getContent();
+  const { site, hero, why, products, faqs, seo, services, badges, about, cities, guides, homeFaqs, popular } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   return (
     <>
@@ -126,7 +127,7 @@ export default async function Home() {
           <h2>See How Anodizing Works</h2>
           <p className="lead">Our anodizing services in Pakistan and Lahore: watch the process and pick a colour.</p>
           <AnodizingAnimation />
-          <p style={{ marginTop: 16, textAlign: 'center' }}><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link></p>
+          <p style={{ marginTop: 16, textAlign: 'center' }}><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link> <Link className="btn btn-outline" href="/services/aluminium-electroplating-service-lahore">Electroplating Services</Link></p>
         </div>
       </section>
 
@@ -155,10 +156,14 @@ export default async function Home() {
 
       <section className="section alt">
         <div className="container narrow">
-          <h2>Frequently Asked Questions</h2>
-          <FAQ faqs={faqs.slice(0, 4)} schema={false} />
+          <h2>Aluminum Handles & Hardware - Frequently Asked Questions</h2>
+          <FAQ faqs={homeFaqs} />
           <p style={{ marginTop: 20 }}><Link className="btn btn-outline" href="/faq">See All FAQs</Link></p>
         </div>
+      </section>
+
+      <section className="section">
+        <div className="container"><PopularSearches items={popular} /></div>
       </section>
 
       <section className="section cta">

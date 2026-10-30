@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 import AnodizingAnimation from '@/components/AnodizingAnimation';
+import Gallery from '@/components/Gallery';
 
 
 async function find(slug) { const c = await getContent(); return { c, s: c.services.find((x) => x.slug === slug) }; }
@@ -27,11 +28,15 @@ export async function generateMetadata({ params }) {
 export default async function ServicePage({ params }) {
   const { c, s } = await find(params.slug);
   if (!s) notFound();
+  const gallery = (s.gallery || []).filter((g) => g && g.url).map((g, i) => ({ url: g.url, alt: (g.alt && g.alt.trim()) || `${s.title} - sample ${i + 1} - Doorline Lahore Pakistan` }));
+  const workLabel = /anodiz/i.test(s.title) ? 'Anodizing Work Samples' : /plating/i.test(s.title) ? 'Electroplating Work Samples' : 'Work Samples';
+  const abs = (u) => (u.startsWith('http') ? u : `${siteUrl()}${u}`);
   const points = String(s.points || '').split('\n').map((x) => x.trim()).filter(Boolean);
   const ld = {
     '@context': 'https://schema.org', '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title,
     provider: { '@type': 'LocalBusiness', name: c.site.name, url: siteUrl(), telephone: c.site.phone },
-    areaServed: { '@type': 'Country', name: 'Pakistan' },
+    areaServed: [{ '@type': 'Country', name: 'Pakistan' }, { '@type': 'City', name: 'Lahore' }],
+    ...(gallery.length ? { image: gallery.map((g) => abs(g.url)) } : {}),
   };
   const others = c.services.filter((x) => x.slug !== s.slug);
   return (
@@ -60,6 +65,24 @@ export default async function ServicePage({ params }) {
             <h2>How Anodizing Works - Watch the Process</h2>
             <p className="lead">Watch an aluminium part go through cleaning, anodizing, colouring and sealing. Tap a colour to see the final finish.</p>
             <AnodizingAnimation />
+          </div>
+        </section>
+      )}
+      {gallery.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <h2>{workLabel}</h2>
+            <p className="lead">Tap a picture to enlarge it.</p>
+            <Gallery images={gallery} />
+          </div>
+        </section>
+      )}
+      {/plating/i.test(s.title) && (
+        <section className="section">
+          <div className="container narrow">
+            <h2>How Electroplating Works - Watch the Process</h2>
+            <p className="lead">Watch a part go through cleaning, surface preparation, plating and rinsing. Tap a finish to see the result.</p>
+            <AnodizingAnimation kind="plating" />
           </div>
         </section>
       )}

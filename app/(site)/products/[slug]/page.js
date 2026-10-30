@@ -70,6 +70,7 @@ export default async function ProductPage({ params }) {
         </div>
 
         <div className="narrow" style={{ marginTop: 36 }}>
+          <p className="muted">Browse: <Link className="link" href="/aluminum-handles">Aluminum Handles</Link> · <Link className="link" href="/aluminum-hardware">Aluminum Hardware</Link> · <Link className="link" href={`/collections/${catSlug(p.category)}`}>Aluminum {p.category}</Link> · <Link className="link" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan</Link></p>
           <h2>{p.name} - Technical Specifications</h2>
           <table className="spec"><tbody>{seo.specs.map(([k, v]) => <tr key={k}><th>{k}</th><td>{v}</td></tr>)}</tbody></table>
           {seo.options.length > 0 && (<><h2 style={{ fontSize: '1.1rem' }}>Available Colours and Sizes</h2><ul className="ticks">{seo.options.map((o) => <li key={o}>{o}</li>)}</ul></>)}
