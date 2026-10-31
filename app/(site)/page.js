@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getContent } from '@/lib/store';
-import { waLink } from '@/lib/site';
+import { waLink, slugify } from '@/lib/site';
+import { catSlug } from '@/lib/categories';
+import { TOP_CITIES } from '@/lib/cities';
 import ProductCard from '@/components/ProductCard';
 import CatalogueForm from '@/components/CatalogueForm';
 import FAQ from '@/components/FAQ';
@@ -9,170 +11,182 @@ import ServiceCard from '@/components/ServiceCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 import PopularSearches from '@/components/PopularSearches';
-import AnodizingAnimation from '@/components/AnodizingAnimation';
-import { slugify } from '@/lib/site';
-import { catSlug } from '@/lib/categories';
+import LazyAnodizing from '@/components/LazyAnodizing';
+import ContactLines from '@/components/ContactLines';
 
+const H1 = 'Aluminum Handles Manufacturer & Hardware Dealer in Pakistan, Lahore';
+const CAT_ICON = { 'Door Handles': '🚪', 'Cabinet Handles': '🗄️', 'Window Locks': '🔒', Hinges: '🔩' };
+const WHY_ICON = ['🏭', '🎨', '🚚', '✨', '✅', '⭐'];
 
 export async function generateMetadata() {
   const { site } = await getContent();
-  const title = 'Aluminum Handles & Aluminum Hardware - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline';
-  const description = `Aluminum handles & aluminum hardware: Wholesaler & Manufacturer in Pakistan and Lahore. Anodizing, electroplating. Call ${site.phone} for price.`.slice(0, 155);
+  const title = 'Aluminum Handles Manufacturer & Hardware Dealer | Pakistan, Lahore';
+  const description = `Aluminum handles manufacturer & hardware dealer in Pakistan, Lahore. Anodizing and electroplating. Call ${site.phone} for factory price.`.slice(0, 155);
   return {
     title: { absolute: title }, description,
-    keywords: ['aluminium handles manufacturer in Lahore', 'aluminium door handles wholesale Pakistan', 'kitchen cabinet handles factory Lahore', 'door handles supplier Pakistan', 'aluminium handles wholesale market Lahore', 'aluminium handles wholesale market Lahore', 'aluminium anodizing in Lahore', 'electroplating in Lahore', 'top aluminium handles manufacturers in Lahore', 'best aluminium handles manufacturer Lahore', 'cheap aluminium door handles price Pakistan', 'direct factory rates aluminium handles', 'no middleman aluminium handles', 'premium quality aluminium handles', 'cheap anodizing price Lahore', 'premium quality anodizing Lahore', 'aluminium pull handle manufacturer Lahore', 'sliding door handle Pakistan', 'aluminium window handle wholesale Pakistan', 'sliding window lock supplier Lahore', 'aluminium glass door handle Pakistan', 'aluminium fabrication hardware Lahore', 'anodising service Lahore', 'colour anodizing Pakistan', 'electro plating Lahore', 'electroplating companies in Pakistan', 'aluminum handles manufacturer in Lahore', 'aluminum handels manufacturer in Lahore', 'steel aluminum handles manufacturer in Lahore', 'anodizing services in Lahore', 'anodizing Lahore', 'aluminum handles manufacturer in Karachi', 'aluminum handles manufacturer in Islamabad', 'aluminum handles manufacturer in Pakistan', 'wholesaler and manufacturer in Pakistan', 'aluminium handles wholesaler Lahore', 'aluminium hinges wholesaler Pakistan', 'aluminium handles supplier Pakistan'],
     alternates: { canonical: '/' },
-    openGraph: { title, description, url: '/', images: ['/images/logo.png'] },
+    openGraph: { title, description, url: '/', images: ['/images/og-default.jpg'] },
+    twitter: { card: 'summary_large_image', title, description, images: ['/images/og-default.jpg'] },
   };
 }
 
+function Band({ n, title, sub }) {
+  return (
+    <div className="band"><div className="container bandin"><span className="num">{n}</span><div><p className="bandt">{title}</p><small>{sub}</small></div></div></div>
+  );
+}
+
 export default async function Home() {
-  const { site, hero, why, products, faqs, seo, services, badges, about, cities, guides, homeFaqs, popular } = await getContent();
+  const { site, hero, why, products, seo, services, badges, about, guides, homeFaqs, popular } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
+  const glance = [
+    ['Business', `${site.name}: aluminum handles manufacturer & hardware dealer`],
+    ['Location', site.address],
+    ['Products', 'Aluminum door handles, cabinet handles, hinges, window locks, fittings'],
+    ['Services', 'Aluminium anodizing and electroplating'],
+    ['Customers', 'Hardware shops, fabricators, dealers, furniture makers, contractors'],
+    ['Pricing', 'Direct factory rates, no middleman'],
+    ['Delivery', 'All over Pakistan by transport and cargo'],
+    ['Contact person', site.owner],
+  ];
   return (
     <>
       <section className="hero">
         <div className={`container herogrid ${hero.image ? '' : 'herosolo'}`}>
           <div>
-            <h1>{hero.h1}</h1>
+            <p className="kicker">Anodizing & Electroplating · Factory Price for Bulk Buyers</p>
+            <h1>{H1}</h1>
             <p>{hero.sub}</p>
             <Badges items={badges} center={!hero.image} />
             <div className="row">
               <Link className="btn" href="/aluminum-handles">View Aluminum Handles</Link>
-              <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">WhatsApp Rates</a>
+              <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminum handles.')} target="_blank" rel="noopener noreferrer">WhatsApp Rates</a>
             </div>
           </div>
           {hero.image ? (
             <div className="heroimg">
-              <Image src={hero.image} alt="Aluminium door handle manufacturer, anodizing and electroplating Lahore Pakistan" fill priority sizes="(max-width: 900px) 100vw, 45vw" className="pimg" />
+              <Image src={hero.image} alt="Aluminum handles manufacturer and hardware dealer in Pakistan, Lahore" fill priority sizes="(max-width: 900px) 100vw, 45vw" className="pimg" />
             </div>
           ) : null}
         </div>
       </section>
 
-      <div className="marquee" aria-hidden="true"><div className="track">{[0, 1].map((k) => <span key={k}>Door Handles ✦ Cabinet Handles ✦ Window Locks ✦ Hinges ✦ Anodizing ✦ Electroplating ✦ Wholesale Lahore ✦ Delivery All Over Pakistan ✦ </span>)}</div></div>
+      {/* ---------- 1. COMPANY ---------- */}
+      <Band n="1" title="Our Company" sub="Who we are, our vision, mission and promise" />
+      <section id="company" className="sec sec-co">
+        <div className="container">
+          <div className="cogrid">
+            <Reveal>
+              <h2>{about.title}</h2>
+              {String(about.text || '').split(/\n\s*\n/).map((t, i) => <p key={i} className="pre">{t}</p>)}
+              <div className="row"><Link className="btn" href="/about">More About Us</Link><Link className="btn btn-outline" href="/contact">Contact Us</Link></div>
+            </Reveal>
+            <Reveal delay={120} className="glance">
+              <h3>Doorline at a Glance</h3>
+              <dl>{glance.map(([k, v]) => (<div key={k}><dt>{k}</dt><dd>{v}</dd></div>))}</dl>
+            </Reveal>
+          </div>
 
-      <section className="section">
-        <Reveal className="container">
-          <h2>Product Categories</h2>
-          <p className="lead">Browse our aluminium handle range by category.</p>
-          <div className="grid4">
-            {categories.map((c) => (
-              <Link key={c} href={`/collections/${catSlug(c)}`} className="box catbox">
-                <h3>{c}</h3>
-                <span className="link">Browse {c} →</span>
-              </Link>
+          <h2 className="subh">Our Vision, Mission & Promise</h2>
+          <div className="vmp">
+            {[['👁️', 'Our Vision', about.vision], ['🎯', 'Our Mission', about.mission], ['🤝', 'Our Promise', about.promise]].map(([ic, t, x], i) => (
+              <Reveal key={t} delay={i * 100} className="vcard"><span className="vic" aria-hidden="true">{ic}</span><h3>{t}</h3><p>{x}</p></Reveal>
             ))}
           </div>
-        </Reveal>
-      </section>
 
-      <section className="section">
-        <div className="container">
-          <h2>Anodizing & Electroplating Services</h2>
-          <p className="lead">Professional aluminium finishing for handles, hardware and parts.</p>
-          <div className="grid">{services.map((x, i) => <Reveal key={x.slug} delay={i * 120}><ServiceCard s={x} /></Reveal>)}</div>
+          <h2 className="subh">Why Choose Doorline</h2>
+          <div className="fgrid">
+            {why.map((w, i) => (<Reveal key={i} delay={i * 80} className="fcard"><span className="fic" aria-hidden="true">{WHY_ICON[i % WHY_ICON.length]}</span><h3>{w.title}</h3><p>{w.text}</p></Reveal>))}
+          </div>
         </div>
       </section>
 
-      <section id="products" className="section alt">
+      {/* ---------- 2. CUSTOMERS ---------- */}
+      <Band n="2" title="For Customers" sub="Products, services, delivery and how to order" />
+      <section id="customers" className="sec sec-cu">
         <div className="container">
-          <h2>Featured Aluminium Handles</h2>
-          <p className="lead">Door handles, cabinet handles, window locks and hinges at wholesale factory prices. Anodizing and electroplating available.</p>
+          <h2>Aluminum Handles & Hardware Categories</h2>
+          <div className="catgrid">
+            {categories.map((c, i) => (
+              <Reveal key={c} delay={i * 70}><Link href={`/collections/${catSlug(c)}`} className="catcard"><span className="cic" aria-hidden="true">{CAT_ICON[c] || '🛠️'}</span><strong>Aluminum {c}</strong><span className="link">Browse {c.toLowerCase()} →</span></Link></Reveal>
+            ))}
+            <Reveal delay={categories.length * 70}><Link href="/aluminum-hardware" className="catcard"><span className="cic" aria-hidden="true">🧰</span><strong>Aluminum Hardware</strong><span className="link">See all hardware →</span></Link></Reveal>
+          </div>
+
+          <h2 className="subh">Featured Aluminum Handles</h2>
           <div className="grid">{products.slice(0, 8).map((p, i) => <Reveal key={p.slug} delay={(i % 4) * 80}><ProductCard p={p} /></Reveal>)}</div>
-          <p style={{ marginTop: 28, textAlign: 'center' }}><Link className="btn" href="/aluminum-handles">View All Aluminum Handles</Link></p>
-        </div>
-      </section>
+          <p className="center"><Link className="btn" href="/aluminum-handles">View All Aluminum Handles</Link> <Link className="btn btn-outline" href="/aluminum-hardware">View Aluminum Hardware</Link></p>
 
-      <section id="why" className="section">
-        <div className="container">
-          <h2>Why Choose Us</h2>
-          <div className="grid4">
-            {why.map((w, i) => (<Reveal key={i} delay={i * 90} className="box"><h3>{w.title}</h3><p>{w.text}</p></Reveal>))}
+          <h2 className="subh">Anodizing & Electroplating Services</h2>
+          <div className="grid">{services.map((x, i) => <Reveal key={x.slug} delay={i * 120}><ServiceCard s={x} /></Reveal>)}</div>
+          <h3 className="subh3">See How Anodizing Works</h3>
+          <div className="narrow"><LazyAnodizing kind="anodizing" /></div>
+          <p className="center"><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link> <Link className="btn btn-outline" href="/services/aluminium-electroplating-service-lahore">Electroplating Services</Link></p>
+
+          <h2 className="subh">How It Works</h2>
+          <div className="steps">
+            {[['Send your requirement', 'Share the models, colours and quantities you need on WhatsApp or through the form.'], ['Get factory rates', 'We reply with the latest wholesale rate list directly from the factory, no middleman.'], ['Confirm and produce', 'Confirm the order. Ready stock ships fast and bulk orders are produced with your required finish.'], ['Delivery across Pakistan', 'Your order is dispatched by transport or cargo to your city.']].map(([t, x], i) => (
+              <Reveal key={t} delay={i * 90} className="step"><span className="snum">{i + 1}</span><h3>{t}</h3><p>{x}</p></Reveal>
+            ))}
           </div>
-        </div>
-      </section>
 
-      <section className="section">
-        <div className="container">
-          <h2>Our Vision, Mission & Promise</h2>
-          <div className="grid4">
-            {[['Our Vision', about.vision], ['Our Mission', about.mission], ['Our Promise', about.promise]].map(([t, x], i) => (<Reveal key={t} delay={i * 100} className="box"><h3>{t}</h3><p>{x}</p></Reveal>))}
+          <h2 className="subh">Delivery All Over Pakistan</h2>
+          <div className="chips">{TOP_CITIES.map((c) => <Link key={c} className="chip" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan →</Link><Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
+
+          <div id="catalogue" className="formcard">
+            <div><h2>Request Wholesale Catalogue</h2><p className="lead">Fill in the form and we will send the catalogue, latest rate list and anodizing and electroplating details on WhatsApp.</p><ul className="ticks"><li>Direct factory rates</li><li>Reply on WhatsApp</li><li>Delivery across Pakistan</li></ul></div>
+            <CatalogueForm whatsapp={site.whatsapp} source="home" />
           </div>
+
+          <h2 className="subh">Aluminum Handles Buying Guides</h2>
+          <div className="fgrid">{guides.slice(0, 4).map((g, i) => (<Reveal key={g.slug} delay={i * 90} className="fcard"><h3>{g.title}</h3><p className="muted">{g.description}</p><Link className="link" href={`/guides/${g.slug}`}>Read guide →</Link></Reveal>))}</div>
         </div>
       </section>
 
-      <section className="section alt">
-        <div className="container narrow">
-          {seo.map((b, i) => (
-            <Reveal key={i} as="article" className="seoblock">
-              <h2>{b.title}</h2>
-              <p className="pre">{b.text}</p>
+      {/* ---------- 3. TRUST ---------- */}
+      <Band n="3" title="Trust & Information" sub="Business details, FAQs and everything you can verify" />
+      <section id="trust" className="sec sec-tr">
+        <div className="container">
+          <div className="trgrid">
+            <Reveal className="tcard">
+              <h2>Business Details You Can Verify</h2>
+              <address><ContactLines site={site} /></address>
+              <div className="row">
+                <a className="btn" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`} target="_blank" rel="noopener noreferrer">Find Us on Google Maps</a>
+                <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello')} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+              </div>
             </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <h2>How It Works</h2>
-          <div className="grid4">
-            {[['1. Send Your Requirement', 'Share the models, colours and quantities you need on WhatsApp or through the form.'], ['2. Get Factory Rates', 'We reply with the latest wholesale rate list directly from the factory, no middleman.'], ['3. Confirm and Produce', 'Confirm the order. Ready stock ships fast and bulk orders are produced with your required finish.'], ['4. Delivery Across Pakistan', 'Your order is dispatched from Lahore by transport or cargo to your city.']].map(([t, x], i) => (<Reveal key={t} delay={i * 90} className="box"><h3>{t}</h3><p>{x}</p></Reveal>))}
+            <Reveal delay={120} className="tcard">
+              <h2>Why Buyers and Search Engines Can Trust Us</h2>
+              <ul className="ticks">
+                <li>We are the manufacturer, not a trader.</li>
+                <li>Name, address and phone are the same on every page.</li>
+                <li>Prices and quotes come directly from the factory.</li>
+                <li>Anodizing and electroplating are done for our own and customer parts.</li>
+                <li>Privacy policy and terms are public.</li>
+              </ul>
+              <p><Link className="link" href="/privacy-policy">Privacy policy</Link> · <Link className="link" href="/terms">Terms</Link> · <Link className="link" href="/faq">FAQ</Link></p>
+            </Reveal>
           </div>
-        </div>
-      </section>
 
-      <section className="section">
-        <div className="container narrow">
-          <h2>See How Anodizing Works</h2>
-          <p className="lead">Our anodizing services in Pakistan and Lahore: watch the process and pick a colour.</p>
-          <AnodizingAnimation />
-          <p style={{ marginTop: 16, textAlign: 'center' }}><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link> <Link className="btn btn-outline" href="/services/aluminium-electroplating-service-lahore">Electroplating Services</Link></p>
-        </div>
-      </section>
+          <h2 className="subh">Aluminum Handles & Hardware in Pakistan: What We Offer</h2>
+          <div className="seogrid">
+            {seo.map((b, i) => (<Reveal key={i} as="article" delay={(i % 3) * 80} className="scard"><h3>{b.title}</h3><p className="pre">{b.text}</p></Reveal>))}
+          </div>
 
-      <section className="section">
-        <div className="container">
-          <h2>Aluminium Handles Buying Guides</h2>
-          <div className="grid4">{guides.slice(0, 4).map((g, i) => (<Reveal key={g.slug} delay={i * 90} className="box"><h3>{g.title}</h3><p className="muted">{g.description}</p><Link className="link" href={`/guides/${g.slug}`}>Read guide →</Link></Reveal>))}</div>
-        </div>
-      </section>
+          <h2 className="subh">Aluminum Handles & Hardware: Frequently Asked Questions</h2>
+          <div className="narrow"><FAQ faqs={homeFaqs} /></div>
+          <p className="center"><Link className="btn btn-outline" href="/faq">See All FAQs</Link></p>
 
-      <section className="section alt">
-        <div className="container">
-          <h2>Delivery All Over Pakistan</h2>
-          <p className="lead">We supply aluminium handles, locks and hinges from Lahore to dealers and fabricators in every major city.</p>
-          <div className="chips">{cities.slice(0, 12).map((c) => <Link key={c} className="chip" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>{c}</Link>)}<Link className="chip on" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan →</Link><Link className="chip on" href="/delivery-across-pakistan">All cities →</Link></div>
-        </div>
-      </section>
+          <div className="popwrap"><PopularSearches items={popular} /></div>
 
-      <section id="catalogue" className="section">
-        <div className="container narrow">
-          <h2>Request Wholesale Catalogue</h2>
-          <p className="lead">Fill in the form and we will send the catalogue, latest rate list and anodizing and electroplating details on WhatsApp.</p>
-          <CatalogueForm whatsapp={site.whatsapp} source="home" />
-        </div>
-      </section>
-
-      <section className="section alt">
-        <div className="container narrow">
-          <h2>Aluminum Handles & Hardware - Frequently Asked Questions</h2>
-          <FAQ faqs={homeFaqs} />
-          <p style={{ marginTop: 20 }}><Link className="btn btn-outline" href="/faq">See All FAQs</Link></p>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container"><PopularSearches items={popular} /></div>
-      </section>
-
-      <section className="section cta">
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h2>Need Wholesale Rates Today?</h2>
-          <p className="lead">Call {site.phone} or message us on WhatsApp.</p>
-          <div className="row" style={{ justifyContent: 'center' }}>
-            <Link className="btn" href="/contact">Contact Us</Link>
-            <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello')} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+          <div className="ctaband">
+            <h2>Need Wholesale Rates Today?</h2>
+            <p>Call {site.phone} or message us on WhatsApp.</p>
+            <div className="row" style={{ justifyContent: 'center' }}>
+              <Link className="btn" href="/contact">Contact Us</Link>
+              <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello')} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+            </div>
           </div>
         </div>
       </section>

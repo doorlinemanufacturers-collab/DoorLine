@@ -239,6 +239,7 @@ export default function Admin() {
 
       {tab === 'general' && (
         <div className="panel">
+          {(String(c.site.email).includes('example.com') || String(c.site.address).includes('Factory Address Here')) && <p className="err" style={{ marginBottom: 12 }}>Your email or address is still the default. Enter the real email, address and map text below. Google and customers trust a site with real business details.</p>}
           <p style={{ marginBottom: 12 }}><button className="btn btn-sm btn-outline" onClick={applyLatest}>Update website texts to the latest version</button></p>
           {[['name', 'Business Name'], ['tagline', 'Tagline'], ['owner', 'Contact Person Name'], ['phone', 'Call Number (display)'], ['whatsappDisplay', 'WhatsApp Number (display)'], ['whatsapp', 'WhatsApp number for link (923454880180, no + or spaces)'], ['email', 'Email'], ['address', 'Full Address'], ['hours', 'Opening Hours (text)'], ['mapQuery', 'Google Map search text (address or place name)'], ['facebook', 'Facebook page URL (optional)'], ['instagram', 'Instagram URL (optional)'], ['youtube', 'YouTube URL (optional)'], ['googleBusiness', 'Google Business Profile URL (optional)']].map(([k, l]) => (
             <Field key={k} label={l} value={c.site[k]} onChange={(v) => up(['site', k], v)} />
@@ -249,7 +250,6 @@ export default function Admin() {
 
       {tab === 'hero' && (
         <div className="panel">
-          <Field label="Hero H1 heading" area value={c.hero.h1} onChange={(v) => up(['hero', 'h1'], v)} />
           <Field label="Trust badges under the hero text (one per line)" area rows={5} value={(c.badges || []).join('\n')} onChange={(v) => up(['badges'], v.split('\n'))} />
           <Field label="Hero sub text" area value={c.hero.sub} onChange={(v) => up(['hero', 'sub'], v)} />
           <Field label="Hero image path or URL (leave empty to show no image)" value={c.hero.image} onChange={(v) => up(['hero', 'image'], v)} />

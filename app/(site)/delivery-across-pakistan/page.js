@@ -1,17 +1,14 @@
 import Link from 'next/link';
 import { getContent } from '@/lib/store';
 import { slugify, waLink } from '@/lib/site';
+import { TOP_CITIES } from '@/lib/cities';
 import Reveal from '@/components/Reveal';
 
-export async function generateMetadata() {
-  const { cities } = await getContent();
-  return {
-    title: 'Aluminium Handles Supplier & Delivery Across Pakistan',
-    description: 'Professional aluminium handles manufacturer in Lahore delivering door handles, cabinet handles, window locks and hinges to Karachi, Islamabad, Peshawar, Quetta, Multan and all Pakistan. Direct factory rates.',
-    keywords: cities.slice(0, 16).map((c) => `aluminium door handles supplier ${c}`),
-    alternates: { canonical: '/delivery-across-pakistan' },
-  };
-}
+export const metadata = {
+  title: { absolute: 'Aluminum Handles Delivery in Pakistan, Lahore | Doorline' },
+  description: 'Aluminum handles manufacturer & hardware dealer delivering across Pakistan from Lahore: handles, hinges, locks, anodizing. Call for rates.',
+  alternates: { canonical: '/delivery-across-pakistan' },
+};
 
 export default async function Delivery() {
   const { site, cities } = await getContent();
@@ -28,7 +25,7 @@ export default async function Delivery() {
             <Reveal key={c} delay={(i % 4) * 80} className="box">
               <h2 id={slugify(c)} style={{ fontSize: '1.05rem', marginBottom: 8 }}>Aluminium Door Handles Supplier in {c}</h2>
               <p>Hardware shops, fabricators and contractors in {c} can order aluminium door handles, cabinet handles, window locks and hinges directly from our Lahore factory. We also arrange anodizing and electroplating job work for {c} customers. Wholesale rates, bulk dispatch by transport or cargo.</p>
-              <Link className="link" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>Aluminum handles manufacturer in {c} →</Link>
+              {TOP_CITIES.includes(c) && <Link className="link" href={`/aluminium-handles-manufacturer/${slugify(c)}`}>Aluminum handles manufacturer in {c} →</Link>}
             </Reveal>
           ))}
         </div>

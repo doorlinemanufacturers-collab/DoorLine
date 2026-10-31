@@ -8,14 +8,14 @@ import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
 import PopularSearches from '@/components/PopularSearches';
+import Crumbs from '@/components/Crumbs';
 
 export async function generateMetadata() {
   const { site } = await getContent();
   const description = `Aluminum hardware: handles, hinges, window locks and fittings. Wholesaler & Manufacturer in Pakistan and Lahore. Call ${site.phone} for factory price.`.slice(0, 155);
-  const title = 'Aluminum Hardware - Wholesaler & Manufacturer in Pakistan and Lahore | Doorline';
+  const title = 'Aluminum Hardware Dealer & Manufacturer | Pakistan, Lahore';
   return {
     title: { absolute: title }, description,
-    keywords: ['aluminum hardware', 'aluminium hardware Pakistan', 'aluminum hardware Lahore', 'aluminum hardware wholesaler', 'aluminum hardware manufacturer', 'aluminum door and window hardware', 'aluminium hinges Pakistan', 'aluminium window lock Pakistan'],
     alternates: { canonical: '/aluminum-hardware' },
     openGraph: { title, description, url: '/aluminum-hardware', images: ['/images/logo.png'] },
   };
@@ -46,7 +46,8 @@ export default async function Hardware() {
     <>
       <section className="section">
         <div className="container">
-          <h1 className="h1s">Aluminum Hardware - Wholesaler & Manufacturer in Pakistan and Lahore</h1>
+          <Crumbs items={[{ name: 'Aluminum Hardware' }]} />
+          <h1 className="h1s">Aluminum Hardware Dealer & Manufacturer in Pakistan, Lahore</h1>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 860 }}>Doorline is a professional manufacturer and wholesaler of aluminum hardware in Lahore, Pakistan: aluminum handles, hinges, window locks and fittings for doors, windows and cabinets. Buy at direct factory rates with no middleman, with anodizing and electroplating services available.</p>
           <div className="chips">{sorted.map((x) => <Link key={x} className="chip" href={`/collections/${catSlug(x)}`}>Aluminum {x}</Link>)}<Link className="chip" href="/aluminum-handles">Aluminum Handles</Link></div>

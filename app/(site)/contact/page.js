@@ -3,8 +3,8 @@ import CatalogueForm from '@/components/CatalogueForm';
 import ContactCards from '@/components/ContactCards';
 
 export const metadata = {
-  title: 'Contact Us - Professional Aluminium Handles Manufacturer Lahore',
-  description: 'Contact DoorLine Manufacturers, a professional aluminium handles manufacturer in Lahore, for wholesale handles, locks, hinges, anodizing and electroplating. Call or WhatsApp for rates.',
+  title: { absolute: 'Contact Aluminum Handles Manufacturer | Pakistan, Lahore' },
+  description: 'Contact Doorline, aluminum handles manufacturer & hardware dealer in Pakistan, Lahore. Call or WhatsApp for wholesale rates, anodizing and electroplating.',
   alternates: { canonical: '/contact' },
 };
 

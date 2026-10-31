@@ -15,6 +15,7 @@ export async function PUT(req) {
   try {
     const { content } = await req.json();
     if (!content || !Array.isArray(content.products)) throw new Error('Invalid data');
+    content.updatedAt = new Date().toISOString();
     await saveContent(content);
     revalidateTag('content');
     revalidatePath('/', 'layout');

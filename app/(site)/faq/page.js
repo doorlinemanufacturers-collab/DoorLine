@@ -3,8 +3,8 @@ import FAQ from '@/components/FAQ';
 
 
 export const metadata = {
-  title: 'FAQ - Wholesale Buyers | Aluminium Handles Lahore',
-  description: 'Answers to common questions about aluminium door handle prices, bulk delivery across Pakistan, MOQ, colours, anodizing, electroplating and our Lahore factory.',
+  title: { absolute: 'Aluminum Handles FAQ | Pakistan, Lahore | Doorline' },
+  description: 'Answers about aluminum handle prices, delivery across Pakistan, MOQ, colours, anodizing and electroplating from our factory in Lahore.',
   alternates: { canonical: '/faq' },
 };
 

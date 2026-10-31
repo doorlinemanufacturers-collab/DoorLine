@@ -1,8 +1,8 @@
 import { getContent } from '@/lib/store';
 
 export const metadata = {
-  title: 'Terms & Conditions',
-  description: 'Terms for orders, pricing, delivery and returns with DoorLine Manufacturers, aluminium handles manufacturer in Lahore.',
+  title: { absolute: 'Terms & Conditions | Doorline Pakistan, Lahore' },
+  description: 'Terms for orders, pricing, delivery and returns with Doorline, aluminum handles manufacturer and hardware dealer in Pakistan, Lahore.',
   alternates: { canonical: '/terms' },
 };
 

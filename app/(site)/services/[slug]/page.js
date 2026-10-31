@@ -7,7 +7,8 @@ import FAQ from '@/components/FAQ';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
-import AnodizingAnimation from '@/components/AnodizingAnimation';
+import LazyAnodizing from '@/components/LazyAnodizing';
+import Crumbs from '@/components/Crumbs';
 import Gallery from '@/components/Gallery';
 
 
@@ -19,7 +20,6 @@ export async function generateMetadata({ params }) {
   const description = `${s.short} Call ${c.site.phone} for price. Direct factory rates, bulk orders across Pakistan.`.slice(0, 155);
   return {
     title: { absolute: s.metaTitle || `${s.title} | Doorline` }, description,
-    keywords: String(s.keywords || '').split(',').map((k) => k.trim()).filter(Boolean),
     alternates: { canonical: `/services/${s.slug}` },
     openGraph: { title: s.title, description, url: `/services/${s.slug}`, images: [s.image || '/images/logo.png'] },
   };
@@ -43,10 +43,10 @@ export default async function ServicePage({ params }) {
     <>
       <section className="section">
         <div className="container">
-          <p className="crumb"><Link href="/">Home</Link> / <Link href="/services">Services</Link> / {s.title}</p>
+          <Crumbs items={[{ name: 'Services', href: '/services' }, { name: s.title }]} />
           <div className="pgrid">
-            <Reveal><ServiceVisual s={s} big /></Reveal>
-            <Reveal delay={120}>
+            <Reveal eager><ServiceVisual s={s} big /></Reveal>
+            <Reveal eager>
               <h1 className="h1s">{s.title}</h1>
               <Badges items={c.badges} />
               <p className="pre">{s.intro}</p>
@@ -64,7 +64,7 @@ export default async function ServicePage({ params }) {
           <div className="container narrow">
             <h2>How Anodizing Works - Watch the Process</h2>
             <p className="lead">Watch an aluminium part go through cleaning, anodizing, colouring and sealing. Tap a colour to see the final finish.</p>
-            <AnodizingAnimation />
+            <LazyAnodizing kind="anodizing" />
           </div>
         </section>
       )}
@@ -82,7 +82,7 @@ export default async function ServicePage({ params }) {
           <div className="container narrow">
             <h2>How Electroplating Works - Watch the Process</h2>
             <p className="lead">Watch a part go through cleaning, surface preparation, plating and rinsing. Tap a finish to see the result.</p>
-            <AnodizingAnimation kind="plating" />
+            <LazyAnodizing kind="plating" />
           </div>
         </section>
       )}

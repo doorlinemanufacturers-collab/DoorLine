@@ -3,8 +3,8 @@ import { getContent } from '@/lib/store';
 import Reveal from '@/components/Reveal';
 
 export const metadata = {
-  title: 'Aluminium Handles Buying Guides | Size, Finish & Wholesale Tips',
-  description: 'Practical guides from an aluminium handles manufacturer in Lahore: how to choose door handle size, cabinet handle hole spacing, anodized vs powder coated finish, and how to buy wholesale in Pakistan.',
+  title: { absolute: 'Aluminum Handles Guides | Pakistan, Lahore | Doorline' },
+  description: 'Guides from an aluminum handles manufacturer in Pakistan, Lahore: door handle size, cabinet hole spacing, anodizing, electroplating and wholesale buying.',
   alternates: { canonical: '/guides' },
 };
 

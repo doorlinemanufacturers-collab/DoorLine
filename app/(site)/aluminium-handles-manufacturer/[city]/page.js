@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, slugify, waLink } from '@/lib/site';
-import { cityPage } from '@/lib/cities';
+import { cityPage, TOP_CITIES } from '@/lib/cities';
 import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
@@ -10,20 +10,22 @@ import Badges from '@/components/Badges';
 
 async function find(slug) {
   const c = await getContent();
-  const all = ['Lahore', ...c.cities.map((x) => x.trim()).filter((x) => x && x !== 'Lahore')];
+  const all = [...TOP_CITIES];
   const city = slug === 'pakistan' ? 'Pakistan' : all.find((x) => slugify(x) === slug);
-  return { c, city, all };
+  const known = (c.cities || []).some((x) => slugify(x) === slug);
+  return { c, city, all, redirect: !city && known };
 }
 
 export async function generateMetadata({ params }) {
-  const { c, city } = await find(params.city);
-  if (!city) return { title: 'Page not found' };
+  const { c, city, redirect } = await find(params.city);
+  if (!city) return { title: redirect ? 'Redirecting' : 'Page not found' };
   const p = cityPage(city, c.site);
-  return { title: { absolute: p.title }, description: p.description, keywords: p.keywords, alternates: { canonical: `/aluminium-handles-manufacturer/${params.city}` }, openGraph: { title: p.title, description: p.description, url: `/aluminium-handles-manufacturer/${params.city}`, images: ['/images/logo.png'] } };
+  return { title: { absolute: p.title }, description: p.description, alternates: { canonical: `/aluminium-handles-manufacturer/${params.city}` }, openGraph: { title: p.title, description: p.description, url: `/aluminium-handles-manufacturer/${params.city}`, images: ['/images/logo.png'] } };
 }
 
 export default async function CityPage({ params }) {
-  const { c, city, all } = await find(params.city);
+  const { c, city, all, redirect } = await find(params.city);
+  if (redirect) permanentRedirect('/aluminium-handles-manufacturer/pakistan');
   if (!city) notFound();
   const p = cityPage(city, c.site);
   const base = siteUrl();

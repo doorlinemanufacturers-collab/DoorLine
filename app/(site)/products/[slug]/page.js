@@ -8,7 +8,8 @@ import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
 import Reveal from '@/components/Reveal';
 import Badges from '@/components/Badges';
-import ColourChanger from '@/components/ColourChanger';
+import LazyColour from '@/components/LazyColour';
+import Crumbs from '@/components/Crumbs';
 import { catSlug } from '@/lib/categories';
 
 async function find(slug) {
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!p) return { title: moved ? 'Redirecting' : 'Product not found' };
   const seo = productSeo(p, c.site);
   return {
-    title: { absolute: seo.title }, description: seo.description, keywords: seo.keywords,
+    title: { absolute: seo.title }, description: seo.description,
     alternates: { canonical: `/products/${p.slug}` },
     openGraph: { title: seo.title, description: seo.description, url: `/products/${p.slug}`, images: [p.image] },
   };
@@ -38,26 +39,24 @@ export default async function ProductPage({ params }) {
   const img = p.image.startsWith('http') ? p.image : `${base}${p.image}`;
   const same = c.products.filter((x) => x.slug !== p.slug && x.category === p.category);
   const related = [...same, ...c.products.filter((x) => x.slug !== p.slug && x.category !== p.category)].slice(0, 4);
+  const colorList = String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean);
+  const gmap = { 'Door Handles': ['how-to-choose-aluminium-door-handle-size', 'types-of-aluminium-handles-and-where-to-use-them'], 'Cabinet Handles': ['aluminium-cabinet-handle-hole-spacing-guide', 'types-of-aluminium-handles-and-where-to-use-them'], 'Window Locks': ['types-of-aluminium-handles-and-where-to-use-them'], Hinges: ['types-of-aluminium-handles-and-where-to-use-them'] };
+  const relGuides = (c.guides || []).filter((g) => [...(gmap[p.category] || []), 'anodized-vs-powder-coated-aluminium-handles'].includes(g.slug));
   const hasPrice = p.price && /\d/.test(String(p.price));
   const org = { '@type': 'Organization', name: c.site.name, url: base, address: { '@type': 'PostalAddress', streetAddress: c.site.address, addressLocality: 'Lahore', addressRegion: 'Punjab', addressCountry: 'PK' } };
   const ld = [
     hasPrice
-      ? { '@context': 'https://schema.org', '@type': 'Product', '@id': `${base}/products/${p.slug}#product`, url: `${base}/products/${p.slug}`, name: `${p.name} ${p.model}`, sku: p.model, mpn: p.model, description: seo.body[0], image: [img], category: p.category, material: 'Aluminium', color: p.colors, size: p.size, keywords: seo.keywords.join(', '), brand: { '@type': 'Brand', name: 'Doorline' }, manufacturer: org, offers: { '@type': 'Offer', priceCurrency: 'PKR', price: String(p.price).replace(/[^0-9.]/g, ''), availability: 'https://schema.org/InStock', url: `${base}/products/${p.slug}`, seller: org } }
+      ? { '@context': 'https://schema.org', '@type': 'Product', '@id': `${base}/products/${p.slug}#product`, url: `${base}/products/${p.slug}`, name: `${p.name} ${p.model}`, sku: p.model, mpn: p.model, description: seo.body[0], image: [img], category: p.category, material: 'Aluminium', color: p.colors, size: p.size, brand: { '@type': 'Brand', name: 'Doorline' }, manufacturer: org, offers: { '@type': 'Offer', priceCurrency: 'PKR', price: String(p.price).replace(/[^0-9.]/g, ''), availability: 'https://schema.org/InStock', url: `${base}/products/${p.slug}`, seller: org } }
       // Google requires offers, review or aggregateRating for Product markup. Without a price we publish a WebPage so Search Console shows no error.
-      : { '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${base}/products/${p.slug}#webpage`, url: `${base}/products/${p.slug}`, name: seo.title, description: seo.description, primaryImageOfPage: { '@type': 'ImageObject', url: img }, about: { '@type': 'Thing', name: `${p.name} ${p.model}`, description: seo.body[0], image: img }, publisher: org },
-    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: base },
-      { '@type': 'ListItem', position: 2, name: 'Aluminum Handles', item: `${base}/aluminum-handles` },
-      { '@type': 'ListItem', position: 3, name: p.category, item: `${base}/collections/${catSlug(p.category)}` },
-      { '@type': 'ListItem', position: 4, name: `${p.name} ${p.model}`, item: `${base}/products/${p.slug}` } ] },
+      : { '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${base}/products/${p.slug}#webpage`, url: `${base}/products/${p.slug}`, name: seo.title, description: seo.description, primaryImageOfPage: { '@type': 'ImageObject', url: img }, about: { '@type': 'Thing', name: `${p.name} ${p.model}`, description: seo.body[0], image: img }, publisher: org }
   ];
   return (
     <section className="section">
       <div className="container">
-        <p className="crumb"><Link href="/">Home</Link> / <Link href="/aluminum-handles">Aluminum Handles</Link> / <Link href={`/collections/${catSlug(p.category)}`}>{p.category}</Link> / {p.name}</p>
+        <Crumbs items={[{ name: 'Aluminum Handles', href: '/aluminum-handles' }, { name: p.category, href: `/collections/${catSlug(p.category)}` }, { name: p.name }]} />
         <div className="pgrid">
-          <Reveal><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
-          <Reveal delay={120}>
+          <Reveal eager><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
+          <Reveal eager>
             <h1 className="h1s">{p.name} - Wholesaler & Manufacturer in Pakistan and Lahore</h1>
             <Badges items={c.badges} />
             {seo.body.map((t, i) => <p key={i} className="pre">{t}</p>)}
@@ -65,20 +64,21 @@ export default async function ProductPage({ params }) {
               <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need the wholesale price of ${p.name} ${p.model}`)} target="_blank" rel="noopener noreferrer">Ask Wholesale Price on WhatsApp</a>
               <a className="btn btn-outline" href={`tel:${c.site.phone.replace(/\s/g, '')}`}>Call {c.site.phone}</a>
             </div>
-            <ColourChanger info={previewInfo(p)} colors={String(p.colors || '').split(',').map((x) => x.trim()).filter(Boolean)} name={p.name} />
+            {colorList.length > 1 && <LazyColour info={previewInfo(p)} colors={colorList} name={p.name} />}
           </Reveal>
         </div>
 
         <div className="narrow" style={{ marginTop: 36 }}>
           <p className="muted">Browse: <Link className="link" href="/aluminum-handles">Aluminum Handles</Link> · <Link className="link" href="/aluminum-hardware">Aluminum Hardware</Link> · <Link className="link" href={`/collections/${catSlug(p.category)}`}>Aluminum {p.category}</Link> · <Link className="link" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan</Link></p>
+          {relGuides.length > 0 && <p className="muted">Related guides: {relGuides.map((g, i) => <span key={g.slug}>{i > 0 && ' · '}<Link className="link" href={`/guides/${g.slug}`}>{g.title}</Link></span>)}</p>}
           <h2>{p.name} - Technical Specifications</h2>
-          <table className="spec"><tbody>{seo.specs.map(([k, v]) => <tr key={k}><th>{k}</th><td>{v}</td></tr>)}</tbody></table>
+          <div className="tablewrap"><table className="spec"><tbody>{seo.specs.map(([k, v]) => <tr key={k}><th>{k}</th><td>{v}</td></tr>)}</tbody></table></div>
           {seo.options.length > 0 && (<><h2 style={{ fontSize: '1.1rem' }}>Available Colours and Sizes</h2><ul className="ticks">{seo.options.map((o) => <li key={o}>{o}</li>)}</ul></>)}
         </div>
 
         <Reveal className="narrow-block">
-          <h2 style={{ marginTop: 44 }}>Popular Searches</h2>
-          <div className="chips">{seo.variants.map((v) => <Link key={v} href={`/aluminum-handles?q=${encodeURIComponent(v)}`} className="chip" rel="nofollow">{v}</Link>)}</div>
+          <h2 style={{ marginTop: 44 }}>Related Searches</h2>
+          <div className="chips">{seo.variants.map((v) => <span key={v} className="chip">{v}</span>)}</div>
           <p className="muted">Need a finish on your own aluminium parts? See our <Link className="link" href="/services/aluminium-anodizing-service-lahore">anodizing</Link> and <Link className="link" href="/services/aluminium-electroplating-service-lahore">electroplating</Link> services.</p>
         </Reveal>
 

@@ -3,8 +3,8 @@ import { getContent } from '@/lib/store';
 
 
 export const metadata = {
-  title: 'About Us - Professional Aluminium Handles Manufacturer Lahore',
-  description: 'Learn about DoorLine Manufacturers (direct factory rates, no middleman, premium quality), a direct factory of aluminium door handles, cabinet handles, window locks and hinges in Lahore, with anodizing and electroplating services.',
+  title: { absolute: 'About Doorline | Aluminum Handles, Pakistan, Lahore' },
+  description: 'About Doorline: aluminum handles manufacturer & hardware dealer in Pakistan, Lahore. Our vision, mission, promise, anodizing and electroplating.',
   alternates: { canonical: '/about' },
 };
 

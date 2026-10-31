@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
   const { c, cat } = await find(params.slug);
   if (!cat) return { title: 'Page not found' };
   const p = categoryPage(cat, c.site);
-  return { title: { absolute: p.title }, description: p.description, keywords: p.keywords, alternates: { canonical: `/collections/${params.slug}` }, openGraph: { title: p.title, description: p.description, url: `/collections/${params.slug}`, images: ['/images/logo.png'] } };
+  return { title: { absolute: p.title }, description: p.description, alternates: { canonical: `/collections/${params.slug}` }, openGraph: { title: p.title, description: p.description, url: `/collections/${params.slug}`, images: ['/images/logo.png'] } };
 }
 
 export default async function Collection({ params }) {
@@ -40,6 +40,7 @@ export default async function Collection({ params }) {
           <h1 className="h1s">{p.h1}</h1>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 820 }}>{p.intro}</p>
+          <p className="muted">See also: <Link className="link" href="/aluminum-handles">Aluminum Handles</Link> · <Link className="link" href="/aluminum-hardware">Aluminum Hardware</Link></p>
           <div className="grid" style={{ marginTop: 24 }}>{list.map((x, i) => <Reveal key={x.slug} delay={(i % 4) * 80}><ProductCard p={x} /></Reveal>)}</div>
         </div>
       </section>

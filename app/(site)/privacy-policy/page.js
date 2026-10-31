@@ -1,8 +1,8 @@
 import { getContent } from '@/lib/store';
 
 export const metadata = {
-  title: 'Privacy Policy',
-  description: 'How DoorLine Manufacturers handles the information you send through our inquiry and contact forms.',
+  title: { absolute: 'Privacy Policy | Doorline Pakistan, Lahore' },
+  description: 'How Doorline, aluminum handles manufacturer in Pakistan, Lahore, handles the information you send through our inquiry and contact forms.',
   alternates: { canonical: '/privacy-policy' },
 };
 
