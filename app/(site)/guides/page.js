@@ -14,7 +14,7 @@ export default async function Guides() {
     <section className="section">
       <div className="container">
         <h1 className="h1s">Aluminium Handles Buying Guides</h1>
-        <p className="lead">Simple, practical advice from DoorLine Manufacturers, a professional aluminium handles manufacturer in Lahore.</p>
+        <p className="lead">Simple, practical advice from DoorLine Manufacturers, a professional aluminium handles manufacturer in Lahore, Pakistan.</p>
         <div className="grid">
           {guides.map((g, i) => (
             <Reveal key={g.slug} delay={(i % 3) * 90}>

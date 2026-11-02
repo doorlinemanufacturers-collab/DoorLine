@@ -30,7 +30,7 @@ export default async function RootLayout({ children }) {
     '@type': ['WholesaleStore', 'Organization'],
     '@id': `${base}/#business`,
     name: site.name,
-    alternateName: ['DoorLine', 'Door Line Manufacturers', 'DoorLine Aluminium Handles Lahore'],
+    alternateName: ['DoorLine', 'Door Line Manufacturers', 'DoorLine Aluminium Handles Lahore, Pakistan'],
     description: 'Manufacturer and wholesaler of aluminium door handles, cabinet handles, window locks, hinges and hardware in Lahore, Pakistan, with in-house aluminium anodizing and electroplating services. Factory-direct wholesale supply across Pakistan.',
     url: base,
     logo: { '@type': 'ImageObject', url: `${base}/images/logo.png` },

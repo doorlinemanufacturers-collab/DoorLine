@@ -15,7 +15,7 @@ export default async function Contact() {
     <section className="section">
       <div className="container">
         <h1 className="h1s">Contact DoorLine Manufacturers</h1>
-        <p className="lead">Professional aluminium handles manufacturer in Lahore. Call, WhatsApp or send an inquiry about wholesale handles, anodizing or electroplating. We reply with the latest rates.</p>
+        <p className="lead">Professional aluminium handles manufacturer in Lahore, Pakistan. Call, WhatsApp or send an inquiry about wholesale handles, anodizing or electroplating. We reply with the latest rates.</p>
         <ContactCards site={site} />
         <div className="contactgrid" style={{ marginTop: 36 }}>
           <div>
@@ -23,7 +23,7 @@ export default async function Contact() {
             <p className="muted" style={{ marginBottom: 12 }}>Your inquiry reaches us instantly and also opens on WhatsApp.</p>
             <CatalogueForm whatsapp={site.whatsapp} button="Send Inquiry" title="Wholesale Inquiry" source="contact" />
           </div>
-          <iframe title={`${site.name} factory location Lahore`} src={map} loading="lazy" className="map" referrerPolicy="no-referrer-when-downgrade" />
+          <iframe title={`${site.name} factory location Lahore, Pakistan`} src={map} loading="lazy" className="map" referrerPolicy="no-referrer-when-downgrade" />
         </div>
       </div>
     </section>

@@ -1,3 +1,5 @@
+import { getLocalGallery } from '@/lib/localGallery';
+import Gallery from '@/components/Gallery';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getContent } from '@/lib/store';
@@ -21,8 +23,8 @@ const WHY_ICON = ['🏭', '🎨', '🚚', '✨', '✅', '⭐'];
 
 export async function generateMetadata() {
   const { site } = await getContent();
-  const title = 'Aluminium Handles Wholesale Price Pakistan | Lahore';
-  const description = `Aluminium door handles wholesale price in Pakistan from our Lahore factory. Handles, hinges, locks and anodizing. WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
+  const title = 'Aluminium Handles Wholesale Price Lahore, Pakistan';
+  const description = `Aluminium door handles wholesale price in Pakistan from our factory in Lahore, Pakistan. Handles, hinges, locks and anodizing. WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
   return {
     title: { absolute: title }, description,
     alternates: { canonical: '/' },
@@ -40,6 +42,8 @@ function Band({ n, title, sub }) {
 export default async function Home() {
   const { site, hero, why, products, seo, services, badges, about, guides, homeFaqs, popular } = await getContent();
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
+  const anodizingPics = getLocalGallery('anodizing');
+  const anodizingSvc = (services || []).find((x) => /anodiz/i.test(x.title));
   const glance = [
     ['Business', `${site.name}: aluminum handles manufacturer & hardware dealer`],
     ['Location', site.address],
@@ -55,7 +59,7 @@ export default async function Home() {
       <section className="hero">
         <div className={`container herogrid ${hero.image ? '' : 'herosolo'}`}>
           <div>
-            <p className="kicker">Anodizing Factory in Lahore · Factory Price for Bulk Buyers</p>
+            <p className="kicker">Anodizing Factory in Lahore, Pakistan · Factory Price for Bulk Buyers</p>
             <h1>{H1}</h1>
             <p>{hero.sub}</p>
             <Badges items={badges} center={!hero.image} />
@@ -130,18 +134,19 @@ export default async function Home() {
             <p className="center"><a className="btn" href={waLink(site.whatsapp, ORDER_MSG)} target="_blank" rel="noopener noreferrer">Get Today&apos;s Price on WhatsApp</a></p>
           </div>
 
-          <h2 className="subh">Aluminium Handles Wholesale Market Lahore: Buy Direct From the Factory</h2>
+          <h2 className="subh">Aluminium Handles Wholesale Market Lahore, Pakistan: Buy Direct From the Factory</h2>
           <div className="narrow">
-            <p className="pre">Hardware shops, dealers and fabricators in Lahore and other cities buy aluminium handles from DoorLine at factory rates, because we are the manufacturer and not a trader. Our factory is at {site.address}. We are open {site.hours}. Message us on WhatsApp first so we can confirm that your models and colours are available.</p>
-            <div className="row"><a className="btn btn-outline" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`} target="_blank" rel="noopener noreferrer">Find Our Factory on Google Maps</a><Link className="btn btn-outline" href="/aluminium-handles-manufacturer/lahore">Handles Manufacturer in Lahore</Link></div>
+            <p className="pre">Hardware shops, dealers and fabricators in Lahore, Pakistan and other cities buy aluminium handles from DoorLine at factory rates, because we are the manufacturer and not a trader. Our factory is at {site.address}. We are open {site.hours}. Message us on WhatsApp first so we can confirm that your models and colours are available.</p>
+            <div className="row"><a className="btn btn-outline" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`} target="_blank" rel="noopener noreferrer">Find Our Factory on Google Maps</a><Link className="btn btn-outline" href="/aluminium-handles-manufacturer/lahore">Handles Manufacturer in Lahore, Pakistan</Link></div>
           </div>
 
-          <h2 className="subh">Anodizing Factory in Lahore: Anodizing & Electroplating Services</h2>
-          <p className="pre narrow">DoorLine runs its own anodizing and electroplating work in Lahore. We finish our aluminium handles and also take job work from fabricators and factories across Pakistan, in gold, bronze, brown, silver and black. Send a sample and your quantity on WhatsApp for the price.</p>
+          <h2 className="subh">Anodizing Factory in Lahore, Pakistan: Anodizing & Electroplating Services</h2>
+          <p className="pre narrow">DoorLine runs its own anodizing and electroplating work in Lahore, Pakistan. We finish our aluminium handles and also take job work from fabricators and factories across Pakistan, in gold, bronze, brown, silver and black. Send a sample and your quantity on WhatsApp for the price.</p>
+          {anodizingPics.length > 0 && (<><Gallery images={anodizingPics.slice(0, 8)} /><p className="center"><Link className="btn btn-outline" href={`/services/${anodizingSvc ? anodizingSvc.slug : 'aluminium-anodizing-service-lahore'}`}>See All Anodizing Pictures</Link></p></>)}
           <div className="grid">{services.map((x, i) => <Reveal key={x.slug} delay={i * 120}><ServiceCard s={x} /></Reveal>)}</div>
           <h3 className="subh3">See How Anodizing Works</h3>
           <div className="narrow"><LazyAnodizing kind="anodizing" /></div>
-          <p className="center"><Link className="btn btn-outline" href="/services/aluminium-anodizing-service-lahore">Anodizing Services</Link> <Link className="btn btn-outline" href="/services/aluminium-electroplating-service-lahore">Electroplating Services</Link></p>
+          <p className="center"><Link className="btn btn-outline" href={`/services/${anodizingSvc ? anodizingSvc.slug : 'aluminium-anodizing-service-lahore'}`}>Anodizing Services</Link> <Link className="btn btn-outline" href="/services/aluminium-electroplating-service-lahore">Electroplating Services</Link></p>
 
           <h2 className="subh">How to Order Aluminium Handles on WhatsApp</h2>
           <div className="steps">

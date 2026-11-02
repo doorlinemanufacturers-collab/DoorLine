@@ -27,10 +27,10 @@ const TYPES = [
 const FAQS = [
   { q: 'What are aluminum handles used for?', a: 'Aluminum handles are used on doors, windows, cabinets, wardrobes and drawers. They are light, do not rust like steel and can be anodized or powder coated in many colours.' },
   { q: 'What are aluminum door handles?', a: 'Aluminum door handles are bar, pull or sliding handles made from aluminium for glass, aluminium and wooden doors. Our door handles come with mounting brackets.' },
-  { q: 'Are you the manufacturer of these aluminum handles?', a: 'Yes. Doorline makes these handles at its own factory in Lahore, so you get direct factory rates with no middleman.' },
+  { q: 'Are you the manufacturer of these aluminum handles?', a: 'Yes. Doorline makes these handles at its own factory in Lahore, Pakistan, so you get direct factory rates with no middleman.' },
   { q: 'What is the price of aluminum handles in Pakistan?', a: 'The price depends on the model, size, finish and quantity. Message us on WhatsApp for today\'s wholesale rate list.' },
   { q: 'Which finishes and colours are available?', a: 'Anodized and powder coated finishes in gold, bronze, brown, silver, white and black. We also provide anodizing and electroplating services.' },
-  { q: 'Do you deliver aluminum handles all over Pakistan?', a: 'Yes. We dispatch from Lahore to all cities by transport and cargo.' },
+  { q: 'Do you deliver aluminum handles all over Pakistan?', a: 'Yes. We dispatch from Lahore, Pakistan to all cities by transport and cargo.' },
 ];
 
 export default async function AluminumHandles() {
@@ -83,7 +83,7 @@ export default async function AluminumHandles() {
           </div>
           <div>
             <h2>More From Doorline</h2>
-            <div className="chips"><Link className="chip" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan</Link><Link className="chip" href="/aluminium-handles-manufacturer/lahore">Manufacturer in Lahore</Link><Link className="chip" href="/guides">Buying Guides</Link><Link className="chip" href="/delivery-across-pakistan">Delivery</Link></div>
+            <div className="chips"><Link className="chip" href="/aluminium-handles-manufacturer/pakistan">Manufacturer in Pakistan</Link><Link className="chip" href="/aluminium-handles-manufacturer/lahore">Manufacturer in Lahore, Pakistan</Link><Link className="chip" href="/guides">Buying Guides</Link><Link className="chip" href="/delivery-across-pakistan">Delivery</Link></div>
           </div>
         </div>
       </section>

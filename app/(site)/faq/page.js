@@ -4,7 +4,7 @@ import FAQ from '@/components/FAQ';
 
 export const metadata = {
   title: { absolute: 'Aluminum Handles FAQ | Pakistan, Lahore | Doorline' },
-  description: 'Answers about aluminum handle prices, delivery across Pakistan, MOQ, colours, anodizing and electroplating from our factory in Lahore.',
+  description: 'Answers about aluminum handle prices, delivery across Pakistan, MOQ, colours, anodizing and electroplating from our factory in Lahore, Pakistan.',
   alternates: { canonical: '/faq' },
 };
 

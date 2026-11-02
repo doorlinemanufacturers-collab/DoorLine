@@ -10,7 +10,7 @@ export default function Footer({ site, popular = [] }) {
         <div>
           <h3>{site.name}</h3>
           <p>{site.tagline}</p>
-          <p className="muted" style={{ color: '#aaa' }}>Professional aluminium handles manufacturer in Lahore. Direct factory rates, no middleman, premium quality, plus anodizing and electroplating.</p>
+          <p className="muted" style={{ color: '#aaa' }}>Professional aluminium handles manufacturer in Lahore, Pakistan. Direct factory rates, no middleman, premium quality, plus anodizing and electroplating.</p>
           <p className="footlinks">
             <Link href="/">Home</Link> · <Link href="/aluminum-handles">Aluminum Handles</Link> · <Link href="/aluminum-hardware">Aluminum Hardware</Link> · <Link href="/services/aluminium-anodizing-service-lahore">Anodizing</Link> · <Link href="/services/aluminium-electroplating-service-lahore">Electroplating</Link> · <Link href="/delivery-across-pakistan">Delivery</Link> · <Link href="/about">About</Link> · <Link href="/faq">FAQ</Link> · <Link href="/contact">Contact Us</Link> · <Link href="/guides">Guides</Link> · <Link href="/privacy-policy">Privacy</Link> · <Link href="/terms">Terms</Link>
           </p>

@@ -14,7 +14,7 @@ export default function Header({ site, categories, services = [] }) {
     <header className="header">
       <div className="container nav">
         <Link href="/" className="logo" aria-label={`${site.name} - ${site.tagline}`} onClick={close}>
-          <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer, anodizing and electroplating Lahore" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
+          <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer, anodizing and electroplating Lahore, Pakistan" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
         </Link>
         <nav className="desknav" aria-label="Main">
           <Link href="/aluminum-handles">Aluminum Handles</Link>
@@ -43,7 +43,7 @@ export default function Header({ site, categories, services = [] }) {
         {sv && (
           <div className="subs">
             <Link href="/services" onClick={close}>All Services</Link>
-            {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(' in Lahore', '').replace(/ Services?/, '')}</Link>)}
+            {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(/ in Lahore(, Pakistan)?/, '').replace(/ Services?/, '')}</Link>)}
           </div>
         )}
         <Link href="/aluminum-hardware" onClick={close}>Aluminum Hardware</Link>

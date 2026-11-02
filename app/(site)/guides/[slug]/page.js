@@ -25,7 +25,7 @@ export default async function Guide({ params }) {
       <div className="container narrow">
         <Crumbs items={[{ name: 'Guides', href: '/guides' }, { name: g.title }]} />
         <h1 className="h1s">{g.title}</h1>
-        <p className="muted" style={{ marginBottom: 18 }}>By {c.site.name}, aluminium handles manufacturer in Lahore</p>
+        <p className="muted" style={{ marginBottom: 18 }}>By {c.site.name}, aluminium handles manufacturer in Lahore, Pakistan</p>
         {String(g.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 24 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}
         <div className="box" style={{ marginTop: 30 }}>
           <h3>Need help choosing?</h3>

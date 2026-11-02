@@ -27,3 +27,6 @@ Add ANTHROPIC_API_KEY (from console.anthropic.com) in Vercel Environment Variabl
 - Set NEXT_PUBLIC_SITE_URL to the exact domain you serve (https://www.doorlinemanufacturers.com) and redirect the other version (www or non-www) to it.
 - If you ever saved content in /admin, saved values override defaultContent.js. Update hero text, FAQs, badges, email and address in /admin too.
 - Optional: put latitude/longitude from Google Maps in site.lat / site.lng (lib/defaultContent.js) to add geo coordinates to the schema.
+
+## Anodizing / electroplating pictures
+Copy photos into public/images/anodizing/ (or public/images/electroplating/), git add, commit, push. They show on the service page and the homepage automatically; the file name becomes the Google picture description. Rule for all text: never write only "Lahore", always "Lahore, Pakistan" (text saved from /admin is fixed automatically by withPakistan() in lib/site.js).

@@ -2,12 +2,12 @@ import Link from 'next/link';
 import ProductImage from './ProductImage';
 
 export function ServiceVisual({ s, big = false }) {
-  if (s.image) return <ProductImage src={s.image} alt={`${s.title} - DoorLine Manufacturers Lahore`} priority={big} sizes="(max-width: 900px) 100vw, 50vw" />;
+  if (s.image) return <ProductImage src={s.image} alt={`${s.title} - DoorLine Manufacturers Lahore, Pakistan`} priority={big} sizes="(max-width: 900px) 100vw, 50vw" />;
   const icon = /anodiz/i.test(s.title) ? '🎨' : /plating/i.test(s.title) ? '✨' : '⚙️';
   return (
     <div className={`svcvisual ${big ? 'big' : ''}`} role="img" aria-label={s.title}>
       <span className="svcicon">{icon}</span>
-      <strong>{s.title.replace(' in Lahore', '').replace(/ Services?/, '')}</strong>
+      <strong>{s.title.replace(/ in Lahore(, Pakistan)?/, '').replace(/ Services?/, '')}</strong>
     </div>
   );
 }

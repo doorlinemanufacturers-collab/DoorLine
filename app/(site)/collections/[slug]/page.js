@@ -54,7 +54,7 @@ export default async function Collection({ params }) {
       <section className="section">
         <div className="container contactgrid">
           <div>
-            <h2>Order From Our Lahore Factory</h2>
+            <h2>Order From Our Factory in Lahore, Pakistan</h2>
             <address><ContactLines site={c.site} /></address>
             <p><a className="btn" href={waLink(c.site.whatsapp, `Hello, I need wholesale rates for aluminum ${cat.toLowerCase()}.`)} target="_blank" rel="noopener noreferrer">Get Wholesale Rates on WhatsApp</a></p>
           </div>

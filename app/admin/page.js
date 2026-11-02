@@ -111,9 +111,9 @@ export default function Admin() {
 
   const uploadGallery = async (i, files) => {
     if (!files || !files.length) return;
-    setMsg('Uploading pictures...'); setErr('');
+    setMsg('Uploading pictures... please wait, do not close this page.'); setErr('');
     const added = [];
-    for (const file of Array.from(files).slice(0, 12)) {
+    for (const file of Array.from(files).slice(0, 40)) {
       const fd = new FormData(); fd.append('file', await compress(file));
       const r = await fetch('/api/admin/upload', { method: 'POST', body: fd });
       const j = await r.json();
@@ -283,13 +283,13 @@ export default function Admin() {
       {tab === 'services' && (
         <>
           <p className="muted" style={{ marginBottom: 10 }}>Service pages (anodizing, electroplating and more). Each service gets its own page, Google schema and FAQ.</p>
-          <p><button className="btn btn-sm" onClick={() => { setC({ ...c, services: [{ slug: '', title: 'New Service in Lahore', short: '', image: '', keywords: '', intro: '', points: '', body: '', faqs: [] }, ...c.services] }); setOpen(0); }}>+ Add Service</button></p>
+          <p><button className="btn btn-sm" onClick={() => { setC({ ...c, services: [{ slug: '', title: 'New Service in Lahore, Pakistan', short: '', image: '', keywords: '', intro: '', points: '', body: '', faqs: [] }, ...c.services] }); setOpen(0); }}>+ Add Service</button></p>
           {c.services.map((x, i) => (
             <div className="panel" key={i}>
               <div style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }} onClick={() => setOpen(open === i ? null : i)}><strong>{x.title}</strong><span>{open === i ? '▲' : '▼'}</span></div>
               {open === i && (
                 <>
-                  <Field label="Title (include the keyword, e.g. Aluminium Anodizing Service in Lahore)" value={x.title} onChange={(v) => up(['services', i, 'title'], v)} />
+                  <Field label="Title (include the keyword, e.g. Aluminium Anodizing Service in Lahore, Pakistan)" value={x.title} onChange={(v) => up(['services', i, 'title'], v)} />
                   <Field label="URL slug (leave empty to generate automatically)" value={x.slug} onChange={(v) => up(['services', i, 'slug'], v)} />
                   <Field label="Google title (meta title, max 70 characters)" value={x.metaTitle} onChange={(v) => up(['services', i, 'metaTitle'], v)} />
                   <Field label="Short description" area value={x.short} onChange={(v) => up(['services', i, 'short'], v)} />
@@ -298,7 +298,7 @@ export default function Admin() {
                   {x.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => up(['services', i, 'image'], '')}>Remove image</button></p>}
                   <label>Or upload a new image (max 4MB)</label>
                   <input type="file" accept="image/*" onChange={(e) => uploadSvc(i, e.target.files[0])} />
-                  <label>Gallery pictures: select several images at once (up to 12 per upload)</label>
+                  <label>Gallery pictures: select several images at once (up to 40 per upload)</label>
                   <input type="file" accept="image/*" multiple onChange={(e) => { uploadGallery(i, e.target.files); e.target.value = ''; }} />
                   {(x.gallery || []).map((g, k) => (
                     <div key={k} className="galitem">
@@ -394,7 +394,7 @@ export default function Admin() {
                   <input type="file" accept="image/*" onChange={(e) => upload(i, e.target.files[0])} />
                   <Thumb src={p.image} />
                   {p.image && <p style={{ marginTop: 8 }}><button className="btn btn-sm danger" onClick={() => upProd(i, 'image', '')}>Remove image</button></p>}
-                  <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
+                  <Field label="Image alt text (leave empty: auto uses product name, model, colour, Lahore, Pakistan)" value={p.alt} onChange={(v) => upProd(i, 'alt', v)} />
                   <p className="muted" style={{ marginTop: 14 }}>Automatic SEO: title, description, keywords, FAQs and search phrases are generated from the product name, category and colours. Optional overrides:</p>
                   <Field label="Extra search keywords (comma separated, optional)" value={p.keywords} onChange={(v) => upProd(i, 'keywords', v)} />
                   <Field label="Custom meta title (optional, max 70 characters)" value={p.metaTitle} onChange={(v) => upProd(i, 'metaTitle', v)} />

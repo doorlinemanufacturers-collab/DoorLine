@@ -28,8 +28,8 @@ const BLOCKS = [
 ];
 const FAQS = [
   { q: 'What aluminum hardware do you supply?', a: 'We supply aluminum door handles, cabinet handles, hinges, window locks and handle fittings, in anodized and powder coated finishes.' },
-  { q: 'Are you a wholesaler or a manufacturer of aluminum hardware?', a: 'Both. Doorline manufactures in Lahore and sells wholesale, so prices are direct factory rates.' },
-  { q: 'Do you deliver aluminum hardware all over Pakistan?', a: 'Yes. We dispatch from Lahore to all major cities by transport and cargo.' },
+  { q: 'Are you a wholesaler or a manufacturer of aluminum hardware?', a: 'Both. Doorline manufactures in Lahore, Pakistan and sells wholesale, so prices are direct factory rates.' },
+  { q: 'Do you deliver aluminum hardware all over Pakistan?', a: 'Yes. We dispatch from Lahore, Pakistan to all major cities by transport and cargo.' },
   { q: 'Can I get aluminum hardware in custom colours or finishes?', a: 'Yes. We offer gold, bronze, brown, silver, white and black, and we provide anodizing and electroplating for custom finish requirements.' },
   { q: 'What is the price of aluminum hardware in Pakistan?', a: 'The price depends on the item, size, finish and quantity. Message us on WhatsApp for today\'s wholesale rate list.' },
   { q: 'Do you sell aluminum hardware only in bulk?', a: 'We focus on wholesale orders for hardware shops, fabricators and contractors. Contact us with your requirement and we will advise the minimum quantity.' },

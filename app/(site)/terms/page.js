@@ -21,7 +21,7 @@ Orders and production
 An order is confirmed when we accept your requirement and the agreed advance or payment terms are met. Bulk and custom finish orders are produced after confirmation. Anodizing and electroplating job work depends on the sample and finish approved by both sides.
 
 Delivery
-We dispatch from Lahore to cities across Pakistan by transport or cargo. Delivery time depends on stock, the order size and the destination.
+We dispatch from Lahore, Pakistan to cities across Pakistan by transport or cargo. Delivery time depends on stock, the order size and the destination.
 
 Defects and returns
 Please check your goods on receipt. If you find a manufacturing defect, contact us promptly with photos and we will repair or replace the item where the defect is ours.

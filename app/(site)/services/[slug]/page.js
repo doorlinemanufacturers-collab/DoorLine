@@ -1,3 +1,4 @@
+import { getLocalGallery } from '@/lib/localGallery';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
@@ -29,6 +30,8 @@ export default async function ServicePage({ params }) {
   const { c, s } = await find(params.slug);
   if (!s) notFound();
   const gallery = (s.gallery || []).filter((g) => g && g.url).map((g, i) => ({ url: g.url, alt: (g.alt && g.alt.trim()) || `${s.title} - sample ${i + 1} - Doorline Lahore Pakistan` }));
+  const localFolder = /anodiz/i.test(s.title) ? 'anodizing' : /plating/i.test(s.title) ? 'electroplating' : '';
+  if (localFolder) gallery.push(...getLocalGallery(localFolder));
   const workLabel = /anodiz/i.test(s.title) ? 'Anodizing Work Samples' : /plating/i.test(s.title) ? 'Electroplating Work Samples' : 'Work Samples';
   const abs = (u) => (u.startsWith('http') ? u : `${siteUrl()}${u}`);
   const points = String(s.points || '').split('\n').map((x) => x.trim()).filter(Boolean);
