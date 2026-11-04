@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
@@ -19,14 +21,16 @@ export default async function Guide({ params }) {
   if (!g) notFound();
   const base = siteUrl();
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
+  const linker = makeLinker(`/guides/${g.slug}`);
   const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: g.title, description: g.description, mainEntityOfPage: `${base}/guides/${g.slug}`, image: `${base}/images/logo.png`, author: { '@type': 'Organization', name: c.site.name }, publisher: { '@type': 'Organization', name: c.site.name, logo: { '@type': 'ImageObject', url: `${base}/images/logo.png` } } };
   return (
+    <>
     <section className="section">
       <div className="container narrow">
         <Crumbs items={[{ name: 'Guides', href: '/guides' }, { name: g.title }]} />
         <h1 className="h1s">{g.title}</h1>
         <p className="muted" style={{ marginBottom: 18 }}>By {c.site.name}, aluminium handles manufacturer in Lahore, Pakistan</p>
-        {String(g.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 24 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}
+        {String(g.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 24 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{linker.render(blk)}</p>))}
         <div className="box" style={{ marginTop: 30 }}>
           <h3>Need help choosing?</h3>
           <p>Send us a photo and your measurements on WhatsApp and we will suggest the right aluminium handle at factory rates.</p>
@@ -38,5 +42,7 @@ export default async function Guide({ params }) {
       </div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </section>
+    <RelatedLinks groups={relatedGroups(`/guides/${g.slug}`, guideGroups(g.slug))} />
+    </>
   );
 }

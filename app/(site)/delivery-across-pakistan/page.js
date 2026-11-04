@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 import { slugify, waLink } from '@/lib/site';
 import { TOP_CITIES } from '@/lib/cities';
@@ -14,6 +16,7 @@ export default async function Delivery() {
   const { site, cities } = await getContent();
   const list = cities.map((c) => c.trim()).filter(Boolean);
   return (
+    <>
     <section className="section">
       <div className="container">
         <h1 className="h1s">Aluminium Handles Supplier & Delivery Across Pakistan</h1>
@@ -35,5 +38,7 @@ export default async function Delivery() {
         </p>
       </div>
     </section>
+    <RelatedLinks groups={relatedGroups('/delivery-across-pakistan')} />
+    </>
   );
 }

@@ -1,4 +1,7 @@
 import { getLocalGallery } from '@/lib/localGallery';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import LocationBlock from '@/components/LocationBlock';
 import Gallery from '@/components/Gallery';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -41,6 +44,7 @@ function Band({ n, title, sub }) {
 
 export default async function Home() {
   const { site, hero, why, products, seo, services, badges, about, guides, homeFaqs, popular } = await getContent();
+  const linker = makeLinker('/');
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   const anodizingPics = getLocalGallery('anodizing');
   const anodizingSvc = (services || []).find((x) => /anodiz/i.test(x.title));
@@ -197,7 +201,7 @@ export default async function Home() {
 
           <h2 className="subh">Aluminium Handles & Hardware in Pakistan: What We Offer</h2>
           <div className="seogrid">
-            {seo.map((b, i) => (<Reveal key={i} as="article" delay={(i % 3) * 80} className="scard"><h3>{b.title}</h3><p className="pre">{b.text}</p></Reveal>))}
+            {seo.map((b, i) => (<Reveal key={i} as="article" delay={(i % 3) * 80} className="scard"><h3>{b.title}</h3><p className="pre">{linker.render(b.text)}</p></Reveal>))}
           </div>
 
           <h2 className="subh">Aluminium Handles & Hardware: Frequently Asked Questions</h2>
@@ -216,6 +220,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <LocationBlock site={site} />
+      <RelatedLinks groups={relatedGroups('/', undefined, categories)} />
     </>
   );
 }

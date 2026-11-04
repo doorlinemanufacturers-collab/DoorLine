@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 
 
@@ -48,6 +50,7 @@ export default async function About() {
           <p style={{ marginTop: 28 }}><Link className="btn" href="/contact">Contact Us</Link></p>
         </div>
       </section>
+      <RelatedLinks groups={relatedGroups('/about')} />
     </>
   );
 }

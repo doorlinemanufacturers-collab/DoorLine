@@ -18,6 +18,7 @@ export default function Header({ site, categories, services = [] }) {
         </Link>
         <nav className="desknav" aria-label="Main">
           <Link href="/aluminum-handles">Aluminum Handles</Link>
+          {categories.includes('Door Handles') && <Link href={`/collections/${catSlug('Door Handles')}`}>Door Handles</Link>}
           <Link href="/aluminum-hardware">Aluminum Hardware</Link>
           {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`}>{/anodiz/i.test(x.title) ? 'Anodizing' : /plating/i.test(x.title) ? 'Electroplating' : x.title}</Link>)}
           <Link href="/guides">Guides</Link>
@@ -47,6 +48,7 @@ export default function Header({ site, categories, services = [] }) {
           </div>
         )}
         <Link href="/aluminum-hardware" onClick={close}>Aluminum Hardware</Link>
+        <Link href="/aluminium-handles-manufacturer/pakistan" onClick={close}>Aluminium Handles Manufacturer in Pakistan</Link>
         <Link href="/guides" onClick={close}>Buying Guides</Link>
         <Link href="/delivery-across-pakistan" onClick={close}>Delivery Across Pakistan</Link>
         <Link href="/about" onClick={close}>About Us</Link>

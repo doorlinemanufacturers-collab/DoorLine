@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import LocationBlock from '@/components/LocationBlock';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, slugify, waLink, jsonLd } from '@/lib/site';
@@ -29,6 +32,7 @@ export default async function CityPage({ params }) {
   if (!city) notFound();
   const p = cityPage(city, c.site);
   const base = siteUrl();
+  const linker = makeLinker(`/aluminium-handles-manufacturer/${params.city}`);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'Service', name: `Aluminum handles manufacturer, anodizing and electroplating for ${city}`, serviceType: 'Aluminium handles manufacturing, anodizing and electroplating', provider: { '@type': 'LocalBusiness', '@id': `${base}/#business`, name: c.site.name }, areaServed: { '@type': city === 'Pakistan' ? 'Country' : 'City', name: city }, url: `${base}/aluminium-handles-manufacturer/${params.city}` },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: base }, { '@type': 'ListItem', position: 2, name: 'Delivery Across Pakistan', item: `${base}/delivery-across-pakistan` }, { '@type': 'ListItem', position: 3, name: city, item: `${base}/aluminium-handles-manufacturer/${params.city}` }] },
@@ -49,7 +53,7 @@ export default async function CityPage({ params }) {
       </section>
       <section className="section alt">
         <div className="container narrow">
-          {p.sections.map((s, i) => (<Reveal key={i} className="seoblock"><h2>{s.h}</h2><p className="pre">{s.t}</p></Reveal>))}
+          {p.sections.map((s, i) => (<Reveal key={i} className="seoblock"><h2>{s.h}</h2><p className="pre">{linker.render(s.t)}</p></Reveal>))}
         </div>
       </section>
       <section className="section">
@@ -66,6 +70,24 @@ export default async function CityPage({ params }) {
           <div className="chips">{city !== 'Pakistan' && <Link className="chip on" href="/aluminium-handles-manufacturer/pakistan">All Pakistan</Link>}{all.filter((x) => x !== city).map((x) => <Link key={x} className="chip" href={`/aluminium-handles-manufacturer/${slugify(x)}`}>{x}</Link>)}</div>
         </div>
       </section>
+      {city === 'Pakistan' && (
+        <section className="section">
+          <div className="container narrow">
+            <h2>Best Aluminium Handles Manufacturer in Pakistan: What to Check</h2>
+            <p className="pre">Looking for the best aluminium handles manufacturer in Pakistan? Compare these points before you place a bulk order:</p>
+            <ul className="ticks">
+              <li><strong>Own factory:</strong> you buy from the manufacturer, not a trader, so there is no middleman.</li>
+              <li><strong>In-house finishing:</strong> anodizing and electroplating done in the same factory keeps colour and quality the same across batches.</li>
+              <li><strong>Wholesale rates:</strong> a clear wholesale price list on WhatsApp for your model, colour and quantity.</li>
+              <li><strong>Range:</strong> <Link className="link" href="/collections/aluminum-door-handles-lahore">door handles</Link>, <Link className="link" href="/collections/aluminum-cabinet-handles-lahore">cabinet handles</Link>, <Link className="link" href="/collections/aluminum-window-locks-lahore">window locks</Link> and <Link className="link" href="/collections/aluminum-hinges-lahore">hinges</Link> from one supplier.</li>
+              <li><strong>Delivery:</strong> dispatch by transport or cargo to every city in Pakistan.</li>
+            </ul>
+            <p className="pre">DoorLine Manufacturers works this way from its factory in Lahore, Pakistan. Read how to <Link className="link" href="/guides/how-to-buy-aluminium-handles-wholesale-in-pakistan">buy aluminium handles wholesale in Pakistan</Link> or <a className="link" href={waLink(c.site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">ask for rates on WhatsApp</a>.</p>
+          </div>
+        </section>
+      )}
+      {city === 'Lahore' && <LocationBlock site={c.site} />}
+      <RelatedLinks groups={relatedGroups(`/aluminium-handles-manufacturer/${params.city}`, ['handles','finishing','hardware','manufacturer'])} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </>
   );

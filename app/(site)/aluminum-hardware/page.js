@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
@@ -37,6 +39,7 @@ const FAQS = [
 
 export default async function Hardware() {
   const c = await getContent();
+  const linker = makeLinker('/aluminum-hardware');
   const base = siteUrl();
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
   const order = ['Hinges', 'Window Locks', 'Fittings', 'Door Handles', 'Cabinet Handles'];
@@ -64,7 +67,7 @@ export default async function Hardware() {
       ))}
       <section className="section">
         <div className="container narrow">
-          {BLOCKS.map((b) => (<Reveal key={b.h} className="seoblock"><h2>{b.h}</h2><p className="pre">{b.t}</p></Reveal>))}
+          {BLOCKS.map((b) => (<Reveal key={b.h} className="seoblock"><h2>{b.h}</h2><p className="pre">{linker.render(b.t)}</p></Reveal>))}
           <h2>Aluminum Hardware FAQ</h2>
           <FAQ faqs={FAQS} />
         </div>
@@ -79,6 +82,7 @@ export default async function Hardware() {
           <PopularSearches items={c.popular} />
         </div>
       </section>
+      <RelatedLinks groups={relatedGroups('/aluminum-hardware', ['hardware','handles','finishing','manufacturer'])} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </>
   );

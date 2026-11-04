@@ -209,3 +209,7 @@ address{font-style:normal;margin-bottom:16px}
 .copy{padding-bottom:84px}
 .wafloat{width:52px;height:52px}
 @media(max-width:800px){.cogrid,.formcard,.trgrid{grid-template-columns:1fr}.sec{padding:40px 0}.glance dl>div{grid-template-columns:90px 1fr}}
+
+/* internal link blocks */
+.relgrid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:14px}
+.relh{font-size:1.02rem;margin:0 0 6px}

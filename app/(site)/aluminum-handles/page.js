@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
@@ -35,6 +37,7 @@ const FAQS = [
 
 export default async function AluminumHandles() {
   const c = await getContent();
+  const linker = makeLinker('/aluminum-handles');
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
   const base = siteUrl();
   const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Aluminum Handles', url: `${base}/aluminum-handles`, description: 'Aluminum handles and aluminum door handles from the manufacturer in Pakistan, Lahore.', mainEntity: { '@type': 'ItemList', itemListElement: c.products.map((x, i) => ({ '@type': 'ListItem', position: i + 1, url: `${base}/products/${x.slug}`, name: `${x.name} ${x.model}` })) } };
@@ -87,6 +90,7 @@ export default async function AluminumHandles() {
           </div>
         </div>
       </section>
+      <RelatedLinks groups={relatedGroups('/aluminum-handles', ['handles','hardware','finishing','manufacturer'])} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </>
   );

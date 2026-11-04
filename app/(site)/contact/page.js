@@ -1,4 +1,6 @@
 import { getContent } from '@/lib/store';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import CatalogueForm from '@/components/CatalogueForm';
 import ContactCards from '@/components/ContactCards';
 
@@ -12,6 +14,7 @@ export default async function Contact() {
   const { site } = await getContent();
   const map = `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery || site.address)}&output=embed`;
   return (
+    <>
     <section className="section">
       <div className="container">
         <h1 className="h1s">Contact DoorLine Manufacturers</h1>
@@ -27,5 +30,7 @@ export default async function Contact() {
         </div>
       </div>
     </section>
+    <RelatedLinks groups={relatedGroups('/contact')} />
+    </>
   );
 }

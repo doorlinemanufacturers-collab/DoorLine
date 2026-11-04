@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
     url: base,
     logo: { '@type': 'ImageObject', url: `${base}/images/logo.png` },
     image: [`${base}${(products[0] && products[0].image) || '/images/fluted-bar-handle-white-gold.jpg'}`, `${base}/images/og-default.jpg`],
-    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`,
+    hasMap: site.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`,
     telephone: phone,
     email: site.email,
     address: { '@type': 'PostalAddress', streetAddress: street, addressLocality: 'Lahore', addressRegion: 'Punjab', addressCountry: 'PK' },

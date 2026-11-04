@@ -1,4 +1,6 @@
 import { getLocalGallery } from '@/lib/localGallery';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
@@ -32,6 +34,7 @@ export default async function ServicePage({ params }) {
   const gallery = (s.gallery || []).filter((g) => g && g.url).map((g, i) => ({ url: g.url, alt: (g.alt && g.alt.trim()) || `${s.title} - sample ${i + 1} - Doorline Lahore Pakistan` }));
   const localFolder = /anodiz/i.test(s.title) ? 'anodizing' : /plating/i.test(s.title) ? 'electroplating' : '';
   if (localFolder) gallery.push(...getLocalGallery(localFolder));
+  const linker = makeLinker(`/services/${s.slug}`);
   const workLabel = /anodiz/i.test(s.title) ? 'Anodizing Work Samples' : /plating/i.test(s.title) ? 'Electroplating Work Samples' : 'Work Samples';
   const abs = (u) => (u.startsWith('http') ? u : `${siteUrl()}${u}`);
   const points = String(s.points || '').split('\n').map((x) => x.trim()).filter(Boolean);
@@ -89,9 +92,21 @@ export default async function ServicePage({ params }) {
           </div>
         </section>
       )}
+      {(/anodiz/i.test(s.title) || /plating/i.test(s.title)) && (
+        <section className="section">
+          <div className="container narrow">
+            <h2>{/anodiz/i.test(s.title) ? 'Aluminium Anodizer in Lahore, Pakistan' : 'Aluminium Electroplating in Lahore, Pakistan'}</h2>
+            <p className="pre">{/anodiz/i.test(s.title)
+              ? 'Looking for an aluminium anodizer in Lahore, Pakistan? DoorLine Manufacturers anodizes aluminium handles, profiles and hardware in its own factory, and also takes job work from fabricators and factories across Pakistan. Send a sample, the colour and your quantity on WhatsApp and we reply with the price.'
+              : 'Looking for aluminium electroplating in Lahore, Pakistan? DoorLine Manufacturers plates aluminium parts and hardware in its own factory and also takes job work from fabricators and factories across Pakistan. Send a sample, the finish and your quantity on WhatsApp and we reply with the price.'}</p>
+            <p className="pre">See our <Link className="link" href="/aluminum-handles">aluminium handles</Link>, <Link className="link" href="/collections/aluminum-door-handles-lahore">aluminium door handles</Link> and <Link className="link" href="/aluminum-hardware">aluminium hardware</Link>, or read the <Link className="link" href="/guides">buying and finishing guides</Link>.</p>
+            <p><a className="btn" href={waLink(c.site.whatsapp, /anodiz/i.test(s.title) ? 'Hello, I need anodizing for my aluminium parts. Sample, colour and quantity: ' : 'Hello, I need electroplating for my aluminium parts. Sample, finish and quantity: ')} target="_blank" rel="noopener noreferrer">Send Your Sample on WhatsApp</a></p>
+          </div>
+        </section>
+      )}
       <section className="section alt">
         <div className="container narrow">
-          <Reveal>{String(s.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 26 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{blk}</p>))}</Reveal>
+          <Reveal>{String(s.body || '').split(/\n\s*\n/).map((blk, i) => (blk.startsWith('## ') ? <h2 key={i} style={{ marginTop: 26 }}>{blk.slice(3)}</h2> : <p key={i} className="pre">{linker.render(blk)}</p>))}</Reveal>
           {(() => { const re = /anodiz/i.test(s.title) ? /anodiz|powder/ : /plating/i.test(s.title) ? /plating/ : /^$/; const rel = (c.guides || []).filter((g) => re.test(g.slug)); return rel.length ? (<p style={{ marginTop: 20 }}>Related guides: {rel.map((g, i) => <span key={g.slug}>{i > 0 && ', '}<Link className="link" href={`/guides/${g.slug}`}>{g.title}</Link></span>)}</p>) : null; })()}
           <h2 style={{ marginTop: 28 }}>Frequently Asked Questions</h2>
           <FAQ faqs={s.faqs || []} />
@@ -104,6 +119,7 @@ export default async function ServicePage({ params }) {
           {others.length > 0 && <p style={{ marginTop: 24 }}>Also see: {others.map((o, i) => <span key={o.slug}>{i > 0 && ', '}<Link className="link" href={`/services/${o.slug}`}>{o.title}</Link></span>)}</p>}
         </div>
       </section>
+      <RelatedLinks groups={relatedGroups(`/services/${s.slug}`, ['finishing','handles','manufacturer','hardware'])} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </>
   );

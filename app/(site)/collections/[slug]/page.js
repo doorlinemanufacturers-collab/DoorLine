@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
@@ -64,6 +66,7 @@ export default async function Collection({ params }) {
           </div>
         </div>
       </section>
+      <RelatedLinks groups={relatedGroups(`/collections/${params.slug}`, ['handles','hardware','finishing','manufacturer'], cats)} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </>
   );

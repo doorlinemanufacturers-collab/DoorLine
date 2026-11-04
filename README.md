@@ -30,3 +30,10 @@ Add ANTHROPIC_API_KEY (from console.anthropic.com) in Vercel Environment Variabl
 
 ## Anodizing / electroplating pictures
 Copy photos into public/images/anodizing/ (or public/images/electroplating/), git add, commit, push. They show on the service page and the homepage automatically; the file name becomes the Google picture description. Rule for all text: never write only "Lahore", always "Lahore, Pakistan" (text saved from /admin is fixed automatically by withPakistan() in lib/site.js).
+
+## Internal linking (topic clusters)
+All link targets live in lib/linkMap.js. Clusters: handles, hardware, finishing (anodizing + electroplating), manufacturer/wholesale.
+- Every page ends with a RelatedLinks block (components/RelatedLinks.js) built from the cluster map.
+- Body text gets one contextual link per keyword via makeLinker() (first mention only, max 7 per page, 2 per paragraph).
+- Header, footer and popular-search chips always contain the main keyword pages (withCoreChips()).
+- Factory map: footer iframe on every page, LocationBlock on home + Lahore page, contact page map, schema hasMap. Put your Google Business Profile link in /admin (Google Business) and site.mapUrl / site.lat / site.lng in lib/defaultContent.js.

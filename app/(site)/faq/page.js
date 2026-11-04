@@ -1,4 +1,6 @@
 import { getContent } from '@/lib/store';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import FAQ from '@/components/FAQ';
 
 
@@ -11,6 +13,7 @@ export const metadata = {
 export default async function FaqPage() {
   const { faqs } = await getContent();
   return (
+    <>
     <section className="section">
       <div className="container narrow">
         <h1 className="h1s">FAQ - Wholesale Buyers</h1>
@@ -18,5 +21,7 @@ export default async function FaqPage() {
         <FAQ faqs={faqs} />
       </div>
     </section>
+    <RelatedLinks groups={relatedGroups('/faq')} />
+    </>
   );
 }

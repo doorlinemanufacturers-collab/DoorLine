@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedLinks from '@/components/RelatedLinks';
+import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
@@ -51,6 +53,7 @@ export default async function ProductPage({ params }) {
       : { '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${base}/products/${p.slug}#webpage`, url: `${base}/products/${p.slug}`, name: seo.title, description: seo.description, primaryImageOfPage: { '@type': 'ImageObject', url: img }, about: { '@type': 'Thing', name: `${p.name} ${p.model}`, description: seo.body[0], image: img }, publisher: org }
   ];
   return (
+    <>
     <section className="section">
       <div className="container">
         <Crumbs items={[{ name: 'Aluminum Handles', href: '/aluminum-handles' }, { name: p.category, href: `/collections/${catSlug(p.category)}` }, { name: p.name }]} />
@@ -92,5 +95,7 @@ export default async function ProductPage({ params }) {
       </div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
     </section>
+    <RelatedLinks groups={relatedGroups(`/products/${p.slug}`, ['finishing','manufacturer','hardware'])} />
+    </>
   );
 }
