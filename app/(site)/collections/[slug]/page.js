@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { notFound } from 'next/navigation';
@@ -40,6 +41,7 @@ export default async function Collection({ params }) {
         <div className="container">
           <p className="crumb"><Link href="/">Home</Link> / <Link href="/aluminum-handles">Aluminum Handles</Link> / {cat}</p>
           <h1 className="h1s">{p.h1}</h1>
+          <QuickAnswer>{`${cat} from DoorLine Manufacturers: aluminium ${cat.toLowerCase()} made in Lahore, Pakistan and sold wholesale across Pakistan. Send the model, colour and quantity on WhatsApp to get today's factory rate.`}</QuickAnswer>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 820 }}>{p.intro}</p>
           <p className="muted">See also: <Link className="link" href="/aluminum-handles">Aluminum Handles</Link> · <Link className="link" href="/aluminum-hardware">Aluminum Hardware</Link></p>

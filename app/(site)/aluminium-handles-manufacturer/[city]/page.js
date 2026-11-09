@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import LocationBlock from '@/components/LocationBlock';
@@ -43,8 +44,12 @@ export default async function CityPage({ params }) {
         <div className="container narrow">
           <p className="crumb"><Link href="/">Home</Link> / <Link href="/delivery-across-pakistan">Delivery Across Pakistan</Link> / {city}</p>
           <h1 className="h1s">{p.h1}</h1>
+          <QuickAnswer>{city === 'Pakistan'
+            ? `DoorLine Manufacturers is an aluminium handles wholesaler and manufacturer in Pakistan with its factory in Lahore, Pakistan. Buyers in every city get wholesale factory rates on WhatsApp (${c.site.whatsappDisplay || c.site.whatsapp}), and orders are delivered by transport or cargo.`
+            : `DoorLine Manufacturers supplies aluminium handles to ${city}, Pakistan from its factory in Lahore, Pakistan, delivered by transport or cargo. Message ${c.site.whatsappDisplay || c.site.whatsapp} on WhatsApp for the wholesale rate list.`}</QuickAnswer>
           <Badges items={c.badges} />
           <p className="pre">{p.intro}</p>
+          {city !== 'Pakistan' && <p className="muted">Supplying all of Pakistan: <Link className="link" href="/aluminium-handles-manufacturer/pakistan">Aluminum Handles Wholesaler &amp; Manufacturer in Pakistan</Link></p>}
           <div className="row">
             <a className="btn" href={waLink(c.site.whatsapp, `Hello, I need wholesale rates for aluminium handles in ${city}.`)} target="_blank" rel="noopener noreferrer">Get Rates for {city}</a>
             <Link className="btn btn-outline" href="/aluminum-handles">View Aluminum Handles</Link>

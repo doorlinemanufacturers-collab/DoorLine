@@ -3,6 +3,7 @@ import './globals.css';
 import { getContent } from '@/lib/store';
 import { siteUrl, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
+import { TOP_CITIES } from '@/lib/cities';
 
 const font = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'], display: 'swap' });
 
@@ -47,7 +48,7 @@ export default async function RootLayout({ children }) {
     ...(sameAs.length ? { sameAs } : {}),
     slogan: 'Direct factory rates. No middleman. Premium quality.',
     knowsAbout: ['Aluminium door handles', 'Aluminium cabinet handles', 'Window locks', 'Aluminium hinges', 'Aluminium anodizing', 'Electroplating', 'Aluminium hardware wholesale'],
-    areaServed: { '@type': 'Country', name: 'Pakistan' },
+    areaServed: [{ '@type': 'Country', name: 'Pakistan' }, ...TOP_CITIES.map((n) => ({ '@type': 'City', name: n }))],
     ...(categories.length ? { hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Aluminium handles and hardware', itemListElement: categories.map((c) => ({ '@type': 'OfferCatalog', name: `Aluminium ${c}`, url: `${base}/collections/${catSlug(c)}` })) } } : {}),
     openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '09:00', closes: '19:00' }],
   };

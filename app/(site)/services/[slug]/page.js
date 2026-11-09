@@ -1,4 +1,5 @@
 import { getLocalGallery } from '@/lib/localGallery';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import Link from 'next/link';
@@ -54,6 +55,11 @@ export default async function ServicePage({ params }) {
             <Reveal eager><ServiceVisual s={s} big /></Reveal>
             <Reveal eager>
               <h1 className="h1s">{s.title}</h1>
+              <QuickAnswer>{/anodiz/i.test(s.title)
+                ? 'Anodizing is an electrochemical process that builds a hard, corrosion resistant oxide layer on aluminium and lets it take colours such as gold, bronze, brown, silver and black. DoorLine Manufacturers anodizes aluminium in Lahore, Pakistan, for its own handles and as job work for fabricators across Pakistan.'
+                : /plating/i.test(s.title)
+                  ? 'Electroplating coats a part with a thin layer of metal using electric current, to improve its look and protection. DoorLine Manufacturers plates aluminium parts and hardware in Lahore, Pakistan, including job work sent from anywhere in Pakistan.'
+                  : s.short}</QuickAnswer>
               <Badges items={c.badges} />
               <p className="pre">{s.intro}</p>
               <ul className="ticks">{points.map((p, i) => <li key={i}>{p}</li>)}</ul>

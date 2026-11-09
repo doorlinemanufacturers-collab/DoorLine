@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
@@ -51,6 +52,7 @@ export default async function Hardware() {
         <div className="container">
           <Crumbs items={[{ name: 'Aluminum Hardware' }]} />
           <h1 className="h1s">Aluminum Hardware Dealer & Manufacturer in Pakistan, Lahore</h1>
+          <QuickAnswer>Aluminium hardware means aluminium handles, hinges, window locks and fittings used on doors, windows and cabinets. DoorLine Manufacturers makes aluminium hardware in Lahore, Pakistan and supplies it wholesale to shops, fabricators and contractors across Pakistan.</QuickAnswer>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 860 }}>Doorline is a professional manufacturer and wholesaler of aluminum hardware in Lahore, Pakistan: aluminum handles, hinges, window locks and fittings for doors, windows and cabinets. Buy at direct factory rates with no middleman, with anodizing and electroplating services available.</p>
           <div className="chips">{sorted.map((x) => <Link key={x} className="chip" href={`/collections/${catSlug(x)}`}>Aluminum {x}</Link>)}<Link className="chip" href="/aluminum-handles">Aluminum Handles</Link></div>

@@ -1,4 +1,5 @@
 import { getLocalGallery } from '@/lib/localGallery';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import LocationBlock from '@/components/LocationBlock';
@@ -6,7 +7,7 @@ import Gallery from '@/components/Gallery';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getContent } from '@/lib/store';
-import { waLink, slugify } from '@/lib/site';
+import { waLink, slugify, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
 import { TOP_CITIES } from '@/lib/cities';
 import ProductCard from '@/components/ProductCard';
@@ -45,6 +46,8 @@ function Band({ n, title, sub }) {
 export default async function Home() {
   const { site, hero, why, products, seo, services, badges, about, guides, homeFaqs, popular } = await getContent();
   const linker = makeLinker('/');
+  const orderSteps = [['Open WhatsApp', `Message ${site.whatsappDisplay || site.whatsapp} using the button below. The order message is already filled in for you.`], ['Send your requirement', 'Write the model code, colour, size and quantity. Example: DL-104, black, 100 pieces.'], ['Add your city', 'Tell us your city. For custom lengths or finishes, send a photo or sample details.'], ['Get the rate list', 'We reply with the wholesale price and availability directly from the factory.'], ['Confirm and receive', 'Confirm the order. Ready stock is dispatched and bulk orders are produced, then sent by transport or cargo to your city.']];
+  const howTo = { '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to order aluminium handles on WhatsApp from DoorLine Manufacturers', description: 'Order aluminium handles wholesale in Pakistan by sending your model, colour, size, quantity and city on WhatsApp.', step: orderSteps.map(([t, x], n) => ({ '@type': 'HowToStep', position: n + 1, name: t, text: x })) };
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
   const anodizingPics = getLocalGallery('anodizing');
   const anodizingSvc = (services || []).find((x) => /anodiz/i.test(x.title));
@@ -77,6 +80,11 @@ export default async function Home() {
               <Image src={hero.image} alt="Aluminium handles manufacturer and wholesaler in Lahore, Pakistan" fill priority sizes="(max-width: 900px) 100vw, 45vw" className="pimg" />
             </div>
           ) : null}
+        </div>
+      </section>
+      <section className="section" style={{ paddingBottom: 0 }}>
+        <div className="container narrow">
+          <QuickAnswer>{`DoorLine Manufacturers is an aluminium handles manufacturer and wholesaler in Lahore, Pakistan. We make aluminium door handles, cabinet handles, window locks and hinges, and run our own anodizing and electroplating. Wholesale rates are shared on WhatsApp (${site.whatsappDisplay || site.whatsapp}) and orders are delivered across Pakistan by transport or cargo.`}</QuickAnswer>
         </div>
       </section>
 
@@ -154,7 +162,7 @@ export default async function Home() {
 
           <h2 className="subh">How to Order Aluminium Handles on WhatsApp</h2>
           <div className="steps">
-            {[['Open WhatsApp', `Message ${site.whatsappDisplay || site.whatsapp} using the button below. The order message is already filled in for you.`], ['Send your requirement', 'Write the model code, colour, size and quantity. Example: DL-104, black, 100 pieces.'], ['Add your city', 'Tell us your city. For custom lengths or finishes, send a photo or sample details.'], ['Get the rate list', 'We reply with the wholesale price and availability directly from the factory.'], ['Confirm and receive', 'Confirm the order. Ready stock is dispatched and bulk orders are produced, then sent by transport or cargo to your city.']].map(([t, x], i) => (
+            {orderSteps.map(([t, x], i) => (
               <Reveal key={t} delay={i * 90} className="step"><span className="snum">{i + 1}</span><h3>{t}</h3><p>{x}</p></Reveal>
             ))}
           </div>
@@ -220,6 +228,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(howTo) }} />
       <LocationBlock site={site} />
       <RelatedLinks groups={relatedGroups('/', undefined, categories)} />
     </>

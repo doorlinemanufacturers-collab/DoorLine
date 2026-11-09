@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
 import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
@@ -47,6 +48,7 @@ export default async function AluminumHandles() {
         <div className="container">
           <Crumbs items={[{ name: 'Aluminum Handles' }]} />
           <h1 className="h1s">Aluminum Handles & Aluminum Door Handles in Pakistan, Lahore</h1>
+          <QuickAnswer>Aluminium handles are door, cabinet and window handles made from aluminium. They are light, resist rust and come in anodized and powder coated finishes. DoorLine Manufacturers makes them in Lahore, Pakistan and sells them wholesale across Pakistan at factory rates.</QuickAnswer>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 860 }}>Doorline is a manufacturer and hardware dealer of aluminum (aluminium) handles in Pakistan, Lahore. Browse our aluminum door handles, cabinet handles, window locks and hinges, made at our own factory and sold at direct factory rates with no middleman. Anodizing and electroplating services are also available.</p>
           <ProductSearch products={c.products} />
