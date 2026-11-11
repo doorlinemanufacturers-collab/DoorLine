@@ -3,6 +3,7 @@ import { getContent } from '@/lib/store';
 export const metadata = {
   title: { absolute: 'Terms & Conditions | Doorline Pakistan, Lahore' },
   description: 'Terms for orders, pricing, delivery and returns with Doorline, aluminum handles manufacturer and hardware dealer in Pakistan, Lahore.',
+  robots: { index: false, follow: true },
   alternates: { canonical: '/terms' },
 };
 

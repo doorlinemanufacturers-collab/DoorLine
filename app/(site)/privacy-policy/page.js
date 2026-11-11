@@ -3,6 +3,7 @@ import { getContent } from '@/lib/store';
 export const metadata = {
   title: { absolute: 'Privacy Policy | Doorline Pakistan, Lahore' },
   description: 'How Doorline, aluminum handles manufacturer in Pakistan, Lahore, handles the information you send through our inquiry and contact forms.',
+  robots: { index: false, follow: true },
   alternates: { canonical: '/privacy-policy' },
 };
 

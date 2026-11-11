@@ -6,7 +6,7 @@ export default function ContactCards({ site }) {
     { icon: '📞', title: 'Call Us', text: site.phone, href: `tel:${tel}`, cta: 'Call now' },
     { icon: '💬', title: 'WhatsApp', text: site.whatsappDisplay || site.whatsapp, href: waLink(site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.'), cta: 'Chat on WhatsApp', ext: true },
     { icon: '✉️', title: 'Email', text: site.email, href: `mailto:${site.email}`, cta: 'Send email' },
-    { icon: '📍', title: 'Visit Our Factory', text: site.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`, cta: 'Get directions', ext: true },
+    { icon: '📍', title: 'Visit Our Factory', text: site.address, href: '/map', cta: 'Get directions', ext: true },
   ];
   return (
     <>

@@ -1,11 +1,11 @@
 import { getLocalGallery } from '@/lib/localGallery';
 import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
-import { siteUrl, waLink, jsonLd } from '@/lib/site';
+import { siteUrl, waLink, jsonLd, businessRef } from '@/lib/site';
 import { ServiceVisual } from '@/components/ServiceCard';
 import FAQ from '@/components/FAQ';
 import ProductCard from '@/components/ProductCard';
@@ -35,13 +35,13 @@ export default async function ServicePage({ params }) {
   const gallery = (s.gallery || []).filter((g) => g && g.url).map((g, i) => ({ url: g.url, alt: (g.alt && g.alt.trim()) || `${s.title} - sample ${i + 1} - Doorline Lahore Pakistan` }));
   const localFolder = /anodiz/i.test(s.title) ? 'anodizing' : /plating/i.test(s.title) ? 'electroplating' : '';
   if (localFolder) gallery.push(...getLocalGallery(localFolder));
-  const linker = makeLinker(`/services/${s.slug}`);
+  const linker = makeLinker(`/services/${s.slug}`, undefined, undefined, catsOf(c.products));
   const workLabel = /anodiz/i.test(s.title) ? 'Anodizing Work Samples' : /plating/i.test(s.title) ? 'Electroplating Work Samples' : 'Work Samples';
   const abs = (u) => (u.startsWith('http') ? u : `${siteUrl()}${u}`);
   const points = String(s.points || '').split('\n').map((x) => x.trim()).filter(Boolean);
   const ld = {
     '@context': 'https://schema.org', '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title,
-    provider: { '@type': 'LocalBusiness', name: c.site.name, url: siteUrl(), telephone: c.site.phone },
+    provider: businessRef(c.site),
     areaServed: [{ '@type': 'Country', name: 'Pakistan' }, { '@type': 'City', name: 'Lahore' }],
     ...(gallery.length ? { image: gallery.map((g) => abs(g.url)) } : {}),
   };
@@ -105,7 +105,7 @@ export default async function ServicePage({ params }) {
             <p className="pre">{/anodiz/i.test(s.title)
               ? 'Looking for an aluminium anodizer in Lahore, Pakistan? DoorLine Manufacturers anodizes aluminium handles, profiles and hardware in its own factory, and also takes job work from fabricators and factories across Pakistan. Send a sample, the colour and your quantity on WhatsApp and we reply with the price.'
               : 'Looking for aluminium electroplating in Lahore, Pakistan? DoorLine Manufacturers plates aluminium parts and hardware in its own factory and also takes job work from fabricators and factories across Pakistan. Send a sample, the finish and your quantity on WhatsApp and we reply with the price.'}</p>
-            <p className="pre">See our <Link className="link" href="/aluminum-handles">aluminium handles</Link>, <Link className="link" href="/collections/aluminum-door-handles-lahore">aluminium door handles</Link> and <Link className="link" href="/aluminum-hardware">aluminium hardware</Link>, or read the <Link className="link" href="/guides">buying and finishing guides</Link>.</p>
+            <p className="pre">See our <Link className="link" href="/aluminum-handles">aluminium handles</Link>, <Link className="link" href="/aluminum-hardware">aluminium hardware</Link>, or read the <Link className="link" href="/guides">buying and finishing guides</Link>.</p>
             <p><a className="btn" href={waLink(c.site.whatsapp, /anodiz/i.test(s.title) ? 'Hello, I need anodizing for my aluminium parts. Sample, colour and quantity: ' : 'Hello, I need electroplating for my aluminium parts. Sample, finish and quantity: ')} target="_blank" rel="noopener noreferrer">Send Your Sample on WhatsApp</a></p>
           </div>
         </section>

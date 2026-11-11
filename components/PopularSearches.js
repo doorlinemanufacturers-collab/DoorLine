@@ -1,7 +1,10 @@
 import Link from 'next/link';
+import { getContent } from '@/lib/store';
+import { liveHref } from '@/lib/linkMap';
 
-export default function PopularSearches({ items = [], title = 'Popular Searches' }) {
-  const list = items.filter((x) => x && x.label && String(x.href || '').startsWith('/'));
+export default async function PopularSearches({ items = [], title = 'Popular Searches' }) {
+  const c = await getContent();
+  const list = items.filter((x) => x && x.label && String(x.href || '').startsWith('/') && liveHref(x.href, c));
   if (!list.length) return null;
   return (
     <nav aria-label={title} className="popsearch">

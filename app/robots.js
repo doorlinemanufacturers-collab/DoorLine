@@ -6,8 +6,8 @@ const BOTS = ['Googlebot', 'Bingbot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',
 export default function robots() {
   return {
     rules: [
-      { userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] },
-      ...BOTS.map((userAgent) => ({ userAgent, allow: '/', disallow: ['/admin', '/api/'] })),
+      { userAgent: '*', allow: '/', disallow: ['/admin', '/api/', '/wa', '/map'] },
+      ...BOTS.map((userAgent) => ({ userAgent, allow: '/', disallow: ['/admin', '/api/', '/wa', '/map'] })),
     ],
     sitemap: `${siteUrl()}/sitemap.xml`,
     host: siteUrl(),

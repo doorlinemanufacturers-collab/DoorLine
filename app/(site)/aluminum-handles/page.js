@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
@@ -38,7 +38,7 @@ const FAQS = [
 
 export default async function AluminumHandles() {
   const c = await getContent();
-  const linker = makeLinker('/aluminum-handles');
+  const linker = makeLinker('/aluminum-handles', undefined, undefined, catsOf(c.products));
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
   const base = siteUrl();
   const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Aluminum Handles', url: `${base}/aluminum-handles`, description: 'Aluminum handles and aluminum door handles from the manufacturer in Pakistan, Lahore.', mainEntity: { '@type': 'ItemList', itemListElement: c.products.map((x, i) => ({ '@type': 'ListItem', position: i + 1, url: `${base}/products/${x.slug}`, name: `${x.name} ${x.model}` })) } };
@@ -51,7 +51,7 @@ export default async function AluminumHandles() {
           <QuickAnswer>Aluminium handles are door, cabinet and window handles made from aluminium. They are light, resist rust and come in anodized and powder coated finishes. DoorLine Manufacturers makes them in Lahore, Pakistan and sells them wholesale across Pakistan at factory rates.</QuickAnswer>
           <Badges items={c.badges} />
           <p className="pre" style={{ maxWidth: 860 }}>Doorline is a manufacturer and hardware dealer of aluminum (aluminium) handles in Pakistan, Lahore. Browse our aluminum door handles, cabinet handles, window locks and hinges, made at our own factory and sold at direct factory rates with no middleman. Anodizing and electroplating services are also available.</p>
-          <ProductSearch products={c.products} />
+          <ProductSearch products={c.products.map(({ slug, name, model, category, colors, price, image, alt, keywords, desc }) => ({ slug, name, model, category, colors, price, image, alt, keywords, desc: String(desc || '').slice(0, 160) }))} />
           <div className="chips">{cats.map((x) => <Link key={x} className="chip" href={`/collections/${catSlug(x)}`}>Aluminum {x}</Link>)}<Link className="chip" href="/aluminum-hardware">Aluminum Hardware</Link><Link className="chip" href="/services">Anodizing & Electroplating</Link></div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { getLocalGallery } from '@/lib/localGallery';
 import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import LocationBlock from '@/components/LocationBlock';
 import Gallery from '@/components/Gallery';
 import Image from 'next/image';
@@ -20,15 +20,15 @@ import PopularSearches from '@/components/PopularSearches';
 import LazyAnodizing from '@/components/LazyAnodizing';
 import ContactLines from '@/components/ContactLines';
 
-const H1 = 'Aluminium Handles Manufacturer & Wholesaler in Lahore, Pakistan';
+const H1 = 'Glass Door Handles & Aluminium Handles Manufacturer in Lahore, Pakistan';
 const ORDER_MSG = 'Assalam o Alaikum, I want wholesale rates.\nModel: \nColour: \nSize: \nQuantity: \nCity: ';
 const CAT_ICON = { 'Door Handles': '🚪', 'Cabinet Handles': '🗄️', 'Window Locks': '🔒', Hinges: '🔩' };
 const WHY_ICON = ['🏭', '🎨', '🚚', '✨', '✅', '⭐'];
 
 export async function generateMetadata() {
   const { site } = await getContent();
-  const title = 'Aluminium Handles Wholesale Price Lahore, Pakistan';
-  const description = `Aluminium door handles wholesale price in Pakistan from our factory in Lahore, Pakistan. Handles, hinges, locks and anodizing. WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
+  const title = 'Glass Door Handles Manufacturer Lahore, Pakistan | DoorLine';
+  const description = `Glass door handles, aluminium and steel handles, hinges and anodizing from our factory in Lahore, Pakistan. Wholesale rate on WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
   return {
     title: { absolute: title }, description,
     alternates: { canonical: '/' },
@@ -45,7 +45,7 @@ function Band({ n, title, sub }) {
 
 export default async function Home() {
   const { site, hero, why, products, seo, services, badges, about, guides, homeFaqs, popular } = await getContent();
-  const linker = makeLinker('/');
+  const linker = makeLinker('/', undefined, undefined, catsOf(products));
   const orderSteps = [['Open WhatsApp', `Message ${site.whatsappDisplay || site.whatsapp} using the button below. The order message is already filled in for you.`], ['Send your requirement', 'Write the model code, colour, size and quantity. Example: DL-104, black, 100 pieces.'], ['Add your city', 'Tell us your city. For custom lengths or finishes, send a photo or sample details.'], ['Get the rate list', 'We reply with the wholesale price and availability directly from the factory.'], ['Confirm and receive', 'Confirm the order. Ready stock is dispatched and bulk orders are produced, then sent by transport or cargo to your city.']];
   const howTo = { '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to order aluminium handles on WhatsApp from DoorLine Manufacturers', description: 'Order aluminium handles wholesale in Pakistan by sending your model, colour, size, quantity and city on WhatsApp.', step: orderSteps.map(([t, x], n) => ({ '@type': 'HowToStep', position: n + 1, name: t, text: x })) };
   const categories = [...new Set(products.map((p) => p.category).filter(Boolean))];
@@ -134,6 +134,12 @@ export default async function Home() {
           <div className="grid">{products.slice(0, 8).map((p, i) => <Reveal key={p.slug} delay={(i % 4) * 80}><ProductCard p={p} /></Reveal>)}</div>
           <p className="center"><Link className="btn" href="/aluminum-handles">View All Aluminium Handles</Link> <Link className="btn btn-outline" href="/aluminum-hardware">View Aluminium Hardware</Link></p>
 
+          <h2 className="subh">Glass Door Handles Manufacturer in Lahore, Pakistan</h2>
+          <div className="narrow">
+            <p className="pre">Glass door handles are our number one product. We make and supply steel and aluminium handles for frameless glass doors to shops, offices, glass fabricators and contractors across Pakistan. Send the glass thickness and the hole distance on WhatsApp to get the wholesale rate for your door.</p>
+            <p className="center"><Link className="btn" href="/glass-door-handles">See Glass Door Handles</Link> <Link className="btn btn-outline" href="/steel-handles">Steel Handles</Link></p>
+          </div>
+
           <h2 className="subh">Aluminium Door Handles Price in Pakistan</h2>
           <div className="narrow">
             <p className="pre">The price of aluminium door handles in Pakistan depends on the model, size, finish and the quantity you order. We share the current wholesale rate list on WhatsApp, so you always get today&apos;s factory price with no middleman.</p>
@@ -149,7 +155,7 @@ export default async function Home() {
           <h2 className="subh">Aluminium Handles Wholesale Market Lahore, Pakistan: Buy Direct From the Factory</h2>
           <div className="narrow">
             <p className="pre">Hardware shops, dealers and fabricators in Lahore, Pakistan and other cities buy aluminium handles from DoorLine at factory rates, because we are the manufacturer and not a trader. Our factory is at {site.address}. We are open {site.hours}. Message us on WhatsApp first so we can confirm that your models and colours are available.</p>
-            <div className="row"><a className="btn btn-outline" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`} target="_blank" rel="noopener noreferrer">Find Our Factory on Google Maps</a><Link className="btn btn-outline" href="/aluminium-handles-manufacturer/lahore">Handles Manufacturer in Lahore, Pakistan</Link></div>
+            <div className="row"><a className="btn btn-outline" href="/map" target="_blank" rel="noopener noreferrer">Find Our Factory on Google Maps</a><Link className="btn btn-outline" href="/aluminium-handles-manufacturer/lahore">Handles Manufacturer in Lahore, Pakistan</Link></div>
           </div>
 
           <h2 className="subh">Anodizing Factory in Lahore, Pakistan: Anodizing & Electroplating Services</h2>
@@ -190,7 +196,7 @@ export default async function Home() {
               <h2>Business Details You Can Verify</h2>
               <address><ContactLines site={site} /></address>
               <div className="row">
-                <a className="btn" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || site.address)}`} target="_blank" rel="noopener noreferrer">Find Us on Google Maps</a>
+                <a className="btn" href="/map" target="_blank" rel="noopener noreferrer">Find Us on Google Maps</a>
                 <a className="btn btn-outline" href={waLink(site.whatsapp, 'Hello')} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
               </div>
             </Reveal>

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
 import { catSlug } from '@/lib/categories';
@@ -40,7 +40,7 @@ const FAQS = [
 
 export default async function Hardware() {
   const c = await getContent();
-  const linker = makeLinker('/aluminum-hardware');
+  const linker = makeLinker('/aluminum-hardware', undefined, undefined, catsOf(c.products));
   const base = siteUrl();
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
   const order = ['Hinges', 'Window Locks', 'Fittings', 'Door Handles', 'Cabinet Handles'];

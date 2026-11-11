@@ -17,6 +17,7 @@ export default function Header({ site, categories, services = [] }) {
           <Image src="/images/logo.png" alt="DoorLine Manufacturers logo - aluminium handles manufacturer, anodizing and electroplating Lahore, Pakistan" width={65} height={48} priority style={{ height: 48, width: 'auto' }} />
         </Link>
         <nav className="desknav" aria-label="Main">
+          <Link href="/glass-door-handles">Glass Door Handles</Link>
           <Link href="/aluminum-handles">Aluminum Handles</Link>
           {categories.includes('Door Handles') && <Link href={`/collections/${catSlug('Door Handles')}`}>Door Handles</Link>}
           <Link href="/aluminum-hardware">Aluminum Hardware</Link>
@@ -47,6 +48,8 @@ export default function Header({ site, categories, services = [] }) {
             {services.map((x) => <Link key={x.slug} href={`/services/${x.slug}`} onClick={close}>{x.title.replace(/ in Lahore(, Pakistan)?/, '').replace(/ Services?/, '')}</Link>)}
           </div>
         )}
+        <Link href="/glass-door-handles" onClick={close}>Glass Door Handles</Link>
+        <Link href="/steel-handles" onClick={close}>Steel Handles</Link>
         <Link href="/aluminum-hardware" onClick={close}>Aluminum Hardware</Link>
         <Link href="/aluminium-handles-manufacturer/pakistan" onClick={close}>Aluminium Handles Manufacturer in Pakistan</Link>
         <Link href="/guides" onClick={close}>Buying Guides</Link>

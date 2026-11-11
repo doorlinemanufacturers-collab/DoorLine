@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import QuickAnswer from '@/components/QuickAnswer';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import LocationBlock from '@/components/LocationBlock';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { getContent } from '@/lib/store';
-import { siteUrl, slugify, waLink, jsonLd } from '@/lib/site';
+import { siteUrl, slugify, waLink, jsonLd, businessRef } from '@/lib/site';
+import { catSlug } from '@/lib/categories';
 import { cityPage, TOP_CITIES } from '@/lib/cities';
 import ProductCard from '@/components/ProductCard';
 import FAQ from '@/components/FAQ';
@@ -33,9 +34,9 @@ export default async function CityPage({ params }) {
   if (!city) notFound();
   const p = cityPage(city, c.site);
   const base = siteUrl();
-  const linker = makeLinker(`/aluminium-handles-manufacturer/${params.city}`);
+  const linker = makeLinker(`/aluminium-handles-manufacturer/${params.city}`, undefined, undefined, catsOf(c.products));
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'Service', name: `Aluminum handles manufacturer, anodizing and electroplating for ${city}`, serviceType: 'Aluminium handles manufacturing, anodizing and electroplating', provider: { '@type': 'LocalBusiness', '@id': `${base}/#business`, name: c.site.name }, areaServed: { '@type': city === 'Pakistan' ? 'Country' : 'City', name: city }, url: `${base}/aluminium-handles-manufacturer/${params.city}` },
+    { '@context': 'https://schema.org', '@type': 'Service', name: `Aluminum handles manufacturer, anodizing and electroplating for ${city}`, serviceType: 'Aluminium handles manufacturing, anodizing and electroplating', provider: businessRef(c.site), areaServed: { '@type': city === 'Pakistan' ? 'Country' : 'City', name: city }, url: `${base}/aluminium-handles-manufacturer/${params.city}` },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: base }, { '@type': 'ListItem', position: 2, name: 'Delivery Across Pakistan', item: `${base}/delivery-across-pakistan` }, { '@type': 'ListItem', position: 3, name: city, item: `${base}/aluminium-handles-manufacturer/${params.city}` }] },
   ];
   return (
@@ -84,7 +85,7 @@ export default async function CityPage({ params }) {
               <li><strong>Own factory:</strong> you buy from the manufacturer, not a trader, so there is no middleman.</li>
               <li><strong>In-house finishing:</strong> anodizing and electroplating done in the same factory keeps colour and quality the same across batches.</li>
               <li><strong>Wholesale rates:</strong> a clear wholesale price list on WhatsApp for your model, colour and quantity.</li>
-              <li><strong>Range:</strong> <Link className="link" href="/collections/aluminum-door-handles-lahore">door handles</Link>, <Link className="link" href="/collections/aluminum-cabinet-handles-lahore">cabinet handles</Link>, <Link className="link" href="/collections/aluminum-window-locks-lahore">window locks</Link> and <Link className="link" href="/collections/aluminum-hinges-lahore">hinges</Link> from one supplier.</li>
+              <li><strong>Range:</strong> {catsOf(c.products).map((n, i) => (<span key={n}>{i ? ', ' : ''}<Link className="link" href={`/collections/${catSlug(n)}`}>{n.toLowerCase()}</Link></span>))} from one manufacturer.</li>
               <li><strong>Delivery:</strong> dispatch by transport or cargo to every city in Pakistan.</li>
             </ul>
             <p className="pre">DoorLine Manufacturers works this way from its factory in Lahore, Pakistan. Read how to <Link className="link" href="/guides/how-to-buy-aluminium-handles-wholesale-in-pakistan">buy aluminium handles wholesale in Pakistan</Link> or <a className="link" href={waLink(c.site.whatsapp, 'Hello, I need wholesale rates for aluminium handles.')} target="_blank" rel="noopener noreferrer">ask for rates on WhatsApp</a>.</p>

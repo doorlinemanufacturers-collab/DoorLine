@@ -1,7 +1,10 @@
 import Link from 'next/link';
+import { getContent } from '@/lib/store';
+import { liveHref } from '@/lib/linkMap';
 
-export default function RelatedLinks({ groups = [], title = 'Explore More From DoorLine Manufacturers', alt = true }) {
-  const list = groups.filter((g) => g && g.links && g.links.length);
+export default async function RelatedLinks({ groups = [], title = 'Explore More From DoorLine Manufacturers', alt = true }) {
+  const c = await getContent();
+  const list = groups.map((g) => ({ ...g, links: (g.links || []).filter((l) => liveHref(l.href, c)) })).filter((g) => g.links.length);
   if (!list.length) return null;
   return (
     <section className={`section${alt ? ' alt' : ''}`}>

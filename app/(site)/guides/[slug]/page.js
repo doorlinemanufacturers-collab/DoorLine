@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import RelatedLinks from '@/components/RelatedLinks';
-import { relatedGroups, makeLinker, guideGroups } from '@/lib/linkMap';
+import { relatedGroups, makeLinker, guideGroups, catsOf } from '@/lib/linkMap';
 import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/store';
 import { siteUrl, waLink, jsonLd } from '@/lib/site';
@@ -21,7 +21,7 @@ export default async function Guide({ params }) {
   if (!g) notFound();
   const base = siteUrl();
   const cats = [...new Set(c.products.map((p) => p.category).filter(Boolean))];
-  const linker = makeLinker(`/guides/${g.slug}`);
+  const linker = makeLinker(`/guides/${g.slug}`, undefined, undefined, catsOf(c.products));
   const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: g.title, description: g.description, mainEntityOfPage: `${base}/guides/${g.slug}`, image: `${base}/images/logo.png`, author: { '@type': 'Organization', name: c.site.name }, publisher: { '@type': 'Organization', name: c.site.name, logo: { '@type': 'ImageObject', url: `${base}/images/logo.png` } } };
   return (
     <>
