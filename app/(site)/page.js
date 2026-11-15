@@ -20,15 +20,15 @@ import PopularSearches from '@/components/PopularSearches';
 import LazyAnodizing from '@/components/LazyAnodizing';
 import ContactLines from '@/components/ContactLines';
 
-const H1 = 'Glass Door Handles & Aluminium Handles Manufacturer in Lahore, Pakistan';
+const H1 = 'Door Handles, Hinges & Anodizing Manufacturer in Lahore, Pakistan';
 const ORDER_MSG = 'Assalam o Alaikum, I want wholesale rates.\nModel: \nColour: \nSize: \nQuantity: \nCity: ';
 const CAT_ICON = { 'Door Handles': '🚪', 'Cabinet Handles': '🗄️', 'Window Locks': '🔒', Hinges: '🔩' };
 const WHY_ICON = ['🏭', '🎨', '🚚', '✨', '✅', '⭐'];
 
 export async function generateMetadata() {
   const { site } = await getContent();
-  const title = 'Glass Door Handles Manufacturer Lahore, Pakistan | DoorLine';
-  const description = `Glass door handles, aluminium and steel handles, hinges and anodizing from our factory in Lahore, Pakistan. Wholesale rate on WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
+  const title = 'DoorLine Lahore, Pakistan | Handles, Hinges & Anodizing';
+  const description = `DoorLine Manufacturers, Lahore, Pakistan: glass, steel and aluminium door handles, hinges and anodizing. Factory rates, WhatsApp ${site.whatsappDisplay || site.whatsapp}.`.slice(0, 155);
   return {
     title: { absolute: title }, description,
     alternates: { canonical: '/' },

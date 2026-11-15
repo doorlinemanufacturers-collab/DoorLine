@@ -56,7 +56,7 @@ export default async function ProductPage({ params }) {
     <>
     <section className="section">
       <div className="container">
-        <Crumbs items={[{ name: 'Aluminum Handles', href: '/aluminum-handles' }, { name: p.category, href: `/collections/${catSlug(p.category)}` }, { name: p.name }]} />
+        <Crumbs items={[/glass/i.test(`${p.name} ${p.slug}`) ? { name: 'Glass Door Handles', href: '/glass-door-handles' } : /steel|stainless/i.test(`${p.name} ${p.slug}`) ? { name: 'Steel Handles', href: '/steel-handles' } : { name: 'Aluminum Handles', href: '/aluminum-handles' }, { name: p.category, href: `/collections/${catSlug(p.category)}` }, { name: p.name }]} />
         <div className="pgrid">
           <Reveal eager><ProductImage src={p.image} alt={productAlt(p)} priority sizes="(max-width: 900px) 100vw, 50vw" /></Reveal>
           <Reveal eager>

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
   if (!s) return { title: 'Service not found' };
   const description = `${s.short} Call ${c.site.phone} for price. Direct factory rates, bulk orders across Pakistan.`.slice(0, 155);
   return {
-    title: { absolute: s.metaTitle || `${s.title} | Doorline` }, description,
+    title: { absolute: /anodiz/i.test(s.title) ? 'Anodizing in Lahore, Pakistan | Aluminium Anodizing Services' : (s.metaTitle || `${s.title} | Doorline`) }, description,
     alternates: { canonical: `/services/${s.slug}` },
     openGraph: { title: s.title, description, url: `/services/${s.slug}`, images: [s.image || '/images/logo.png'] },
   };
